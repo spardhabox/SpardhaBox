@@ -337,7 +337,7 @@ body {
   flex-shrink:0;
 }
 .badge-new    { background:var(--green-light);  color:var(--green);  border:1px solid var(--green); }
-.badge-hot    { background:var(--red-light);    color:var(--red);    border:1px solid var(--red);   }
+.badge-Full    { background:var(--red-light);    color:var(--red);    border:1px solid var(--red);   }
 .badge-live   { background:var(--amber-light);  color:var(--amber);  border:1px solid var(--amber); }
 .badge-std    { background:var(--surface3);     color:var(--text-mute); border:1px solid var(--border); }
 
@@ -785,6 +785,189 @@ body {
   font-size:0.62rem; color:var(--text-mute);
 }
 .l-dot { width:10px; height:10px; border-radius:3px; }
+
+/* ═══════════════════════════════════════════════════════
+   MOBILE RESPONSIVE — does NOT affect desktop layout
+═══════════════════════════════════════════════════════ */
+
+/* ── Small tablet & mobile shared helpers ── */
+@media (max-width: 768px) {
+
+  /* Allow body/html to scroll on mobile */
+  html, body { overflow: auto; height: auto; }
+  .screen { height: auto; min-height: 100dvh; }
+
+  /* ── Top bar: hide center text, shrink padding ── */
+  .top-bar { padding: 0 14px; gap: 8px; }
+  .top-center { display: none; }
+  .brand-name { font-size: 0.92rem; }
+  .timer-block { padding: 5px 10px; gap: 6px; }
+  .timer-value { font-size: 0.9rem; min-width: 46px; }
+
+  /* ── Screen 1: test list ── */
+  .select-body { padding: 20px 16px; }
+  .select-hero h1 { font-size: 1.4rem; }
+  .select-hero p { font-size: 0.82rem; }
+  .tests-grid { grid-template-columns: 1fr; gap: 14px; }
+  .test-card { padding: 18px; border-radius: 14px; }
+  .filter-chip { padding: 6px 12px; font-size: 0.73rem; }
+
+  /* ── Screen 2: instructions card ── */
+  #login-screen { padding-top: 70px; padding-bottom: 24px; align-items: flex-start; overflow-y: auto; }
+  .login-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 16px;
+    padding: 24px 20px;
+    border-radius: 18px;
+  }
+  .info-grid { grid-template-columns: 1fr 1fr; }
+
+  /* ── Screen 3: exam — hide desktop sidebar ── */
+  .sidebar { display: none; }
+
+  /* Exam layout: column, fills height */
+  #exam-screen { min-height: 100dvh; }
+  .exam-body { flex-direction: column; overflow: visible; }
+
+  .q-panel {
+    padding: 16px;
+    gap: 14px;
+    overflow: visible;
+    flex: none;
+  }
+  .q-text { font-size: 0.92rem; line-height: 1.65; margin-bottom: 16px; }
+  .q-card { padding: 18px; }
+  .option-label { padding: 11px 13px; gap: 10px; }
+  .opt-text { font-size: 0.83rem; }
+
+  /* Action bar: stack into two rows on mobile */
+  .action-bar {
+    height: auto;
+    flex-wrap: wrap;
+    padding: 10px 12px;
+    gap: 7px;
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    background: var(--surface);
+  }
+  .action-left, .action-right {
+    display: flex; gap: 6px; flex-wrap: wrap; width: 100%; justify-content: center;
+  }
+  .action-left .btn, .action-right .btn {
+    flex: 1;
+    justify-content: center;
+    min-width: 0;
+    font-size: 0.75rem;
+    padding: 8px 8px;
+  }
+
+  /* Show mobile palette button inside action-left */
+  .mob-palette-trigger {
+    display: inline-flex !important;
+  }
+
+  /* ── Screen 4: result ── */
+  #result-screen { overflow-y: auto; height: auto; }
+  .result-body { padding: 16px; }
+  .score-hero { flex-direction: column; gap: 14px; }
+  .score-main { padding: 24px 20px; min-width: unset; }
+  .score-num { font-size: 3rem; }
+  .score-stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; min-width: unset; }
+  .score-stat-card { padding: 14px; border-radius: 12px; }
+  .s-val { font-size: 1.5rem; }
+
+  /* Result table: scrollable */
+  .res-table-wrap { overflow-x: auto; }
+  .res-table { min-width: 560px; }
+  .res-table td, .res-table th { padding: 9px 11px; font-size: 0.75rem; }
+
+  /* Result top-bar buttons */
+  .result-topbar-actions .btn { font-size: 0.75rem; padding: 7px 11px; }
+
+  /* ── Modal ── */
+  .modal-box { width: calc(100% - 32px); padding: 24px 20px; border-radius: 18px; }
+}
+
+/* ── Very small phones ── */
+@media (max-width: 400px) {
+  .select-hero h1 { font-size: 1.2rem; }
+  .login-card { margin: 0 10px; }
+  .action-left .btn, .action-right .btn { font-size: 0.7rem; padding: 7px 6px; }
+  .timer-value { font-size: 0.82rem; min-width: 40px; }
+}
+
+/* ── Mobile palette overlay (hidden on desktop) ── */
+.mob-palette-trigger { display: none; }
+
+.mob-palette-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(6px);
+  align-items: flex-end;
+}
+.mob-palette-overlay.open { display: flex; }
+
+.mob-palette-sheet {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px 20px 0 0;
+  width: 100%;
+  max-height: 72dvh;
+  display: flex;
+  flex-direction: column;
+  animation: sheetUp 0.28s cubic-bezier(.25,.8,.25,1) both;
+}
+@keyframes sheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+.mob-palette-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.mob-palette-header h3 {
+  font-size: 0.85rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px; color: var(--text-mute);
+}
+.mob-palette-close {
+  width: 30px; height: 30px; border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: var(--surface2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; cursor: pointer; color: var(--text-soft);
+}
+
+.mob-palette-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--border);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.mob-palette-stats .stat-cell { padding: 8px 10px; }
+.mob-palette-stats .stat-dot { width: 20px; height: 20px; font-size: 0.65rem; }
+.mob-palette-stats .stat-val { font-size: 0.7rem; }
+.mob-palette-stats .stat-lbl { font-size: 0.55rem; }
+
+.mob-palette-grid-wrap {
+  flex: 1; overflow-y: auto; padding: 12px;
+}
+.mob-palette-grid-wrap .palette-grid {
+  grid-template-columns: repeat(7, 1fr);
+}
+@media (max-width: 400px) {
+  .mob-palette-grid-wrap .palette-grid { grid-template-columns: repeat(6, 1fr); }
+}
+
+.mob-palette-legend {
+  padding: 8px 14px 12px;
+  border-top: 1px solid var(--border);
+  display: flex; flex-wrap: wrap; gap: 8px;
+  flex-shrink: 0;
+}
+.mob-palette-legend .legend-item { font-size: 0.68rem; }
 </style>
 </head>
 <body>
@@ -966,6 +1149,7 @@ body {
       <button class="btn btn-ghost btn-sm" onclick="navigate(-1)">← Prev</button>
       <button class="btn btn-amber btn-sm" onclick="markReview()">🔖 Mark &amp; Next</button>
       <button class="btn btn-outline btn-sm" onclick="clearResp()">✕ Clear</button>
+      <button class="btn btn-ghost btn-sm mob-palette-trigger" onclick="openMobPalette()">🗂 Palette</button>
     </div>
     <div class="action-right">
       <button class="btn btn-ghost btn-sm" onclick="navigate(1)">Next →</button>
@@ -1028,6 +1212,43 @@ body {
 </div>
 
 
+<!-- MOBILE PALETTE OVERLAY -->
+<div class="mob-palette-overlay" id="mob-palette-overlay" onclick="closeMobPaletteOutside(event)">
+  <div class="mob-palette-sheet">
+    <div class="mob-palette-header">
+      <h3>📋 Question Palette</h3>
+      <button class="mob-palette-close" onclick="closeMobPalette()">✕</button>
+    </div>
+    <div class="mob-palette-stats">
+      <div class="stat-cell">
+        <div class="stat-dot d-green" id="ms-ans">0</div>
+        <div><div class="stat-val" style="color:var(--green)">Answered</div><div class="stat-lbl">Attempted</div></div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-dot d-red" id="ms-nans">0</div>
+        <div><div class="stat-val" style="color:var(--red)">Not Ans.</div><div class="stat-lbl">Skipped</div></div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-dot d-mute" id="ms-nvis">0</div>
+        <div><div class="stat-val" style="color:var(--text-mute)">Not Visited</div><div class="stat-lbl">Remaining</div></div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-dot d-violet" id="ms-rev">0</div>
+        <div><div class="stat-val" style="color:var(--violet)">Marked</div><div class="stat-lbl">Review</div></div>
+      </div>
+    </div>
+    <div class="mob-palette-grid-wrap">
+      <div class="palette-grid" id="mob-palette"></div>
+    </div>
+    <div class="mob-palette-legend">
+      <div class="legend-item"><div class="l-dot" style="background:var(--green)"></div>Answered</div>
+      <div class="legend-item"><div class="l-dot" style="background:var(--red)"></div>Skipped</div>
+      <div class="legend-item"><div class="l-dot" style="background:var(--violet)"></div>Review</div>
+      <div class="legend-item"><div class="l-dot" style="background:var(--surface3)"></div>Not Visited</div>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL -->
 <div class="modal-overlay" id="submit-modal">
   <div class="modal-box">
@@ -1070,8 +1291,8 @@ const TESTS_DB = [
     desc: "Complete 90-question mock for Maharashtra competitive exams covering GK, English, Marathi, Computer, Arithmetic, History and Legal Knowledge.",
     icon: "🏛️",
     category: "Comprehensive",
-    badge: "hot",
-    badgeText: "HOT",
+    badge: "Full",
+    badgeText: "Full",
     duration: 3600,
     difficulty: 3,
     marks: 1,
@@ -1176,7 +1397,7 @@ const TESTS_DB = [
     icon: "💻",
     category: "Computer",
     badge: "new",
-    badgeText: "NEW",
+    badgeText: "Computer",
     duration: 1200,
     difficulty: 2,
     marks: 1,
@@ -1221,7 +1442,7 @@ const TESTS_DB = [
     icon: "📝",
     category: "English",
     badge: "std",
-    badgeText: "STANDARD",
+    badgeText: "English",
     duration: 900,
     difficulty: 2,
     marks: 1,
@@ -1261,7 +1482,7 @@ const TESTS_DB = [
     icon: "🌐",
     category: "General Knowledge",
     badge: "live",
-    badgeText: "LIVE",
+    badgeText: "GS",
     duration: 600,
     difficulty: 2,
     marks: 1,
@@ -1666,6 +1887,37 @@ function goBack(screen) {
     buildTestCards();
   }
   document.getElementById(screen).classList.add('active-screen');
+}
+
+/* ═══════════════════════════════════════════════════════════
+  MOBILE PALETTE
+═══════════════════════════════════════════════════════════ */
+function openMobPalette() {
+  syncMobPalette();
+  document.getElementById('mob-palette-overlay').classList.add('open');
+}
+function closeMobPalette() {
+  document.getElementById('mob-palette-overlay').classList.remove('open');
+}
+function closeMobPaletteOutside(e) {
+  if (e.target === document.getElementById('mob-palette-overlay')) closeMobPalette();
+}
+function syncMobPalette() {
+  const grid = document.getElementById('mob-palette');
+  grid.innerHTML = '';
+  activeTest.questions.forEach((_, i) => {
+    const btn = document.createElement('div');
+    btn.className = 'q-btn' + (i === current ? ' current' : '') +
+      (status[i] === 1 ? ' st-1' : status[i] === 2 ? ' st-2' : status[i] === 3 ? ' st-3' : '');
+    btn.textContent = i + 1;
+    btn.onclick = () => { loadQ(i); closeMobPalette(); };
+    grid.appendChild(btn);
+  });
+  // sync stats
+  let ans=0, notAns=0, nvis=0, rev=0;
+  status.forEach(s => { if(s===1) ans++; else if(s===2) notAns++; else if(s===3) rev++; else nvis++; });
+  const set = (id, v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+  set('ms-ans', ans); set('ms-nans', notAns); set('ms-nvis', nvis); set('ms-rev', rev);
 }
 </script>
 </body>
