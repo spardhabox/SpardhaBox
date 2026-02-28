@@ -6,987 +6,338 @@
 <title>SpardhaBox – MahaMockTest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
 <style>
-/* ═══════════════════════════════════════════════════════
-   THEME TOKENS — Two Professional EdTech Themes
-═══════════════════════════════════════════════════════ */
-
-/* ── EDTECH BLUE (Default) ─────────────────────────── */
 [data-theme="edtech-blue"] {
-  --bg:           #eef2f9;
-  --surface:      #ffffff;
-  --surface2:     #f4f7fd;
-  --surface3:     #e6ecf8;
-  --border:       #d0d9ee;
-  --border-hi:    #1a56db;
-  --text:         #0f1b35;
-  --text-soft:    #334466;
-  --text-mute:    #8899bb;
-  --shadow:       0 2px 16px rgba(26,86,219,.08);
-  --shadow-lg:    0 12px 48px rgba(26,86,219,.14);
-  --card-hover:   rgba(26,86,219,.03);
-
-  --blue:         #1a56db;
-  --blue-dark:    #1240a8;
-  --blue-light:   #e8effe;
-  --blue-glow:    rgba(26,86,219,.12);
-
-  --topbar-bg:    #1a56db;
-  --topbar-text:  #ffffff;
-  --topbar-border:#1240a8;
-  --topbar-mute:  rgba(255,255,255,.65);
-
-  --green:        #0e9f6e;
-  --green-light:  #def7ec;
-  --green-glow:   rgba(14,159,110,.12);
-  --amber:        #d97706;
-  --amber-light:  #fef3c7;
-  --amber-glow:   rgba(217,119,6,.12);
-  --red:          #e02424;
-  --red-light:    #fde8e8;
-  --red-glow:     rgba(224,36,36,.12);
-  --violet:       #7e3af2;
-  --violet-light: #edebfe;
-  --violet-glow:  rgba(126,58,242,.12);
+  --bg:#eef2f9;--surface:#ffffff;--surface2:#f4f7fd;--surface3:#e6ecf8;
+  --border:#d0d9ee;--border-hi:#1a56db;--text:#0f1b35;--text-soft:#334466;--text-mute:#8899bb;
+  --shadow:0 2px 16px rgba(26,86,219,.08);--shadow-lg:0 12px 48px rgba(26,86,219,.14);--card-hover:rgba(26,86,219,.03);
+  --blue:#1a56db;--blue-dark:#1240a8;--blue-light:#e8effe;--blue-glow:rgba(26,86,219,.12);
+  --topbar-bg:#1a56db;--topbar-text:#ffffff;--topbar-border:#1240a8;--topbar-mute:rgba(255,255,255,.65);
+  --green:#0e9f6e;--green-light:#def7ec;--green-glow:rgba(14,159,110,.12);
+  --amber:#d97706;--amber-light:#fef3c7;--amber-glow:rgba(217,119,6,.12);
+  --red:#e02424;--red-light:#fde8e8;--red-glow:rgba(224,36,36,.12);
+  --violet:#7e3af2;--violet-light:#edebfe;--violet-glow:rgba(126,58,242,.12);
 }
-
-/* ── EDTECH NAVY (Alternate) ───────────────────────── */
 [data-theme="edtech-navy"] {
-  --bg:           #f0f4f8;
-  --surface:      #ffffff;
-  --surface2:     #f7f9fc;
-  --surface3:     #e4eaf3;
-  --border:       #c8d5e8;
-  --border-hi:    #1e3a5f;
-  --text:         #0d1f35;
-  --text-soft:    #2d4a6e;
-  --text-mute:    #7a94b4;
-  --shadow:       0 2px 16px rgba(30,58,95,.10);
-  --shadow-lg:    0 12px 48px rgba(30,58,95,.16);
-  --card-hover:   rgba(30,58,95,.03);
-
-  --blue:         #1e3a5f;
-  --blue-dark:    #132942;
-  --blue-light:   #dde9f7;
-  --blue-glow:    rgba(30,58,95,.12);
-
-  --topbar-bg:    #1e3a5f;
-  --topbar-text:  #ffffff;
-  --topbar-border:#132942;
-  --topbar-mute:  rgba(255,255,255,.60);
-
-  --green:        #057a55;
-  --green-light:  #d5f0e8;
-  --green-glow:   rgba(5,122,85,.12);
-  --amber:        #b45309;
-  --amber-light:  #fde8c3;
-  --amber-glow:   rgba(180,83,9,.12);
-  --red:          #c81e1e;
-  --red-light:    #fde8e8;
-  --red-glow:     rgba(200,30,30,.12);
-  --violet:       #5521b5;
-  --violet-light: #e5edff;
-  --violet-glow:  rgba(85,33,181,.12);
-}
-
-/* ═══════════════════════════════════════════════════════
-   RESET & BASE
-═══════════════════════════════════════════════════════ */
-*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-html, body { height:100%; overflow:hidden; }
-
-body {
-  font-family: 'Sora', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 14px;
-  line-height: 1.6;
-  transition: background 0.35s ease, color 0.35s ease;
-}
-
-.top-bar, .sidebar, .q-card, .option-label,
-.stat-cell, .login-card, .score-stat-card,
-.res-table-wrap, .f-card-mini, .modal-box,
-.action-bar, .palette-area, .stats-block,
-.test-card { transition: background 0.35s ease, border-color 0.35s ease, color 0.35s ease; }
-
-.screen { display:none; width:100%; height:100vh; flex-direction:column; }
-.active-screen { display:flex !important; }
-
-/* ═══════════════════════════════════════════════════════
-   TOP BAR
-═══════════════════════════════════════════════════════ */
-.top-bar {
-  flex-shrink: 0;
-  height: 56px;
-  background: var(--topbar-bg);
-  border-bottom: 1px solid var(--topbar-border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 24px;
-  gap: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.15);
-  z-index: 10;
-}
-
-.brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
-.brand-logo {
-  width:32px; height:32px;
-  background: rgba(255,255,255,.2);
-  border-radius:8px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:16px;
-  border: 1px solid rgba(255,255,255,.25);
-}
-.brand-name { font-size:1.05rem; font-weight:800; color:var(--topbar-text); letter-spacing:-.3px; }
-.brand-name em { font-style:normal; color:rgba(255,255,255,.75); }
-
-.top-center { display:flex; align-items:center; gap:14px; flex:1; justify-content:center; }
-.exam-title-tag { font-size:0.78rem; font-weight:700; color:var(--topbar-mute); letter-spacing:1.5px; text-transform:uppercase; }
-.section-pill {
-  background: rgba(255,255,255,.15);
-  border: 1px solid rgba(255,255,255,.25);
-  border-radius:999px;
-  padding:4px 14px;
-  font-size:0.75rem; font-weight:600;
-  color: #fff;
-}
-
-.top-right { display:flex; align-items:center; gap:10px; }
-
-.theme-toggle {
-  width:36px; height:36px;
-  border-radius:10px;
-  border: 1.5px solid rgba(255,255,255,.3);
-  background: rgba(255,255,255,.15);
-  cursor:pointer;
-  display:flex; align-items:center; justify-content:center;
-  font-size:1rem;
-  transition: all 0.2s;
-  flex-shrink:0;
-}
-.theme-toggle:hover { border-color:rgba(255,255,255,.6); background:rgba(255,255,255,.25); }
-
-.timer-block {
-  display:flex; align-items:center; gap:10px;
-  background: rgba(255,255,255,.15);
-  border: 1px solid rgba(255,255,255,.25);
-  border-radius:10px;
-  padding:6px 14px;
-}
-.timer-label { font-size:0.65rem; color:rgba(255,255,255,.65); text-transform:uppercase; letter-spacing:1px; line-height:1; }
-.timer-value { font-family:'JetBrains Mono',monospace; font-size:1.1rem; font-weight:700; color:#fff; line-height:1; min-width:58px; text-align:right; }
-.timer-value.danger { color:#ffd700; animation:blink 1s infinite; }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.4} }
-
-.btn {
-  display:inline-flex; align-items:center; gap:6px;
-  padding:9px 18px;
-  border-radius:8px; border:none;
-  font-family:'Sora',sans-serif;
-  font-size:0.82rem; font-weight:600;
-  cursor:pointer;
-  transition: all 0.2s;
-  letter-spacing:0.1px;
-}
-.btn-outline { background:transparent; border:1.5px solid var(--border); color:var(--text-soft); }
-.btn-outline:hover { border-color:var(--blue); color:var(--blue); background:var(--blue-light); }
-.btn-amber  { background:var(--amber-light); border:1.5px solid var(--amber); color:var(--amber); }
-.btn-amber:hover { background:var(--amber-glow); }
-.btn-blue   { background:var(--blue); color:#fff; box-shadow:0 4px 14px var(--blue-glow); }
-.btn-blue:hover { background:var(--blue-dark); transform:translateY(-1px); box-shadow:0 8px 22px var(--blue-glow); }
-.btn-green  { background:var(--green); color:#fff; font-weight:700; box-shadow:0 4px 14px var(--green-glow); }
-.btn-green:hover { filter:brightness(1.08); transform:translateY(-1px); }
-.btn-ghost  { background:var(--surface2); border:1.5px solid var(--border); color:var(--text-soft); }
-.btn-ghost:hover { border-color:var(--blue); color:var(--blue); background:var(--blue-light); }
-.btn-sm { padding:6px 14px; font-size:0.78rem; }
-
-/* ═══════════════════════════════════════════════════════
-   SCREEN 1: TEST SELECTION
-═══════════════════════════════════════════════════════ */
-#select-screen { background: var(--bg); }
-
-.select-body {
-  flex:1;
-  overflow-y:auto;
-  padding:36px;
-}
-.select-body::-webkit-scrollbar { width:6px; }
-.select-body::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:999px; }
-
-.select-hero {
-  text-align:center;
-  margin-bottom:36px;
-}
-.select-hero .eyebrow {
-  font-family:'JetBrains Mono',monospace;
-  font-size:0.7rem;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:var(--blue);
-  margin-bottom:12px;
-  display:block;
-}
-.select-hero h1 {
-  font-size:clamp(1.6rem,3vw,2.2rem);
-  font-weight:800;
-  letter-spacing:-.5px;
-  margin-bottom:8px;
-}
-.select-hero p { color:var(--text-soft); font-size:0.9rem; }
-
-/* Filter bar — wraps chips so all are always visible */
-.filter-bar {
-  display:flex; gap:10px; align-items:flex-start;
-  max-width:900px; margin:0 auto 28px;
-  flex-wrap:wrap;
-}
-.search-box {
-  width:100%;
-  display:flex; align-items:center; gap:10px;
-  background:var(--surface);
-  border:1.5px solid var(--border);
-  border-radius:10px;
-  padding:9px 14px;
-  transition:border-color 0.2s;
-}
-.search-box:focus-within { border-color:var(--blue); }
-.search-box input {
-  flex:1; border:none; background:transparent;
-  font-family:'Sora',sans-serif;
-  font-size:0.875rem; color:var(--text);
-  outline:none;
-}
-.search-box input::placeholder { color:var(--text-mute); }
-
-/* Chips row — all chips always visible, wraps if needed */
-#filter-chips {
-  display:flex; gap:8px; flex-wrap:wrap; width:100%;
-}
-.filter-chip {
-  padding:8px 16px;
-  border-radius:999px;
-  border:1.5px solid var(--border);
-  background:var(--surface);
-  color:var(--text-soft);
-  font-size:0.78rem; font-weight:600;
-  cursor:pointer;
-  transition:all 0.2s;
-  white-space:nowrap;
-}
-.filter-chip:hover, .filter-chip.active {
-  border-color:var(--blue);
-  background:var(--blue-light);
-  color:var(--blue);
-}
-
-.tests-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-  gap:18px;
-  max-width:1200px;
-  margin:0 auto;
-}
-
-.test-card {
-  background:var(--surface);
-  border:1.5px solid var(--border);
-  border-radius:18px;
-  padding:24px;
-  cursor:pointer;
-  transition:all 0.25s;
-  position:relative;
-  overflow:hidden;
-  animation: fadeUp 0.5s ease both;
-}
-.test-card:hover {
-  border-color:var(--blue);
-  transform:translateY(-4px);
-  box-shadow:var(--shadow-lg);
-}
-.test-card::before {
-  content:'';
-  position:absolute;
-  top:0; left:0; right:0;
-  height:3px;
-  background:linear-gradient(90deg, var(--blue), var(--violet));
-  transform:scaleX(0);
-  transform-origin:left;
-  transition:transform 0.35s ease;
-}
-.test-card:hover::before { transform:scaleX(1); }
-
-.test-card-top {
-  display:flex; align-items:flex-start;
-  justify-content:space-between; gap:12px;
-  margin-bottom:14px;
-}
-.test-icon {
-  width:48px; height:48px;
-  border-radius:14px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:1.3rem;
-  flex-shrink:0;
-}
-.test-status-badge {
-  font-size:0.65rem; font-weight:700;
-  letter-spacing:1px; text-transform:uppercase;
-  padding:3px 10px; border-radius:999px;
-  flex-shrink:0;
-}
-.badge-new    { background:var(--green-light);  color:var(--green);  border:1px solid var(--green); }
-.badge-Full    { background:var(--red-light);    color:var(--red);    border:1px solid var(--red);   }
-.badge-live   { background:var(--amber-light);  color:var(--amber);  border:1px solid var(--amber); }
-.badge-std    { background:var(--surface3);     color:var(--text-mute); border:1px solid var(--border); }
-
-.test-name { font-size:1rem; font-weight:700; margin-bottom:5px; }
-.test-desc { font-size:0.8rem; color:var(--text-soft); line-height:1.55; margin-bottom:16px; }
-
-.test-meta {
-  display:flex; gap:16px; flex-wrap:wrap;
-  margin-bottom:18px;
-}
-.test-meta-item {
-  display:flex; align-items:center; gap:5px;
-  font-size:0.75rem; color:var(--text-mute);
-}
-.test-meta-item strong { color:var(--text-soft); font-weight:600; }
-
-.test-tags { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:18px; }
-.test-tag {
-  font-size:0.67rem; font-weight:600;
-  padding:2px 9px; border-radius:999px;
-  background:var(--surface3);
-  border:1px solid var(--border);
-  color:var(--text-mute);
-}
-
-.test-card-footer {
-  display:flex; align-items:center; justify-content:space-between;
-}
-.start-btn {
-  display:inline-flex; align-items:center; gap:6px;
-  padding:8px 18px;
-  background:var(--blue); color:#fff;
-  border-radius:8px; border:none;
-  font-family:'Sora',sans-serif;
-  font-size:0.82rem; font-weight:700;
-  cursor:pointer;
-  transition:all 0.2s;
-  box-shadow:0 3px 10px var(--blue-glow);
-}
-.start-btn:hover { background:var(--blue-dark); transform:translateY(-1px); box-shadow:0 6px 18px var(--blue-glow); }
-.test-difficulty {
-  display:flex; align-items:center; gap:4px;
-  font-size:0.72rem; color:var(--text-mute);
-}
-.diff-dot {
-  width:7px; height:7px; border-radius:50%;
-}
-
-.no-results {
-  text-align:center; padding:60px 20px;
-  color:var(--text-mute); font-size:0.9rem;
-  display:none;
-}
-.no-results .big { font-size:3rem; margin-bottom:12px; }
-
-/* ═══════════════════════════════════════════════════════
-   SCREEN 2: INSTRUCTIONS / LOGIN
-═══════════════════════════════════════════════════════ */
-#login-screen {
-  align-items:center; justify-content:center;
-  background:var(--bg);
-  position:relative; overflow:hidden;
-}
-.login-glow {
-  position:absolute;
-  width:600px; height:600px; border-radius:50%;
-  background:radial-gradient(circle,var(--blue-glow),transparent 70%);
-  top:50%; left:50%; transform:translate(-50%,-50%);
-  pointer-events:none;
-}
-.login-card {
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:24px;
-  padding:44px;
-  width:460px;
-  position:relative;
-  box-shadow:var(--shadow-lg);
-  animation:cardIn 0.5s cubic-bezier(.25,.8,.25,1) both;
-}
-@keyframes cardIn { from{opacity:0;transform:translateY(24px) scale(.97)} to{opacity:1;transform:none} }
-@keyframes fadeUp  { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:none} }
-
-.back-btn {
-  display:inline-flex; align-items:center; gap:6px;
-  background:none; border:none; cursor:pointer;
-  color:var(--text-mute); font-family:'Sora',sans-serif;
-  font-size:0.8rem; font-weight:500;
-  margin-bottom:20px; padding:0;
-  transition:color 0.2s;
-}
-.back-btn:hover { color:var(--blue); }
-
-.login-icon {
-  width:64px; height:64px;
-  background:var(--blue);
-  border-radius:18px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:1.8rem;
-  margin-bottom:16px;
-  box-shadow:0 8px 24px var(--blue-glow);
-}
-.login-card h2 { font-size:1.4rem; font-weight:800; letter-spacing:-.3px; margin-bottom:4px; }
-.login-card .subtitle { color:var(--text-soft); font-size:0.85rem; margin-bottom:20px; }
-
-.info-grid {
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:8px; margin-bottom:20px;
-}
-.info-cell {
-  background:var(--surface2);
-  border:1px solid var(--border);
-  border-radius:8px;
-  padding:11px;
-}
-.info-cell .lbl { font-size:0.65rem; color:var(--text-mute); text-transform:uppercase; letter-spacing:1px; margin-bottom:4px; }
-.info-cell .val { font-size:0.9rem; font-weight:700; }
-.info-cell .val.hi { color:var(--blue); }
-
-.divider { height:1px; background:var(--border); margin:0 0 16px; }
-
-.instructions {
-  background:rgba(245,166,35,.06);
-  border:1px solid rgba(245,166,35,.2);
-  border-radius:8px;
-  padding:13px;
-  font-size:0.78rem;
-  color:var(--text-soft);
-  line-height:1.7;
-  margin-bottom:18px;
-}
-.instructions strong { color:var(--amber); }
-
-.btn-full {
-  width:100%; padding:14px;
-  background: var(--blue);
-  border:none; border-radius:10px;
-  color:#fff; font-family:'Sora',sans-serif;
-  font-size:0.95rem; font-weight:700;
-  cursor:pointer;
-  transition:all 0.3s;
-  box-shadow:0 6px 20px var(--blue-glow);
-}
-.btn-full:hover { background:var(--blue-dark); transform:translateY(-2px); box-shadow:0 12px 32px var(--blue-glow); }
-
-/* ═══════════════════════════════════════════════════════
-   SCREEN 3: EXAM
-═══════════════════════════════════════════════════════ */
-.exam-body { flex:1; display:flex; overflow:hidden; }
-
-.q-panel {
-  flex:1; overflow-y:auto;
-  padding:26px 30px;
-  background:var(--bg);
-  display:flex; flex-direction:column; gap:18px;
-}
-.q-panel::-webkit-scrollbar { width:6px; }
-.q-panel::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:999px; }
-
-.q-header { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-.q-badge {
-  font-family:'JetBrains Mono',monospace;
-  font-size:0.72rem; font-weight:600;
-  background:var(--surface2); border:1px solid var(--border);
-  border-radius:7px; padding:4px 12px; color:var(--text-soft);
-}
-.q-badge.active { background:var(--blue-light); border-color:var(--blue); color:var(--blue); }
-.q-mandatory {
-  display:flex; align-items:center; gap:5px;
-  background:var(--amber-glow); border:1px solid rgba(245,166,35,.25);
-  border-radius:7px; padding:4px 12px;
-  font-size:0.72rem; color:var(--amber); font-weight:600;
-}
-
-.progress-track {
-  width:100%; height:4px;
-  background:var(--surface2); border-radius:999px; overflow:hidden;
-}
-.progress-fill {
-  height:100%;
-  background:linear-gradient(90deg,var(--blue),var(--violet));
-  border-radius:999px;
-  transition:width 0.4s ease;
-}
-.q-card {
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:26px;
-  flex:1;
-  box-shadow:var(--shadow);
-}
-.q-num-label { font-size:0.68rem; font-weight:700; color:var(--text-mute); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:10px; }
-.q-text { font-size:1.05rem; font-weight:500; line-height:1.75; margin-bottom:22px; color:var(--text); }
-
-.options-list { display:flex; flex-direction:column; gap:9px; }
-
-.option-label {
-  display:flex; align-items:center; gap:14px;
-  background:var(--surface2);
-  border:1.5px solid var(--border);
-  border-radius:12px;
-  padding:13px 16px;
-  cursor:pointer;
-  transition:all 0.2s;
-  user-select:none;
-}
-.option-label:hover { border-color:var(--blue); background:var(--blue-light); }
-.option-label.selected { border-color:var(--blue); background:var(--blue-light); }
-.option-label input { display:none; }
-
-.opt-letter {
-  width:30px; height:30px; border-radius:8px;
-  background:var(--surface3); border:1px solid var(--border);
-  display:flex; align-items:center; justify-content:center;
-  font-family:'JetBrains Mono',monospace;
-  font-size:0.75rem; font-weight:700;
-  color:var(--text-mute); flex-shrink:0;
-  transition:all 0.2s;
-}
-.option-label.selected .opt-letter { background:var(--blue); border-color:var(--blue); color:#fff; }
-.opt-text { font-size:0.9rem; color:var(--text-soft); flex:1; line-height:1.5; transition:color 0.2s; }
-.option-label.selected .opt-text { color:var(--blue-dark); font-weight:500; }
-.opt-check {
-  display:none; margin-left:auto;
-  width:22px; height:22px; border-radius:50%;
-  background:var(--blue);
-  align-items:center; justify-content:center;
-  font-size:11px; color:#fff; flex-shrink:0;
-}
-.option-label.selected .opt-check { display:flex; }
-
-.sidebar {
-  width:280px; flex-shrink:0;
-  background:var(--surface);
-  border-left:1px solid var(--border);
-  display:flex; flex-direction:column;
-  overflow:hidden;
-}
-
-.candidate-block {
-  padding:14px;
-  border-bottom:1px solid var(--border);
-  background:var(--surface2);
-  display:flex; align-items:center; gap:10px;
-}
-.cand-avatar {
-  width:42px; height:42px;
-  background:var(--blue);
-  border-radius:12px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:1.05rem; flex-shrink:0;
-}
-.cand-name { font-size:0.85rem; font-weight:700; margin-bottom:2px; }
-.cand-test { font-size:0.68rem; color:var(--text-mute); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:150px; }
-
-.stats-block {
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:1px; background:var(--border);
-  border-bottom:1px solid var(--border);
-}
-.stat-cell { background:var(--surface); padding:9px 12px; display:flex; align-items:center; gap:8px; }
-.stat-dot {
-  width:24px; height:24px; border-radius:6px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:0.72rem; font-weight:800;
-  flex-shrink:0; font-family:'JetBrains Mono',monospace;
-}
-.d-green  { background:var(--green-light);  color:var(--green);  }
-.d-red    { background:var(--red-light);    color:var(--red);    }
-.d-mute   { background:var(--surface3);     color:var(--text-mute); }
-.d-violet { background:var(--violet-light); color:var(--violet); }
-.stat-val { font-size:0.8rem; font-weight:700; line-height:1; }
-.stat-lbl { font-size:0.62rem; color:var(--text-mute); margin-top:1px; }
-
-.palette-header {
-  padding:9px 14px;
-  font-size:0.68rem; font-weight:700;
-  text-transform:uppercase; letter-spacing:1.5px;
-  color:var(--text-mute);
-  border-bottom:1px solid var(--border);
-  display:flex; justify-content:space-between;
-}
-.palette-area { flex:1; overflow-y:auto; padding:12px; }
-.palette-area::-webkit-scrollbar { width:4px; }
-.palette-area::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:999px; }
-
-.palette-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; }
-.q-btn {
-  aspect-ratio:1; border-radius:7px;
-  border:1.5px solid var(--border);
-  background:var(--surface3);
-  color:var(--text-soft);
-  font-family:'JetBrains Mono',monospace;
-  font-size:0.68rem; font-weight:600;
-  cursor:pointer;
-  transition:all 0.15s;
-  display:flex; align-items:center; justify-content:center;
-}
-.q-btn:hover { border-color:var(--blue); color:var(--blue); background:var(--blue-light); }
-.q-btn.current { box-shadow:0 0 0 2px var(--blue); border-color:var(--blue); background:var(--blue-light); color:var(--blue); }
-.q-btn.st-1 { background:var(--green-light); border-color:var(--green); color:var(--green); }
-.q-btn.st-2 { background:var(--red-light);   border-color:var(--red);   color:var(--red);   }
-.q-btn.st-3 { background:var(--violet-light);border-color:var(--violet);color:var(--violet); }
-
-.action-bar {
-  flex-shrink:0; height:62px;
-  background:var(--surface);
-  border-top:1px solid var(--border);
-  display:flex; align-items:center;
-  justify-content:space-between;
-  padding:0 22px; gap:8px;
-}
-.action-left, .action-right { display:flex; gap:7px; align-items:center; }
-
-/* ═══════════════════════════════════════════════════════
-   SCREEN 4: RESULT
-═══════════════════════════════════════════════════════ */
-#result-screen { overflow-y:auto; }
-
-.result-body { flex:1; overflow-y:auto; padding:30px; }
-.result-body::-webkit-scrollbar { width:6px; }
-.result-body::-webkit-scrollbar-thumb { background:var(--surface3); border-radius:999px; }
-
-.score-hero { display:flex; gap:18px; margin-bottom:26px; flex-wrap:wrap; }
-
-.score-main {
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:32px 40px;
-  text-align:center; flex:1; min-width:240px;
-  position:relative; overflow:hidden;
-  box-shadow:var(--shadow);
-}
-.score-main::before {
-  content:'';
-  position:absolute; inset:0;
-  background:radial-gradient(ellipse 80% 50% at 50% 0%, var(--blue-light), transparent 70%);
-}
-.score-lbl { font-size:0.7rem; text-transform:uppercase; letter-spacing:2px; color:var(--text-mute); margin-bottom:10px; position:relative; }
-.score-num {
-  font-size:3.8rem; font-weight:800;
-  font-family:'JetBrains Mono',monospace;
-  color: var(--blue);
-  line-height:1;
-  margin-bottom:6px; position:relative;
-}
-.score-denom { font-size:0.9rem; color:var(--text-mute); font-family:'JetBrains Mono',monospace; position:relative; }
-.score-test-name { font-size:0.78rem; color:var(--text-soft); margin-top:8px; font-weight:500; position:relative; }
-
-.score-stats-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; flex:1; min-width:240px; }
-.score-stat-card {
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:18px;
-  display:flex; flex-direction:column; justify-content:center;
-  box-shadow:var(--shadow);
-}
-.s-lbl { font-size:0.67rem; color:var(--text-mute); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px; }
-.s-val { font-size:1.8rem; font-weight:800; font-family:'JetBrains Mono',monospace; }
-.c-green { color:var(--green); } .c-red { color:var(--red); }
-.c-amber { color:var(--amber); } .c-blue { color:var(--blue); }
-
-.res-section-label {
-  font-size:0.72rem; font-weight:700; text-transform:uppercase;
-  letter-spacing:2px; color:var(--text-mute);
-  margin-bottom:12px;
-  display:flex; align-items:center; gap:10px;
-}
-.res-section-label::after { content:''; flex:1; height:1px; background:var(--border); }
-
-.res-table-wrap {
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:14px; overflow:hidden;
-  box-shadow:var(--shadow);
-}
-.res-table { width:100%; border-collapse:collapse; }
-.res-table th {
-  background:var(--surface2); padding:11px 15px;
-  text-align:left; font-size:0.7rem; font-weight:700;
-  text-transform:uppercase; letter-spacing:1px;
-  color:var(--text-mute); border-bottom:1px solid var(--border);
-}
-.res-table td {
-  padding:11px 15px; font-size:0.8rem;
-  color:var(--text-soft); border-bottom:1px solid rgba(128,128,128,.06);
-  vertical-align:middle; line-height:1.5;
-}
-.res-table tr:last-child td { border-bottom:none; }
-.res-table tr:hover td { background:var(--card-hover); }
-.q-no { font-family:'JetBrains Mono',monospace; font-weight:600; color:var(--text-mute); }
-.ans-val { font-weight:500; color:var(--text); }
-
-.tag {
-  display:inline-flex; align-items:center; gap:4px;
-  padding:3px 9px; border-radius:999px;
-  font-size:0.67rem; font-weight:700; letter-spacing:.5px;
-}
-.tag-c { background:var(--green-light); color:var(--green); border:1px solid var(--green); }
-.tag-w { background:var(--red-light);   color:var(--red);   border:1px solid var(--red);   }
-.tag-s { background:var(--amber-light); color:var(--amber); border:1px solid var(--amber); }
-
-/* ═══════════════════════════════════════════════════════
-   MODAL
-═══════════════════════════════════════════════════════ */
-.modal-overlay {
-  display:none; position:fixed; inset:0;
-  background:rgba(0,0,0,.65);
-  backdrop-filter:blur(8px);
-  z-index:999;
-  align-items:center; justify-content:center;
-}
-.modal-overlay.open { display:flex; }
-.modal-box {
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:22px;
-  padding:34px; width:400px;
-  text-align:center;
-  box-shadow:var(--shadow-lg);
-  animation:cardIn 0.3s ease both;
-}
-.modal-icon { font-size:2.2rem; margin-bottom:12px; }
-.modal-title { font-size:1.15rem; font-weight:800; margin-bottom:7px; }
-.modal-desc { color:var(--text-soft); font-size:0.845rem; margin-bottom:20px; line-height:1.6; }
-.modal-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-bottom:20px; }
-.modal-stat { background:var(--surface2); border:1px solid var(--border); border-radius:9px; padding:11px; }
-.m-val { font-size:1.3rem; font-weight:800; font-family:'JetBrains Mono',monospace; }
-.m-lbl { font-size:0.62rem; color:var(--text-mute); text-transform:uppercase; letter-spacing:1px; margin-top:3px; }
-.modal-actions { display:flex; gap:9px; }
-.modal-actions .btn { flex:1; justify-content:center; padding:11px; }
-
-* { scrollbar-width:thin; scrollbar-color:#202535 transparent; }
-
-.palette-legend {
-  padding:8px 14px;
-  border-top:1px solid var(--border);
-  display:flex; flex-wrap:wrap; gap:6px;
-}
-.legend-item {
-  display:flex; align-items:center; gap:5px;
-  font-size:0.62rem; color:var(--text-mute);
-}
-.l-dot { width:10px; height:10px; border-radius:3px; }
-
-/* ═══════════════════════════════════════════════════════
-   MOBILE RESPONSIVE — does NOT affect desktop layout
-═══════════════════════════════════════════════════════ */
-
-/* ── Small tablet & mobile shared helpers ── */
-@media (max-width: 768px) {
-
-  /* Allow body/html to scroll on mobile */
-  html, body { overflow: auto; height: auto; }
-  .screen { height: auto; min-height: 100dvh; }
-
-  /* ── Top bar: hide center text, shrink padding ── */
-  .top-bar { padding: 0 14px; gap: 8px; }
-  .top-center { display: none; }
-  .brand-name { font-size: 0.92rem; }
-  .timer-block { padding: 5px 10px; gap: 6px; }
-  .timer-value { font-size: 0.9rem; min-width: 46px; }
-
-  /* ── Screen 1: test list ── */
-  .select-body { padding: 20px 16px; }
-  .select-hero h1 { font-size: 1.4rem; }
-  .select-hero p { font-size: 0.82rem; }
-  .tests-grid { grid-template-columns: 1fr; gap: 14px; }
-  .test-card { padding: 18px; border-radius: 14px; }
-  .filter-chip { padding: 6px 12px; font-size: 0.73rem; }
-
-  /* ── Screen 2: instructions card ── */
-  #login-screen { padding-top: 70px; padding-bottom: 24px; align-items: flex-start; overflow-y: auto; }
-  .login-card {
-    width: 100%;
-    max-width: 100%;
-    margin: 0 16px;
-    padding: 24px 20px;
-    border-radius: 18px;
-  }
-  .info-grid { grid-template-columns: 1fr 1fr; }
-
-  /* ── Screen 3: exam — hide desktop sidebar ── */
-  .sidebar { display: none; }
-
-  /* Exam layout: column, fills height */
-  #exam-screen { min-height: 100dvh; }
-  .exam-body { flex-direction: column; overflow: visible; }
-
-  .q-panel {
-    padding: 16px;
-    gap: 14px;
-    overflow: visible;
-    flex: none;
-  }
-  .q-text { font-size: 0.92rem; line-height: 1.65; margin-bottom: 16px; }
-  .q-card { padding: 18px; }
-  .option-label { padding: 11px 13px; gap: 10px; }
-  .opt-text { font-size: 0.83rem; }
-
-  /* Action bar: stack into two rows on mobile */
-  .action-bar {
-    height: auto;
-    flex-wrap: wrap;
-    padding: 10px 12px;
-    gap: 7px;
-    position: sticky;
-    bottom: 0;
-    z-index: 20;
-    background: var(--surface);
-  }
-  .action-left, .action-right {
-    display: flex; gap: 6px; flex-wrap: wrap; width: 100%; justify-content: center;
-  }
-  .action-left .btn, .action-right .btn {
-    flex: 1;
-    justify-content: center;
-    min-width: 0;
-    font-size: 0.75rem;
-    padding: 8px 8px;
-  }
-
-  /* Show mobile palette button inside action-left */
-  .mob-palette-trigger {
-    display: inline-flex !important;
-  }
-
-  /* ── Screen 4: result ── */
-  #result-screen { overflow-y: auto; height: auto; }
-  .result-body { padding: 16px; }
-  .score-hero { flex-direction: column; gap: 14px; }
-  .score-main { padding: 24px 20px; min-width: unset; }
-  .score-num { font-size: 3rem; }
-  .score-stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; min-width: unset; }
-  .score-stat-card { padding: 14px; border-radius: 12px; }
-  .s-val { font-size: 1.5rem; }
-
-  /* Result table: scrollable */
-  .res-table-wrap { overflow-x: auto; }
-  .res-table { min-width: 560px; }
-  .res-table td, .res-table th { padding: 9px 11px; font-size: 0.75rem; }
-
-  /* Result top-bar buttons */
-  .result-topbar-actions .btn { font-size: 0.75rem; padding: 7px 11px; }
-
-  /* ── Modal ── */
-  .modal-box { width: calc(100% - 32px); padding: 24px 20px; border-radius: 18px; }
-}
-
-/* ── Very small phones ── */
-@media (max-width: 400px) {
-  .select-hero h1 { font-size: 1.2rem; }
-  .login-card { margin: 0 10px; }
-  .action-left .btn, .action-right .btn { font-size: 0.7rem; padding: 7px 6px; }
-  .timer-value { font-size: 0.82rem; min-width: 40px; }
-}
-
-/* ── Mobile palette overlay (hidden on desktop) ── */
-.mob-palette-trigger { display: none; }
-
-.mob-palette-overlay {
-  display: none;
-  position: fixed; inset: 0; z-index: 500;
-  background: rgba(0,0,0,.55);
-  backdrop-filter: blur(6px);
-  align-items: flex-end;
-}
-.mob-palette-overlay.open { display: flex; }
-
-.mob-palette-sheet {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 20px 20px 0 0;
-  width: 100%;
-  max-height: 72dvh;
-  display: flex;
-  flex-direction: column;
-  animation: sheetUp 0.28s cubic-bezier(.25,.8,.25,1) both;
-}
-@keyframes sheetUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
-.mob-palette-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 16px 10px;
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-}
-.mob-palette-header h3 {
-  font-size: 0.85rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 1px; color: var(--text-mute);
-}
-.mob-palette-close {
-  width: 30px; height: 30px; border-radius: 8px;
-  border: 1.5px solid var(--border);
-  background: var(--surface2);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.85rem; cursor: pointer; color: var(--text-soft);
-}
-
-.mob-palette-stats {
-  display: grid; grid-template-columns: repeat(4, 1fr);
-  gap: 1px; background: var(--border);
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-}
-.mob-palette-stats .stat-cell { padding: 8px 10px; }
-.mob-palette-stats .stat-dot { width: 20px; height: 20px; font-size: 0.65rem; }
-.mob-palette-stats .stat-val { font-size: 0.7rem; }
-.mob-palette-stats .stat-lbl { font-size: 0.55rem; }
-
-.mob-palette-grid-wrap {
-  flex: 1; overflow-y: auto; padding: 12px;
-}
-.mob-palette-grid-wrap .palette-grid {
-  grid-template-columns: repeat(7, 1fr);
-}
-@media (max-width: 400px) {
-  .mob-palette-grid-wrap .palette-grid { grid-template-columns: repeat(6, 1fr); }
-}
-
-.mob-palette-legend {
-  padding: 8px 14px 12px;
-  border-top: 1px solid var(--border);
-  display: flex; flex-wrap: wrap; gap: 8px;
-  flex-shrink: 0;
+  --bg:#f0f4f8;--surface:#ffffff;--surface2:#f7f9fc;--surface3:#e4eaf3;
+  --border:#c8d5e8;--border-hi:#1e3a5f;--text:#0d1f35;--text-soft:#2d4a6e;--text-mute:#7a94b4;
+  --shadow:0 2px 16px rgba(30,58,95,.10);--shadow-lg:0 12px 48px rgba(30,58,95,.16);--card-hover:rgba(30,58,95,.03);
+  --blue:#1e3a5f;--blue-dark:#132942;--blue-light:#dde9f7;--blue-glow:rgba(30,58,95,.12);
+  --topbar-bg:#1e3a5f;--topbar-text:#ffffff;--topbar-border:#132942;--topbar-mute:rgba(255,255,255,.60);
+  --green:#057a55;--green-light:#d5f0e8;--green-glow:rgba(5,122,85,.12);
+  --amber:#b45309;--amber-light:#fde8c3;--amber-glow:rgba(180,83,9,.12);
+  --red:#c81e1e;--red-light:#fde8e8;--red-glow:rgba(200,30,30,.12);
+  --violet:#5521b5;--violet-light:#e5edff;--violet-glow:rgba(85,33,181,.12);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;transition:background .35s,color .35s;}
+.screen{display:none;width:100%;height:100vh;flex-direction:column;}
+.active-screen{display:flex!important;}
+
+/* TOP BAR */
+.top-bar{flex-shrink:0;height:56px;background:var(--topbar-bg);border-bottom:1px solid var(--topbar-border);display:flex;align-items:center;justify-content:space-between;padding:0 24px;gap:16px;box-shadow:0 2px 8px rgba(0,0,0,.15);z-index:10;}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.brand-logo{width:32px;height:32px;background:rgba(255,255,255,.2);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;border:1px solid rgba(255,255,255,.25);}
+.brand-name{font-size:1.05rem;font-weight:800;color:var(--topbar-text);letter-spacing:-.3px;}
+.brand-name em{font-style:normal;color:rgba(255,255,255,.75);}
+.top-center{display:flex;align-items:center;gap:14px;flex:1;justify-content:center;}
+.exam-title-tag{font-size:0.78rem;font-weight:700;color:var(--topbar-mute);letter-spacing:1.5px;text-transform:uppercase;}
+.section-pill{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:4px 14px;font-size:0.75rem;font-weight:600;color:#fff;}
+.top-right{display:flex;align-items:center;gap:10px;}
+.theme-toggle{width:36px;height:36px;border-radius:10px;border:1.5px solid rgba(255,255,255,.3);background:rgba(255,255,255,.15);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:all .2s;flex-shrink:0;}
+.theme-toggle:hover{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.25);}
+.timer-block{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:6px 14px;}
+.timer-label{font-size:0.65rem;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:1px;line-height:1;}
+.timer-value{font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:700;color:#fff;line-height:1;min-width:58px;text-align:right;}
+.timer-value.danger{color:#ffd700;animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 18px;border-radius:8px;border:none;font-family:'Sora',sans-serif;font-size:0.82rem;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:0.1px;}
+.btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--text-soft);}
+.btn-outline:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-light);}
+.btn-amber{background:var(--amber-light);border:1.5px solid var(--amber);color:var(--amber);}
+.btn-blue{background:var(--blue);color:#fff;box-shadow:0 4px 14px var(--blue-glow);}
+.btn-blue:hover{background:var(--blue-dark);transform:translateY(-1px);}
+.btn-green{background:var(--green);color:#fff;font-weight:700;box-shadow:0 4px 14px var(--green-glow);}
+.btn-green:hover{filter:brightness(1.08);transform:translateY(-1px);}
+.btn-ghost{background:var(--surface2);border:1.5px solid var(--border);color:var(--text-soft);}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-light);}
+.btn-sm{padding:6px 14px;font-size:0.78rem;}
+
+/* ── SCREEN 1: TEST SELECTION ── */
+#select-screen{background:var(--bg);}
+.select-body{flex:1;overflow-y:auto;padding:36px;}
+.select-body::-webkit-scrollbar{width:6px;}
+.select-body::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:999px;}
+.select-hero{text-align:center;margin-bottom:36px;}
+.select-hero .eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--blue);margin-bottom:12px;display:block;}
+.select-hero h1{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-.5px;margin-bottom:8px;}
+.select-hero p{color:var(--text-soft);font-size:0.9rem;}
+
+/* Loading / error states */
+.loading-state{text-align:center;padding:60px 20px;color:var(--text-mute);}
+.loading-spinner{font-size:2.5rem;animation:spin 1s linear infinite;display:block;margin-bottom:16px;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.error-state{text-align:center;padding:60px 20px;}
+.error-state .big{font-size:2.5rem;margin-bottom:12px;}
+.error-state h3{font-size:1.1rem;font-weight:700;margin-bottom:8px;color:var(--red);}
+.error-state p{color:var(--text-mute);font-size:0.85rem;margin-bottom:20px;}
+
+.filter-bar{display:flex;gap:10px;align-items:flex-start;max-width:900px;margin:0 auto 28px;flex-wrap:wrap;}
+.search-box{width:100%;display:flex;align-items:center;gap:10px;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:9px 14px;transition:border-color .2s;}
+.search-box:focus-within{border-color:var(--blue);}
+.search-box input{flex:1;border:none;background:transparent;font-family:'Sora',sans-serif;font-size:0.875rem;color:var(--text);outline:none;}
+.search-box input::placeholder{color:var(--text-mute);}
+#filter-chips{display:flex;gap:8px;flex-wrap:wrap;width:100%;}
+.filter-chip{padding:8px 16px;border-radius:999px;border:1.5px solid var(--border);background:var(--surface);color:var(--text-soft);font-size:0.78rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.filter-chip:hover,.filter-chip.active{border-color:var(--blue);background:var(--blue-light);color:var(--blue);}
+.tests-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;max-width:1200px;margin:0 auto;}
+.test-card{background:var(--surface);border:1.5px solid var(--border);border-radius:18px;padding:24px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;animation:fadeUp .5s ease both;}
+.test-card:hover{border-color:var(--blue);transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.test-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--violet));transform:scaleX(0);transform-origin:left;transition:transform .35s ease;}
+.test-card:hover::before{transform:scaleX(1);}
+.test-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;}
+.test-icon{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+.test-status-badge{font-size:0.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 10px;border-radius:999px;flex-shrink:0;}
+.badge-free{background:var(--green-light);color:var(--green);border:1px solid var(--green);}
+.badge-premium{background:var(--amber-light);color:var(--amber);border:1px solid var(--amber);}
+.badge-new{background:var(--violet-light);color:var(--violet);border:1px solid var(--violet);}
+.test-name{font-size:1rem;font-weight:700;margin-bottom:5px;}
+.test-desc{font-size:0.8rem;color:var(--text-soft);line-height:1.55;margin-bottom:16px;}
+.test-meta{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:18px;}
+.test-meta-item{display:flex;align-items:center;gap:5px;font-size:0.75rem;color:var(--text-mute);}
+.test-meta-item strong{color:var(--text-soft);font-weight:600;}
+.test-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;}
+.test-tag{font-size:0.67rem;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--surface3);border:1px solid var(--border);color:var(--text-mute);}
+.test-card-footer{display:flex;align-items:center;justify-content:space-between;}
+.start-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:var(--blue);color:#fff;border-radius:8px;border:none;font-family:'Sora',sans-serif;font-size:0.82rem;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 3px 10px var(--blue-glow);}
+.start-btn:hover{background:var(--blue-dark);transform:translateY(-1px);}
+.no-results{text-align:center;padding:60px 20px;color:var(--text-mute);font-size:0.9rem;display:none;}
+.no-results .big{font-size:3rem;margin-bottom:12px;}
+
+/* USER PILL in top bar */
+.user-pill-topbar{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:999px;padding:4px 12px 4px 4px;}
+.user-avatar-sm{width:24px;height:24px;border-radius:50%;background:#c9a84c;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;color:#111;}
+.user-name-sm{font-size:0.75rem;font-weight:600;color:#fff;}
+
+/* ── SCREEN 2: INSTRUCTIONS ── */
+#login-screen{align-items:center;justify-content:center;background:var(--bg);position:relative;overflow:hidden;}
+.login-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,var(--blue-glow),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:44px;width:460px;position:relative;box-shadow:var(--shadow-lg);animation:cardIn .5s cubic-bezier(.25,.8,.25,1) both;}
+@keyframes cardIn{from{opacity:0;transform:translateY(24px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.back-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:var(--text-mute);font-family:'Sora',sans-serif;font-size:0.8rem;font-weight:500;margin-bottom:20px;padding:0;transition:color .2s;}
+.back-btn:hover{color:var(--blue);}
+.login-icon{width:64px;height:64px;background:var(--blue);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:16px;box-shadow:0 8px 24px var(--blue-glow);}
+.login-card h2{font-size:1.4rem;font-weight:800;letter-spacing:-.3px;margin-bottom:4px;}
+.login-card .subtitle{color:var(--text-soft);font-size:0.85rem;margin-bottom:20px;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;}
+.info-cell{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px;}
+.info-cell .lbl{font-size:0.65rem;color:var(--text-mute);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+.info-cell .val{font-size:0.9rem;font-weight:700;}
+.info-cell .val.hi{color:var(--blue);}
+.divider{height:1px;background:var(--border);margin:0 0 16px;}
+.instructions{background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.2);border-radius:8px;padding:13px;font-size:0.78rem;color:var(--text-soft);line-height:1.7;margin-bottom:18px;}
+.instructions strong{color:var(--amber);}
+.guest-notice{background:var(--blue-light);border:1px solid rgba(26,86,219,.2);border-radius:8px;padding:10px 13px;font-size:0.76rem;color:var(--blue);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.btn-full{width:100%;padding:14px;background:var(--blue);border:none;border-radius:10px;color:#fff;font-family:'Sora',sans-serif;font-size:0.95rem;font-weight:700;cursor:pointer;transition:all .3s;box-shadow:0 6px 20px var(--blue-glow);}
+.btn-full:hover{background:var(--blue-dark);transform:translateY(-2px);box-shadow:0 12px 32px var(--blue-glow);}
+
+/* ── SCREEN 3: EXAM ── */
+.exam-body{flex:1;display:flex;overflow:hidden;}
+.q-panel{flex:1;overflow-y:auto;padding:26px 30px;background:var(--bg);display:flex;flex-direction:column;gap:18px;}
+.q-panel::-webkit-scrollbar{width:6px;}
+.q-panel::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:999px;}
+.q-header{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.q-badge{font-family:'JetBrains Mono',monospace;font-size:0.72rem;font-weight:600;background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:4px 12px;color:var(--text-soft);}
+.q-badge.active{background:var(--blue-light);border-color:var(--blue);color:var(--blue);}
+.q-mandatory{display:flex;align-items:center;gap:5px;background:var(--amber-glow);border:1px solid rgba(245,166,35,.25);border-radius:7px;padding:4px 12px;font-size:0.72rem;color:var(--amber);font-weight:600;}
+.progress-track{width:100%;height:4px;background:var(--surface2);border-radius:999px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--violet));border-radius:999px;transition:width .4s ease;}
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:26px;flex:1;box-shadow:var(--shadow);}
+.q-num-label{font-size:0.68rem;font-weight:700;color:var(--text-mute);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px;}
+.q-text{font-size:1.05rem;font-weight:500;line-height:1.75;margin-bottom:22px;color:var(--text);}
+.options-list{display:flex;flex-direction:column;gap:9px;}
+.option-label{display:flex;align-items:center;gap:14px;background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;padding:13px 16px;cursor:pointer;transition:all .2s;user-select:none;}
+.option-label:hover{border-color:var(--blue);background:var(--blue-light);}
+.option-label.selected{border-color:var(--blue);background:var(--blue-light);}
+.option-label input{display:none;}
+.opt-letter{width:30px;height:30px;border-radius:8px;background:var(--surface3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:0.75rem;font-weight:700;color:var(--text-mute);flex-shrink:0;transition:all .2s;}
+.option-label.selected .opt-letter{background:var(--blue);border-color:var(--blue);color:#fff;}
+.opt-text{font-size:0.9rem;color:var(--text-soft);flex:1;line-height:1.5;transition:color .2s;}
+.option-label.selected .opt-text{color:var(--blue-dark);font-weight:500;}
+.opt-check{display:none;margin-left:auto;width:22px;height:22px;border-radius:50%;background:var(--blue);align-items:center;justify-content:center;font-size:11px;color:#fff;flex-shrink:0;}
+.option-label.selected .opt-check{display:flex;}
+.sidebar{width:280px;flex-shrink:0;background:var(--surface);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden;}
+.candidate-block{padding:14px;border-bottom:1px solid var(--border);background:var(--surface2);display:flex;align-items:center;gap:10px;}
+.cand-avatar{width:42px;height:42px;background:var(--blue);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.05rem;flex-shrink:0;}
+.cand-name{font-size:0.85rem;font-weight:700;margin-bottom:2px;}
+.cand-test{font-size:0.68rem;color:var(--text-mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:150px;}
+.stats-block{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-bottom:1px solid var(--border);}
+.stat-cell{background:var(--surface);padding:9px 12px;display:flex;align-items:center;gap:8px;}
+.stat-dot{width:24px;height:24px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:800;flex-shrink:0;font-family:'JetBrains Mono',monospace;}
+.d-green{background:var(--green-light);color:var(--green);}
+.d-red{background:var(--red-light);color:var(--red);}
+.d-mute{background:var(--surface3);color:var(--text-mute);}
+.d-violet{background:var(--violet-light);color:var(--violet);}
+.stat-val{font-size:0.8rem;font-weight:700;line-height:1;}
+.stat-lbl{font-size:0.62rem;color:var(--text-mute);margin-top:1px;}
+.palette-header{padding:9px 14px;font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text-mute);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;}
+.palette-area{flex:1;overflow-y:auto;padding:12px;}
+.palette-area::-webkit-scrollbar{width:4px;}
+.palette-area::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:999px;}
+.palette-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;}
+.q-btn{aspect-ratio:1;border-radius:7px;border:1.5px solid var(--border);background:var(--surface3);color:var(--text-soft);font-family:'JetBrains Mono',monospace;font-size:0.68rem;font-weight:600;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;}
+.q-btn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-light);}
+.q-btn.current{box-shadow:0 0 0 2px var(--blue);border-color:var(--blue);background:var(--blue-light);color:var(--blue);}
+.q-btn.st-1{background:var(--green-light);border-color:var(--green);color:var(--green);}
+.q-btn.st-2{background:var(--red-light);border-color:var(--red);color:var(--red);}
+.q-btn.st-3{background:var(--violet-light);border-color:var(--violet);color:var(--violet);}
+.action-bar{flex-shrink:0;height:62px;background:var(--surface);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 22px;gap:8px;}
+.action-left,.action-right{display:flex;gap:7px;align-items:center;}
+.palette-legend{padding:8px 14px;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:6px;}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:0.62rem;color:var(--text-mute);}
+.l-dot{width:10px;height:10px;border-radius:3px;}
+
+/* ── SCREEN 4: RESULT ── */
+#result-screen{overflow-y:auto;}
+.result-body{flex:1;overflow-y:auto;padding:30px;}
+.result-body::-webkit-scrollbar{width:6px;}
+.result-body::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:999px;}
+.score-hero{display:flex;gap:18px;margin-bottom:26px;flex-wrap:wrap;}
+.score-main{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:32px 40px;text-align:center;flex:1;min-width:240px;position:relative;overflow:hidden;box-shadow:var(--shadow);}
+.score-main::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,var(--blue-light),transparent 70%);}
+.score-lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--text-mute);margin-bottom:10px;position:relative;}
+.score-num{font-size:3.8rem;font-weight:800;font-family:'JetBrains Mono',monospace;color:var(--blue);line-height:1;margin-bottom:6px;position:relative;}
+.score-denom{font-size:0.9rem;color:var(--text-mute);font-family:'JetBrains Mono',monospace;position:relative;}
+.score-test-name{font-size:0.78rem;color:var(--text-soft);margin-top:8px;font-weight:500;position:relative;}
+.score-saved-badge{display:inline-flex;align-items:center;gap:5px;background:var(--green-light);border:1px solid var(--green);border-radius:999px;padding:3px 10px;font-size:0.7rem;font-weight:600;color:var(--green);margin-top:8px;position:relative;}
+.score-stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;flex:1;min-width:240px;}
+.score-stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;justify-content:center;box-shadow:var(--shadow);}
+.s-lbl{font-size:0.67rem;color:var(--text-mute);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.s-val{font-size:1.8rem;font-weight:800;font-family:'JetBrains Mono',monospace;}
+.c-green{color:var(--green);}.c-red{color:var(--red);}.c-amber{color:var(--amber);}.c-blue{color:var(--blue);}
+.res-section-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--text-mute);margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+.res-section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.res-table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);}
+.res-table{width:100%;border-collapse:collapse;}
+.res-table th{background:var(--surface2);padding:11px 15px;text-align:left;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-mute);border-bottom:1px solid var(--border);}
+.res-table td{padding:11px 15px;font-size:0.8rem;color:var(--text-soft);border-bottom:1px solid rgba(128,128,128,.06);vertical-align:middle;line-height:1.5;}
+.res-table tr:last-child td{border-bottom:none;}
+.res-table tr:hover td{background:var(--card-hover);}
+.q-no{font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--text-mute);}
+.ans-val{font-weight:500;color:var(--text);}
+.tag{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:999px;font-size:0.67rem;font-weight:700;letter-spacing:.5px;}
+.tag-c{background:var(--green-light);color:var(--green);border:1px solid var(--green);}
+.tag-w{background:var(--red-light);color:var(--red);border:1px solid var(--red);}
+.tag-s{background:var(--amber-light);color:var(--amber);border:1px solid var(--amber);}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(8px);z-index:999;align-items:center;justify-content:center;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:var(--surface);border:1px solid var(--border);border-radius:22px;padding:34px;width:400px;text-align:center;box-shadow:var(--shadow-lg);animation:cardIn .3s ease both;}
+.modal-icon{font-size:2.2rem;margin-bottom:12px;}
+.modal-title{font-size:1.15rem;font-weight:800;margin-bottom:7px;}
+.modal-desc{color:var(--text-soft);font-size:0.845rem;margin-bottom:20px;line-height:1.6;}
+.modal-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:20px;}
+.modal-stat{background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:11px;}
+.m-val{font-size:1.3rem;font-weight:800;font-family:'JetBrains Mono',monospace;}
+.m-lbl{font-size:0.62rem;color:var(--text-mute);text-transform:uppercase;letter-spacing:1px;margin-top:3px;}
+.modal-actions{display:flex;gap:9px;}
+.modal-actions .btn{flex:1;justify-content:center;padding:11px;}
+
+/* MOBILE */
+.mob-palette-trigger{display:none;}
+.mob-palette-overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);align-items:flex-end;}
+.mob-palette-overlay.open{display:flex;}
+.mob-palette-sheet{background:var(--surface);border:1px solid var(--border);border-radius:20px 20px 0 0;width:100%;max-height:72dvh;display:flex;flex-direction:column;animation:sheetUp .28s cubic-bezier(.25,.8,.25,1) both;}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.mob-palette-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px 10px;border-bottom:1px solid var(--border);flex-shrink:0;}
+.mob-palette-header h3{font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-mute);}
+.mob-palette-close{width:30px;height:30px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface2);display:flex;align-items:center;justify-content:center;font-size:0.85rem;cursor:pointer;color:var(--text-soft);}
+.mob-palette-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border-bottom:1px solid var(--border);flex-shrink:0;}
+.mob-palette-stats .stat-cell{padding:8px 10px;}
+.mob-palette-stats .stat-dot{width:20px;height:20px;font-size:0.65rem;}
+.mob-palette-stats .stat-val{font-size:0.7rem;}
+.mob-palette-stats .stat-lbl{font-size:0.55rem;}
+.mob-palette-grid-wrap{flex:1;overflow-y:auto;padding:12px;}
+.mob-palette-grid-wrap .palette-grid{grid-template-columns:repeat(7,1fr);}
+.mob-palette-legend{padding:8px 14px 12px;border-top:1px solid var(--border);display:flex;flex-wrap:wrap;gap:8px;flex-shrink:0;}
+.mob-palette-legend .legend-item{font-size:0.68rem;}
+
+*{scrollbar-width:thin;scrollbar-color:#d0d9ee transparent;}
+
+@media(max-width:768px){
+  html,body{overflow:auto;height:auto;}
+  .screen{height:auto;min-height:100dvh;}
+  .top-bar{padding:0 14px;gap:8px;}
+  .top-center{display:none;}
+  .brand-name{font-size:0.92rem;}
+  .timer-block{padding:5px 10px;gap:6px;}
+  .timer-value{font-size:0.9rem;min-width:46px;}
+  .select-body{padding:20px 16px;}
+  .select-hero h1{font-size:1.4rem;}
+  .tests-grid{grid-template-columns:1fr;gap:14px;}
+  .test-card{padding:18px;border-radius:14px;}
+  .filter-chip{padding:6px 12px;font-size:0.73rem;}
+  #login-screen{padding-top:70px;padding-bottom:24px;align-items:flex-start;overflow-y:auto;}
+  .login-card{width:100%;max-width:100%;margin:0 16px;padding:24px 20px;border-radius:18px;}
+  .info-grid{grid-template-columns:1fr 1fr;}
+  .sidebar{display:none;}
+  #exam-screen{min-height:100dvh;}
+  .exam-body{flex-direction:column;overflow:visible;}
+  .q-panel{padding:16px;gap:14px;overflow:visible;flex:none;}
+  .q-text{font-size:0.92rem;line-height:1.65;margin-bottom:16px;}
+  .q-card{padding:18px;}
+  .option-label{padding:11px 13px;gap:10px;}
+  .opt-text{font-size:0.83rem;}
+  .action-bar{height:auto;flex-wrap:wrap;padding:10px 12px;gap:7px;position:sticky;bottom:0;z-index:20;background:var(--surface);}
+  .action-left,.action-right{display:flex;gap:6px;flex-wrap:wrap;width:100%;justify-content:center;}
+  .action-left .btn,.action-right .btn{flex:1;justify-content:center;min-width:0;font-size:0.75rem;padding:8px 8px;}
+  .mob-palette-trigger{display:inline-flex!important;}
+  #result-screen{overflow-y:auto;height:auto;}
+  .result-body{padding:16px;}
+  .score-hero{flex-direction:column;gap:14px;}
+  .score-main{padding:24px 20px;min-width:unset;}
+  .score-num{font-size:3rem;}
+  .score-stats-grid{grid-template-columns:1fr 1fr;gap:10px;min-width:unset;}
+  .score-stat-card{padding:14px;border-radius:12px;}
+  .s-val{font-size:1.5rem;}
+  .res-table-wrap{overflow-x:auto;}
+  .res-table{min-width:560px;}
+  .res-table td,.res-table th{padding:9px 11px;font-size:0.75rem;}
+  .modal-box{width:calc(100% - 32px);padding:24px 20px;border-radius:18px;}
+}
+@media(max-width:400px){
+  .select-hero h1{font-size:1.2rem;}
+  .login-card{margin:0 10px;}
+  .action-left .btn,.action-right .btn{font-size:0.7rem;padding:7px 6px;}
+  .timer-value{font-size:0.82rem;min-width:40px;}
+  .mob-palette-grid-wrap .palette-grid{grid-template-columns:repeat(6,1fr);}
 }
-.mob-palette-legend .legend-item { font-size: 0.68rem; }
 </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════════════════
-  SCREEN 1: TEST SELECTION
-════════════════════════════════════════════════ -->
+<!-- ══ SCREEN 1: TEST SELECTION ══ -->
 <div id="select-screen" class="screen active-screen">
-
   <div class="top-bar">
-    <div class="brand">
+    <a class="brand" href="/">
       <div class="brand-logo">📚</div>
       <div class="brand-name">Spardha<em>Box</em></div>
-    </div>
+    </a>
     <div class="top-center">
       <span class="exam-title-tag">Maha Mock Test Platform</span>
     </div>
     <div class="top-right">
-      <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" title="Toggle theme">🌊</button>
+      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">🌊</button>
+      <div class="user-pill-topbar" id="topbar-user" style="display:none">
+        <div class="user-avatar-sm" id="topbar-avatar">?</div>
+        <span class="user-name-sm" id="topbar-name">User</span>
+      </div>
+      <a href="/" class="btn btn-ghost btn-sm" style="color:#fff;border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.1)">← Home</a>
     </div>
   </div>
 
@@ -994,80 +345,83 @@ body {
     <div class="select-hero">
       <span class="eyebrow">Choose Your Test</span>
       <h1>Available Mock Tests</h1>
-      <p>Select any test below to begin. Tests are auto-populated from the database.</p>
+      <p id="select-subtitle">Loading tests from database…</p>
     </div>
 
-    <div class="filter-bar">
-      <div class="search-box">
-        <span>🔍</span>
-        <input type="text" id="search-input" placeholder="Search tests…" oninput="filterTests()">
+    <!-- Loading state -->
+    <div id="loading-state" class="loading-state">
+      <span class="loading-spinner">⏳</span>
+      Fetching tests from database…
+    </div>
+
+    <!-- Error state -->
+    <div id="error-state" class="error-state" style="display:none">
+      <div class="big">⚠️</div>
+      <h3>Could not load tests</h3>
+      <p id="error-msg">Unable to connect to the server. Showing demo tests instead.</p>
+      <button class="btn btn-blue" onclick="loadTests()">↺ Retry</button>
+    </div>
+
+    <!-- Tests list (shown after load) -->
+    <div id="tests-loaded" style="display:none">
+      <div class="filter-bar">
+        <div class="search-box">
+          <span>🔍</span>
+          <input type="text" id="search-input" placeholder="Search tests…" oninput="filterTests()">
+        </div>
+        <div id="filter-chips"></div>
       </div>
-      <div id="filter-chips"></div>
-    </div>
-
-    <div class="tests-grid" id="tests-grid"></div>
-    <div class="no-results" id="no-results">
-      <div class="big">🔍</div>
-      No tests match your search.
+      <div class="tests-grid" id="tests-grid"></div>
+      <div class="no-results" id="no-results">
+        <div class="big">🔍</div>
+        No tests match your search.
+      </div>
     </div>
   </div>
 </div>
 
 
-<!-- ════════════════════════════════════════════════
-  SCREEN 2: INSTRUCTIONS
-════════════════════════════════════════════════ -->
+<!-- ══ SCREEN 2: INSTRUCTIONS ══ -->
 <div id="login-screen" class="screen">
   <div class="login-glow"></div>
   <div class="top-bar" style="position:absolute;top:0;left:0;right:0;">
-    <div class="brand">
-      <div class="brand-logo">📚</div>
-      <div class="brand-name">Spardha<em>Box</em></div>
-    </div>
+    <a class="brand" href="/"><div class="brand-logo">📚</div><div class="brand-name">Spardha<em>Box</em></div></a>
     <div class="top-right">
       <button class="theme-toggle" onclick="toggleTheme()">🌊</button>
     </div>
   </div>
-
   <div class="login-card">
     <button class="back-btn" onclick="goBack('select-screen')">← Back to Tests</button>
     <div class="login-icon" id="login-icon">📋</div>
     <h2 id="login-title">Loading…</h2>
     <div class="subtitle" id="login-subtitle">SpardhaBox · Maha Mock Test</div>
-
     <div class="info-grid">
       <div class="info-cell"><div class="lbl">Test</div><div class="val hi" id="li-name">—</div></div>
       <div class="info-cell"><div class="lbl">Duration</div><div class="val" id="li-duration">—</div></div>
       <div class="info-cell"><div class="lbl">Questions</div><div class="val" id="li-questions">—</div></div>
       <div class="info-cell"><div class="lbl">Max Marks</div><div class="val" id="li-marks">—</div></div>
     </div>
-
     <div class="divider"></div>
-
     <div class="instructions">
       <strong>⚠ Instructions:</strong><br>
       • Each correct answer carries <strong>+1</strong> mark.<br>
-      • No negative marking for wrong answers.<br>
+      • Wrong answers have negative marking as per exam rules.<br>
       • Mark questions for review and revisit them anytime.<br>
       • Timer auto-submits when time expires.<br>
       • Do not refresh the page during the exam.
     </div>
-
+    <div class="guest-notice" id="guest-notice" style="display:none">
+      ℹ️ You are taking this test as a <strong>guest</strong>. Your score won't be saved. <a href="/" style="color:var(--blue);font-weight:700;text-decoration:underline">Login</a> to save progress.
+    </div>
     <button class="btn-full" onclick="startTest()">🚀 &nbsp;Begin Exam</button>
   </div>
 </div>
 
 
-<!-- ════════════════════════════════════════════════
-  SCREEN 3: EXAM
-════════════════════════════════════════════════ -->
+<!-- ══ SCREEN 3: EXAM ══ -->
 <div id="exam-screen" class="screen">
-
   <div class="top-bar">
-    <div class="brand">
-      <div class="brand-logo">📚</div>
-      <div class="brand-name">Spardha<em>Box</em></div>
-    </div>
+    <a class="brand" href="/"><div class="brand-logo">📚</div><div class="brand-name">Spardha<em>Box</em></div></a>
     <div class="top-center">
       <span class="exam-title-tag" id="exam-top-name">Exam</span>
       <span class="section-pill">Section A</span>
@@ -1087,7 +441,7 @@ body {
   <div class="exam-body">
     <div class="q-panel">
       <div class="q-header">
-        <span class="q-badge active" id="q-badge">Q 1 / 90</span>
+        <span class="q-badge active" id="q-badge">Q 1 / 10</span>
         <span class="q-badge" id="q-cat-badge">Category</span>
         <span class="q-mandatory">⚡ Mandatory</span>
       </div>
@@ -1103,38 +457,20 @@ body {
 
     <div class="sidebar">
       <div class="candidate-block">
-        <div class="cand-avatar">👤</div>
+        <div class="cand-avatar" id="cand-avatar">👤</div>
         <div>
-          <div class="cand-name">Candidate</div>
+          <div class="cand-name" id="cand-name">Guest</div>
           <div class="cand-test" id="cand-test-name">Test Name</div>
         </div>
       </div>
-
       <div class="stats-block">
-        <div class="stat-cell">
-          <div class="stat-dot d-green" id="s-ans">0</div>
-          <div><div class="stat-val" style="color:var(--green)">Answered</div><div class="stat-lbl">Attempted</div></div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-dot d-red" id="s-nans">0</div>
-          <div><div class="stat-val" style="color:var(--red)">Not Answered</div><div class="stat-lbl">Skipped</div></div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-dot d-mute" id="s-nvis">90</div>
-          <div><div class="stat-val" style="color:var(--text-mute)">Not Visited</div><div class="stat-lbl">Remaining</div></div>
-        </div>
-        <div class="stat-cell">
-          <div class="stat-dot d-violet" id="s-rev">0</div>
-          <div><div class="stat-val" style="color:var(--violet)">Marked</div><div class="stat-lbl">For Review</div></div>
-        </div>
+        <div class="stat-cell"><div class="stat-dot d-green" id="s-ans">0</div><div><div class="stat-val" style="color:var(--green)">Answered</div><div class="stat-lbl">Attempted</div></div></div>
+        <div class="stat-cell"><div class="stat-dot d-red" id="s-nans">0</div><div><div class="stat-val" style="color:var(--red)">Not Answered</div><div class="stat-lbl">Skipped</div></div></div>
+        <div class="stat-cell"><div class="stat-dot d-mute" id="s-nvis">0</div><div><div class="stat-val" style="color:var(--text-mute)">Not Visited</div><div class="stat-lbl">Remaining</div></div></div>
+        <div class="stat-cell"><div class="stat-dot d-violet" id="s-rev">0</div><div><div class="stat-val" style="color:var(--violet)">Marked</div><div class="stat-lbl">For Review</div></div></div>
       </div>
-
-      <div class="palette-header">
-        Question Palette <span style="color:var(--blue)">Section A</span>
-      </div>
-      <div class="palette-area">
-        <div class="palette-grid" id="palette"></div>
-      </div>
+      <div class="palette-header">Question Palette <span style="color:var(--blue)">Section A</span></div>
+      <div class="palette-area"><div class="palette-grid" id="palette"></div></div>
       <div class="palette-legend">
         <div class="legend-item"><div class="l-dot" style="background:var(--green)"></div>Answered</div>
         <div class="legend-item"><div class="l-dot" style="background:var(--red)"></div>Skipped</div>
@@ -1160,26 +496,17 @@ body {
 </div>
 
 
-<!-- ════════════════════════════════════════════════
-  SCREEN 4: RESULT
-════════════════════════════════════════════════ -->
+<!-- ══ SCREEN 4: RESULT ══ -->
 <div id="result-screen" class="screen">
-
   <div class="top-bar">
-    <div class="brand">
-      <div class="brand-logo">📚</div>
-      <div class="brand-name">Spardha<em>Box</em></div>
-    </div>
-    <div class="top-center">
-      <span class="exam-title-tag">Performance Report</span>
-    </div>
+    <a class="brand" href="/"><div class="brand-logo">📚</div><div class="brand-name">Spardha<em>Box</em></div></a>
+    <div class="top-center"><span class="exam-title-tag">Performance Report</span></div>
     <div class="top-right">
       <button class="theme-toggle" onclick="toggleTheme()">🌊</button>
-      <button class="btn btn-outline btn-sm" onclick="goBack('select-screen')">← All Tests</button>
+      <button class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,.4)" onclick="goBack('select-screen')">← All Tests</button>
       <button class="btn btn-blue btn-sm" onclick="retakeTest()">↺ Retake</button>
     </div>
   </div>
-
   <div class="result-body">
     <div class="score-hero">
       <div class="score-main">
@@ -1187,6 +514,8 @@ body {
         <div class="score-num" id="res-score">—</div>
         <div class="score-denom" id="res-denom">out of —</div>
         <div class="score-test-name" id="res-test-name"></div>
+        <div class="score-saved-badge" id="score-saved-badge" style="display:none">✅ Score saved to your profile</div>
+        <div class="score-saved-badge" id="score-guest-badge" style="display:none;background:var(--amber-light);border-color:var(--amber);color:var(--amber)">⚠️ Login to save your score</div>
       </div>
       <div class="score-stats-grid">
         <div class="score-stat-card"><div class="s-lbl">Correct</div><div class="s-val c-green" id="res-correct">—</div></div>
@@ -1195,16 +524,10 @@ body {
         <div class="score-stat-card"><div class="s-lbl">Accuracy</div><div class="s-val c-blue" id="res-accuracy">—</div></div>
       </div>
     </div>
-
     <div class="res-section-label">Detailed Answer Review</div>
     <div class="res-table-wrap">
       <table class="res-table">
-        <thead>
-          <tr>
-            <th>Q.No</th><th>Question</th>
-            <th>Your Answer</th><th>Correct Answer</th><th>Status</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Q.No</th><th>Question</th><th>Your Answer</th><th>Correct Answer</th><th>Status</th></tr></thead>
         <tbody id="result-body"></tbody>
       </table>
     </div>
@@ -1212,34 +535,17 @@ body {
 </div>
 
 
-<!-- MOBILE PALETTE OVERLAY -->
+<!-- MOBILE PALETTE -->
 <div class="mob-palette-overlay" id="mob-palette-overlay" onclick="closeMobPaletteOutside(event)">
   <div class="mob-palette-sheet">
-    <div class="mob-palette-header">
-      <h3>📋 Question Palette</h3>
-      <button class="mob-palette-close" onclick="closeMobPalette()">✕</button>
-    </div>
+    <div class="mob-palette-header"><h3>📋 Question Palette</h3><button class="mob-palette-close" onclick="closeMobPalette()">✕</button></div>
     <div class="mob-palette-stats">
-      <div class="stat-cell">
-        <div class="stat-dot d-green" id="ms-ans">0</div>
-        <div><div class="stat-val" style="color:var(--green)">Answered</div><div class="stat-lbl">Attempted</div></div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-dot d-red" id="ms-nans">0</div>
-        <div><div class="stat-val" style="color:var(--red)">Not Ans.</div><div class="stat-lbl">Skipped</div></div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-dot d-mute" id="ms-nvis">0</div>
-        <div><div class="stat-val" style="color:var(--text-mute)">Not Visited</div><div class="stat-lbl">Remaining</div></div>
-      </div>
-      <div class="stat-cell">
-        <div class="stat-dot d-violet" id="ms-rev">0</div>
-        <div><div class="stat-val" style="color:var(--violet)">Marked</div><div class="stat-lbl">Review</div></div>
-      </div>
+      <div class="stat-cell"><div class="stat-dot d-green" id="ms-ans">0</div><div><div class="stat-val" style="color:var(--green)">Answered</div><div class="stat-lbl">Attempted</div></div></div>
+      <div class="stat-cell"><div class="stat-dot d-red" id="ms-nans">0</div><div><div class="stat-val" style="color:var(--red)">Not Ans.</div><div class="stat-lbl">Skipped</div></div></div>
+      <div class="stat-cell"><div class="stat-dot d-mute" id="ms-nvis">0</div><div><div class="stat-val" style="color:var(--text-mute)">Not Visited</div><div class="stat-lbl">Remaining</div></div></div>
+      <div class="stat-cell"><div class="stat-dot d-violet" id="ms-rev">0</div><div><div class="stat-val" style="color:var(--violet)">Marked</div><div class="stat-lbl">Review</div></div></div>
     </div>
-    <div class="mob-palette-grid-wrap">
-      <div class="palette-grid" id="mob-palette"></div>
-    </div>
+    <div class="mob-palette-grid-wrap"><div class="palette-grid" id="mob-palette"></div></div>
     <div class="mob-palette-legend">
       <div class="legend-item"><div class="l-dot" style="background:var(--green)"></div>Answered</div>
       <div class="legend-item"><div class="l-dot" style="background:var(--red)"></div>Skipped</div>
@@ -1249,7 +555,7 @@ body {
   </div>
 </div>
 
-<!-- MODAL -->
+<!-- SUBMIT MODAL -->
 <div class="modal-overlay" id="submit-modal">
   <div class="modal-box">
     <div class="modal-icon">⚠️</div>
@@ -1257,269 +563,48 @@ body {
     <div class="modal-desc">Once submitted, answers cannot be changed. Please verify your attempt summary below.</div>
     <div class="modal-stats">
       <div class="modal-stat"><div class="m-val c-green" id="m-ans">0</div><div class="m-lbl">Answered</div></div>
-      <div class="modal-stat"><div class="m-val c-red"   id="m-nan">0</div><div class="m-lbl">Unanswered</div></div>
+      <div class="modal-stat"><div class="m-val c-red" id="m-nan">0</div><div class="m-lbl">Unanswered</div></div>
       <div class="modal-stat"><div class="m-val c-amber" id="m-rev">0</div><div class="m-lbl">Review</div></div>
     </div>
     <div class="modal-actions">
       <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-green"   onclick="submitTest()">Submit Now</button>
+      <button class="btn btn-green" onclick="submitTest()">Submit Now</button>
     </div>
   </div>
 </div>
 
 
 <script>
-/* ═══════════════════════════════════════════════════════════
-                   ★ TESTS DATABASE ★
-  HOW TO ADD A NEW TEST:
-  1. Add a new entry to TESTS_DB below.
-  2. Fill in the metadata (id, name, desc, icon, etc.)
-  3. Add your questions array.
-  4. Done — the test card and full exam flow auto-generate!
+// ══════════════════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════════════════
+const API = 'https://spardhabox-backend-production.up.railway.app';
 
-  Question format:
-  { q: "Question text",
-    o: ["Option A", "Option B", "Option C", "Option D"],
-    a: 0,        ← index of correct option (0-based)
-    cat: "Category Name" }
-═══════════════════════════════════════════════════════════ */
-const TESTS_DB = [
+// ══════════════════════════════════════════════════════
+// AUTH STATE
+// ══════════════════════════════════════════════════════
+let currentUser  = null;
+let accessToken  = null;
 
-  {
-    id: "maha-mock-1",
-    name: "MahaMockTest – Full Mock",
-    desc: "Complete 90-question mock for Maharashtra competitive exams covering GK, English, Marathi, Computer, Arithmetic, History and Legal Knowledge.",
-    icon: "🏛️",
-    category: "Comprehensive",
-    badge: "Full",
-    badgeText: "Full",
-    duration: 3600,
-    difficulty: 3,
-    marks: 1,
-    questions: [
-      { q: "Who is the Governor of Maharashtra?", o: ["Ramesh Bais","Acharya Devvrat","Vidyasagar Rao","S.C. Jamir"], a: 1, cat: "General Knowledge" },
-      { q: "Which country has won the 2022 FIFA World Cup?", o: ["Argentina","France","Spain","Brazil"], a: 0, cat: "General Knowledge" },
-      { q: "Who is the Army Chief of India?", o: ["Manoj Pandey","Bipin Rawat","Mukund Narawane","Dalbir Singh"], a: 0, cat: "General Knowledge" },
-      { q: "In which year was the Bombay High Court established?", o: ["1861","1862","1860","1864"], a: 1, cat: "General Knowledge" },
-      { q: "Which city is the financial capital of India?", o: ["New Delhi","Mumbai","Kolkata","Chennai"], a: 1, cat: "General Knowledge" },
-      { q: "Largest district in Maharashtra by area?", o: ["Pune","Nashik","Ahmednagar","Aurangabad"], a: 2, cat: "General Knowledge" },
-      { q: "The 3rd Battle of Panipat was fought in?", o: ["1757","1761","1764","1526"], a: 1, cat: "General Knowledge" },
-      { q: "Azad Hind Sena was formed with help from?", o: ["Germany","Japan","USA","Russia"], a: 1, cat: "General Knowledge" },
-      { q: "Highest peak in Maharashtra?", o: ["Kalsubai","Salher","Mahabaleshwar","Saptashrungi"], a: 0, cat: "General Knowledge" },
-      { q: "First Chief Minister of Maharashtra?", o: ["Y.B. Chavan","Sharad Pawar","Vasantrao Naik","A.R. Antulay"], a: 0, cat: "General Knowledge" },
-      { q: "Synonym of 'Diligent'?", o: ["Lazy","Hardworking","Careless","Weak"], a: 1, cat: "English" },
-      { q: "Antonym of 'Blunt'?", o: ["Sharp","Dull","Slow","Heavy"], a: 0, cat: "English" },
-      { q: "Abstract noun form of 'See'?", o: ["Seen","Saw","Sight","Seeing"], a: 2, cat: "English" },
-      { q: "Correct Spelling?", o: ["Beginning","Begining","Beignning","Beggining"], a: 0, cat: "English" },
-      { q: "The sound produced by a cow is?", o: ["Moo","Bray","Bleat","Grunt"], a: 0, cat: "English" },
-      { q: "I adhere ______ my principles.", o: ["on","with","to","by"], a: 2, cat: "English" },
-      { q: "Economics ______ my favorite subject.", o: ["is","are","were","being"], a: 0, cat: "English" },
-      { q: "One word for 'A person who hates mankind'?", o: ["Misanthrope","Philanthropist","Optimist","Pessimist"], a: 0, cat: "English" },
-      { q: "He is ______ M.A. in English.", o: ["a","an","the","no article"], a: 1, cat: "English" },
-      { q: "Meaning of 'To cry over spilt milk'?", o: ["Regret uselessly","Cry for help","Waste milk","Be happy"], a: 0, cat: "English" },
-      { q: "Brain of the computer?", o: ["ALU","CPU","RAM","ROM"], a: 1, cat: "Computer" },
-      { q: "Shortcut for 'Undo'?", o: ["Ctrl+Y","Ctrl+X","Ctrl+Z","Ctrl+U"], a: 2, cat: "Computer" },
-      { q: "Which is an Output device?", o: ["Keyboard","Mouse","Scanner","Monitor"], a: 3, cat: "Computer" },
-      { q: "Full form of RAM?", o: ["Read Access Memory","Random Access Memory","Real Access Memory","Run Access Memory"], a: 1, cat: "Computer" },
-      { q: "1 Gigabyte (GB) equals?", o: ["1024 MB","1000 MB","1024 KB","1024 TB"], a: 0, cat: "Computer" },
-      { q: "Which is NOT a search engine?", o: ["Google","Bing","Yahoo","Safari"], a: 3, cat: "Computer" },
-      { q: "Shortcut to close active program?", o: ["Alt+F4","Ctrl+F4","Shift+F4","Ctrl+W"], a: 0, cat: "Computer" },
-      { q: "Function of 'Ctrl + C'?", o: ["Cut","Paste","Copy","Clear"], a: 2, cat: "Computer" },
-      { q: "Main folder of a storage device?", o: ["Sub-directory","Root directory","File folder","Interface"], a: 1, cat: "Computer" },
-      { q: "Operating System developed by Microsoft?", o: ["Linux","Windows","MacOS","Android"], a: 1, cat: "Computer" },
-      { q: "'पाया' या शब्दाचे लिंग ओळखा.", o: ["स्त्रीलिंग","पुल्लिंग","नपुंसकलिंग","उभयलिंग"], a: 1, cat: "Marathi" },
-      { q: "'सन्मती' या शब्दाचा योग्य विग्रह करा.", o: ["सत् + मती","सन + मती","सम + मती","स + मती"], a: 0, cat: "Marathi" },
-      { q: "शुद्ध शब्द ओळखा.", o: ["आशिर्वाद","आशीर्वाद","आशिर्वाद्","अशिर्वाद"], a: 1, cat: "Marathi" },
-      { q: "'पाणी' या शब्दाचा समानार्थी शब्द ओळखा.", o: ["पाव","जल","नल","तल"], a: 1, cat: "Marathi" },
-      { q: "'रामाने आंबा खाल्ला' – प्रयोग ओळखा.", o: ["कर्तरी","कर्मणी","भावे","संकर"], a: 1, cat: "Marathi" },
-      { q: "विभक्ती ओळखा: 'मुलांनो'.", o: ["प्रथमा","द्वितीया","तृतीया","संबोधन"], a: 3, cat: "Marathi" },
-      { q: "समास ओळखा: 'पंचवटी'.", o: ["द्वंद्व","द्विगु","अव्ययीभाव","बहुव्रीही"], a: 1, cat: "Marathi" },
-      { q: "'घोडा' चे अनेकवचन.", o: ["घोडी","घोडे","घोड्या","घोडेसवार"], a: 1, cat: "Marathi" },
-      { q: "'आई' चा समानार्थी शब्द.", o: ["माता","कन्या","भगिनी","सरिता"], a: 0, cat: "Marathi" },
-      { q: "मराठी वर्णमालेत एकूण किती स्वर?", o: ["१०","१२","१४","१६"], a: 2, cat: "Marathi" },
-      { q: "'मुलांनी अभ्यास करावा' – वाक्याचा प्रकार.", o: ["आज्ञार्थी","स्वार्थी","विद्यार्थी","संकेतार्थी"], a: 2, cat: "Marathi" },
-      { q: "'क्ष' आणि 'ज्ञ' यांना काय म्हणतात?", o: ["स्वर","व्यंजन","संयुक्त व्यंजन","अनुनासिक"], a: 2, cat: "Marathi" },
-      { q: "विरामचिन्ह ओळखा: (?)", o: ["पूर्णविराम","स्वल्पविराम","प्रश्नचिन्ह","उद्गारचिन्ह"], a: 2, cat: "Marathi" },
-      { q: "'राजा' चे विरुद्धलिंगी रूप.", o: ["राणी","प्रजा","दासी","नटी"], a: 0, cat: "Marathi" },
-      { q: "'खर्च' चा विरुद्धार्थी शब्द.", o: ["वेळ","बचत","जमा","उधार"], a: 2, cat: "Marathi" },
-      { q: "If 20 men finish a task in 30 days, how many men finish it in 24 days?", o: ["22","24","25","27"], a: 2, cat: "Arithmetic" },
-      { q: "What is the square root of 625?", o: ["15","25","35","45"], a: 1, cat: "Arithmetic" },
-      { q: "A person buys a pen for ₹40, sells for ₹50. Gain %?", o: ["10%","20%","25%","30%"], a: 2, cat: "Arithmetic" },
-      { q: "Complete the series: 2, 4, 8, 16, ?", o: ["20","24","32","64"], a: 2, cat: "Arithmetic" },
-      { q: "Average of first five natural numbers?", o: ["2","3","4","5"], a: 1, cat: "Arithmetic" },
-      { q: "Find the odd one out:", o: ["Mumbai","Pune","Nagpur","Delhi"], a: 3, cat: "Arithmetic" },
-      { q: "If CAT = 24, what is DOG?", o: ["24","26","28","30"], a: 1, cat: "Arithmetic" },
-      { q: "Square plot side 10m. Perimeter?", o: ["20m","40m","100m","80m"], a: 1, cat: "Arithmetic" },
-      { q: "Which is the smallest prime number?", o: ["0","1","2","3"], a: 2, cat: "Arithmetic" },
-      { q: "15% of 200 is?", o: ["20","30","40","50"], a: 1, cat: "Arithmetic" },
-      { q: "Next: 5, 10, 20, 35, ?", o: ["45","50","55","60"], a: 2, cat: "Arithmetic" },
-      { q: "How many seconds in 2 hours?", o: ["120","3600","7200","720"], a: 2, cat: "Arithmetic" },
-      { q: "If Jan 1 is Monday, Jan 8 is?", o: ["Sunday","Monday","Tuesday","Wednesday"], a: 1, cat: "Arithmetic" },
-      { q: "Triangle with all sides equal is?", o: ["Isosceles","Scalene","Equilateral","Right"], a: 2, cat: "Arithmetic" },
-      { q: "Sum of angles in a quadrilateral?", o: ["90°","180°","270°","360°"], a: 3, cat: "Arithmetic" },
-      { q: "Founder of Maratha Empire?", o: ["Sambhaji Maharaj","Shivaji Maharaj","Shahu Maharaj","Rajaram Maharaj"], a: 1, cat: "History" },
-      { q: "First fort captured by Shivaji Maharaj?", o: ["Raigad","Torna","Shivneri","Pratapgad"], a: 1, cat: "History" },
-      { q: "Treaty of Purandar was signed in?", o: ["1665","1670","1650","1680"], a: 0, cat: "History" },
-      { q: "Author of 'Dasbodh'?", o: ["Tukaram Maharaj","Namdev Maharaj","Ramdas Swami","Eknath Maharaj"], a: 2, cat: "History" },
-      { q: "Gateway of India built to commemorate visit of?", o: ["Queen Victoria","King George V","Lord Mountbatten","King Edward VII"], a: 1, cat: "History" },
-      { q: "First capital of Maratha Empire?", o: ["Pune","Satara","Rajgad","Raigad"], a: 2, cat: "History" },
-      { q: "Social reformer known as 'Lokhitwadi'?", o: ["Jyotirao Phule","Gopal Hari Deshmukh","Agarkar","B.R. Ambedkar"], a: 1, cat: "History" },
-      { q: "Quit India Movement started in?", o: ["1940","1942","1945","1947"], a: 1, cat: "History" },
-      { q: "Red Planet?", o: ["Venus","Mars","Jupiter","Saturn"], a: 1, cat: "History" },
-      { q: "Who wrote the Indian National Anthem?", o: ["Bankim Chandra","Rabindranath Tagore","Sushila Nayar","Sarojini Naidu"], a: 1, cat: "History" },
-      { q: "Parliament of India is located in?", o: ["Mumbai","Kolkata","Chennai","New Delhi"], a: 3, cat: "History" },
-      { q: "Currency of Japan?", o: ["Won","Yuan","Yen","Dollar"], a: 2, cat: "History" },
-      { q: "'Iron Man of India'?", o: ["Nehru","Sardar Patel","Lal Bahadur Shastri","Gandhi"], a: 1, cat: "History" },
-      { q: "Largest ocean in the world?", o: ["Atlantic","Indian","Arctic","Pacific"], a: 3, cat: "History" },
-      { q: "Satyashodhak Samaj was founded by?", o: ["Dr. Ambedkar","Jyotirao Phule","Savarkar","Tilak"], a: 1, cat: "History" },
-      { q: "Judge of High Court is appointed by?", o: ["Governor","Chief Justice","President","Prime Minister"], a: 2, cat: "Legal & Tech" },
-      { q: "Minimum age to become President of India?", o: ["25","30","35","40"], a: 2, cat: "Legal & Tech" },
-      { q: "'WWW' stands for?", o: ["World Wide Web","World Web Wide","Wide World Web","Web World Wide"], a: 0, cat: "Legal & Tech" },
-      { q: "Permanent storage in computer?", o: ["RAM","Cache","Hard Disk","ALU"], a: 2, cat: "Legal & Tech" },
-      { q: "Shortcut for 'Print'?", o: ["Ctrl+S","Ctrl+P","Ctrl+V","Ctrl+X"], a: 1, cat: "Legal & Tech" },
-      { q: "HTTP stands for?", o: ["Hypertext Transfer Protocol","High Text Transfer","Hyper Text Total","None"], a: 0, cat: "Legal & Tech" },
-      { q: "First Woman Chief Minister in India?", o: ["Sarojini Naidu","Sucheta Kripalani","Indira Gandhi","Mamata Banerjee"], a: 1, cat: "Legal & Tech" },
-      { q: "BHC has benches at Nagpur, Aurangabad and?", o: ["Nashik","Panaji","Pune","Kolhapur"], a: 1, cat: "Legal & Tech" },
-      { q: "Custodian of the Constitution?", o: ["Parliament","President","Supreme Court","Prime Minister"], a: 2, cat: "Legal & Tech" },
-      { q: "Full form of 'PDF'?", o: ["Print Data File","Portable Document Format","Portable Data File","None"], a: 1, cat: "Legal & Tech" },
-      { q: "Constitution Day is on?", o: ["15 Aug","26 Jan","26 Nov","2 Oct"], a: 2, cat: "Legal & Tech" },
-      { q: "Full form of 'URL'?", o: ["Uniform Resource Locator","Unit Resource List","Universal Real Line","None"], a: 0, cat: "Legal & Tech" },
-      { q: "Smallest state of India by area?", o: ["Sikkim","Goa","Tripura","Mizoram"], a: 1, cat: "Legal & Tech" },
-      { q: "Right to Education is a?", o: ["Legal Right","Fundamental Right","Directive Principle","None"], a: 1, cat: "Legal & Tech" },
-      { q: "Bombay High Court jurisdiction over which UT?", o: ["Ladakh","Daman and Diu","Puducherry","Chandigarh"], a: 1, cat: "Legal & Tech" }
-    ]
-  },
+function initAuth() {
+  try {
+    const stored = localStorage.getItem('sb_user');
+    accessToken  = localStorage.getItem('sb_token');
+    if (stored && accessToken) {
+      currentUser = JSON.parse(stored);
+      const initials = currentUser.name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+      document.getElementById('topbar-user').style.display = 'flex';
+      document.getElementById('topbar-avatar').textContent  = initials;
+      document.getElementById('topbar-name').textContent    = currentUser.name.split(' ')[0];
+    }
+  } catch(_) {}
+}
+initAuth();
 
-  {
-    id: "computer-30",
-    name: "Computer Awareness – 30Q",
-    desc: "Focused 30-question computer knowledge test covering hardware, software, shortcuts, networking and internet basics.",
-    icon: "💻",
-    category: "Computer",
-    badge: "new",
-    badgeText: "Computer",
-    duration: 1200,
-    difficulty: 2,
-    marks: 1,
-    questions: [
-      { q: "Brain of the computer?", o: ["ALU","CPU","RAM","ROM"], a: 1, cat: "Hardware" },
-      { q: "Which is an Output device?", o: ["Keyboard","Mouse","Scanner","Monitor"], a: 3, cat: "Hardware" },
-      { q: "Full form of RAM?", o: ["Read Access Memory","Random Access Memory","Real Access Memory","Run Access Memory"], a: 1, cat: "Hardware" },
-      { q: "1 Gigabyte equals?", o: ["1024 MB","1000 MB","1024 KB","1024 TB"], a: 0, cat: "Hardware" },
-      { q: "Which is NOT a search engine?", o: ["Google","Bing","Yahoo","Safari"], a: 3, cat: "Internet" },
-      { q: "Shortcut to close active program?", o: ["Alt+F4","Ctrl+F4","Shift+F4","Ctrl+W"], a: 0, cat: "Shortcuts" },
-      { q: "Function of 'Ctrl + C'?", o: ["Cut","Paste","Copy","Clear"], a: 2, cat: "Shortcuts" },
-      { q: "Main folder of a storage device?", o: ["Sub-directory","Root directory","File folder","Interface"], a: 1, cat: "OS" },
-      { q: "Operating System by Microsoft?", o: ["Linux","Windows","MacOS","Android"], a: 1, cat: "OS" },
-      { q: "Shortcut for 'Undo'?", o: ["Ctrl+Y","Ctrl+X","Ctrl+Z","Ctrl+U"], a: 2, cat: "Shortcuts" },
-      { q: "'WWW' stands for?", o: ["World Wide Web","World Web Wide","Wide World Web","Web World Wide"], a: 0, cat: "Internet" },
-      { q: "HTTP stands for?", o: ["Hypertext Transfer Protocol","High Text Transfer","Hyper Text Total","None"], a: 0, cat: "Internet" },
-      { q: "Full form of 'URL'?", o: ["Uniform Resource Locator","Unit Resource List","Universal Real Line","None"], a: 0, cat: "Internet" },
-      { q: "Full form of 'PDF'?", o: ["Print Data File","Portable Document Format","Portable Data File","None"], a: 1, cat: "Software" },
-      { q: "Shortcut for 'Print'?", o: ["Ctrl+S","Ctrl+P","Ctrl+V","Ctrl+X"], a: 1, cat: "Shortcuts" },
-      { q: "Permanent storage in computer?", o: ["RAM","Cache","Hard Disk","ALU"], a: 2, cat: "Hardware" },
-      { q: "Which is an input device?", o: ["Monitor","Speaker","Printer","Keyboard"], a: 3, cat: "Hardware" },
-      { q: "1 byte = how many bits?", o: ["4","8","16","32"], a: 1, cat: "Hardware" },
-      { q: "Full form of CPU?", o: ["Central Process Unit","Central Processing Unit","Computer Processing Unit","Central Program Unit"], a: 1, cat: "Hardware" },
-      { q: "Which language does computer understand?", o: ["C++","Binary","Java","HTML"], a: 1, cat: "Software" },
-      { q: "Full form of BIOS?", o: ["Basic Input Output System","Basic Interface Operating System","Built In Output System","None"], a: 0, cat: "OS" },
-      { q: "Which shortcut saves a file?", o: ["Ctrl+X","Ctrl+S","Ctrl+Z","Ctrl+V"], a: 1, cat: "Shortcuts" },
-      { q: "DNS stands for?", o: ["Domain Name System","Data Name System","Digital Name Server","None"], a: 0, cat: "Internet" },
-      { q: "ROM stands for?", o: ["Read Only Memory","Random Only Memory","Read Output Memory","Run Only Memory"], a: 0, cat: "Hardware" },
-      { q: "The act of making an unauthorized copy is?", o: ["Piracy","Hacking","Phishing","Malware"], a: 0, cat: "Security" },
-      { q: "Which is NOT an OS?", o: ["Windows","Linux","Oracle","MacOS"], a: 2, cat: "OS" },
-      { q: "Email attachment cannot exceed which common limit?", o: ["2 MB","10 MB","25 MB","100 MB"], a: 2, cat: "Internet" },
-      { q: "Ctrl + A does?", o: ["Copy","Cut","Select All","Paste"], a: 2, cat: "Shortcuts" },
-      { q: "Which memory is volatile?", o: ["ROM","Hard Disk","RAM","Flash"], a: 2, cat: "Hardware" },
-      { q: "IP address stands for?", o: ["Internet Protocol","Interface Program","Internal Process","Integrated Port"], a: 0, cat: "Internet" }
-    ]
-  },
-
-  {
-    id: "english-25",
-    name: "English Grammar – 25Q",
-    desc: "Quick 25-question English grammar test covering synonyms, antonyms, fill-in-the-blanks, spelling and idioms.",
-    icon: "📝",
-    category: "English",
-    badge: "std",
-    badgeText: "English",
-    duration: 900,
-    difficulty: 2,
-    marks: 1,
-    questions: [
-      { q: "Synonym of 'Diligent'?", o: ["Lazy","Hardworking","Careless","Weak"], a: 1, cat: "Synonyms" },
-      { q: "Antonym of 'Blunt'?", o: ["Sharp","Dull","Slow","Heavy"], a: 0, cat: "Antonyms" },
-      { q: "Abstract noun form of 'See'?", o: ["Seen","Saw","Sight","Seeing"], a: 2, cat: "Nouns" },
-      { q: "Correct Spelling?", o: ["Beginning","Begining","Beignning","Beggining"], a: 0, cat: "Spelling" },
-      { q: "The sound produced by a cow is?", o: ["Moo","Bray","Bleat","Grunt"], a: 0, cat: "Vocabulary" },
-      { q: "I adhere ______ my principles.", o: ["on","with","to","by"], a: 2, cat: "Prepositions" },
-      { q: "Economics ______ my favorite subject.", o: ["is","are","were","being"], a: 0, cat: "Grammar" },
-      { q: "One word for 'A person who hates mankind'?", o: ["Misanthrope","Philanthropist","Optimist","Pessimist"], a: 0, cat: "One-Word" },
-      { q: "He is ______ M.A. in English.", o: ["a","an","the","no article"], a: 1, cat: "Articles" },
-      { q: "Meaning of 'To cry over spilt milk'?", o: ["Regret uselessly","Cry for help","Waste milk","Be happy"], a: 0, cat: "Idioms" },
-      { q: "Synonym of 'Abundant'?", o: ["Scarce","Plenty","Few","Rare"], a: 1, cat: "Synonyms" },
-      { q: "Antonym of 'Brave'?", o: ["Bold","Courageous","Cowardly","Strong"], a: 2, cat: "Antonyms" },
-      { q: "She ______ to the market yesterday.", o: ["go","goes","went","gone"], a: 2, cat: "Tense" },
-      { q: "Correct spelling?", o: ["Accomodate","Accommodate","Acomodate","Acommodate"], a: 1, cat: "Spelling" },
-      { q: "One word for 'One who walks in sleep'?", o: ["Somnambulist","Insomniac","Somniloquist","None"], a: 0, cat: "One-Word" },
-      { q: "Meaning of 'Break the ice'?", o: ["Freeze water","Start a conversation","End a fight","Break something"], a: 1, cat: "Idioms" },
-      { q: "______ honest man is always respected.", o: ["A","An","The","No article"], a: 1, cat: "Articles" },
-      { q: "Passive voice of 'She writes a letter'?", o: ["A letter is written by her","A letter was written by her","A letter has been written","None"], a: 0, cat: "Grammar" },
-      { q: "Synonym of 'Candid'?", o: ["Dishonest","Frank","Secretive","Shy"], a: 1, cat: "Synonyms" },
-      { q: "Antonym of 'Frugal'?", o: ["Thrifty","Wasteful","Careful","Miserly"], a: 1, cat: "Antonyms" },
-      { q: "Correct spelling?", o: ["Necessary","Neccessary","Necesary","Neccesary"], a: 0, cat: "Spelling" },
-      { q: "I ______ here since 2010.", o: ["live","lived","have lived","am living"], a: 2, cat: "Tense" },
-      { q: "One word for 'Fear of heights'?", o: ["Claustrophobia","Acrophobia","Agoraphobia","Hydrophobia"], a: 1, cat: "One-Word" },
-      { q: "Meaning of 'Hit the nail on the head'?", o: ["Use a hammer","Be exactly right","Hit something hard","None"], a: 1, cat: "Idioms" },
-      { q: "Antonym of 'Transparent'?", o: ["Clear","Opaque","Visible","Bright"], a: 1, cat: "Antonyms" }
-    ]
-  },
-
-  {
-    id: "gk-current-20",
-    name: "GK & Current Affairs – 20Q",
-    desc: "20 rapid-fire questions on General Knowledge and current affairs for state-level competitive exams.",
-    icon: "🌐",
-    category: "General Knowledge",
-    badge: "live",
-    badgeText: "GS",
-    duration: 600,
-    difficulty: 2,
-    marks: 1,
-    questions: [
-      { q: "Which country has won the 2022 FIFA World Cup?", o: ["Argentina","France","Spain","Brazil"], a: 0, cat: "Sports" },
-      { q: "Which city is the financial capital of India?", o: ["New Delhi","Mumbai","Kolkata","Chennai"], a: 1, cat: "India" },
-      { q: "Highest peak in Maharashtra?", o: ["Kalsubai","Salher","Mahabaleshwar","Saptashrungi"], a: 0, cat: "Geography" },
-      { q: "First Chief Minister of Maharashtra?", o: ["Y.B. Chavan","Sharad Pawar","Vasantrao Naik","A.R. Antulay"], a: 0, cat: "Maharashtra" },
-      { q: "Which planet is known as the Red Planet?", o: ["Venus","Mars","Jupiter","Saturn"], a: 1, cat: "Science" },
-      { q: "Who wrote the Indian National Anthem?", o: ["Bankim Chandra","Rabindranath Tagore","Sushila Nayar","Sarojini Naidu"], a: 1, cat: "India" },
-      { q: "Currency of Japan?", o: ["Won","Yuan","Yen","Dollar"], a: 2, cat: "World" },
-      { q: "'Iron Man of India'?", o: ["Nehru","Sardar Patel","Lal Bahadur Shastri","Gandhi"], a: 1, cat: "India" },
-      { q: "Largest ocean in the world?", o: ["Atlantic","Indian","Arctic","Pacific"], a: 3, cat: "Geography" },
-      { q: "Parliament of India is located in?", o: ["Mumbai","Kolkata","Chennai","New Delhi"], a: 3, cat: "India" },
-      { q: "Satyashodhak Samaj was founded by?", o: ["Dr. Ambedkar","Jyotirao Phule","Savarkar","Tilak"], a: 1, cat: "Maharashtra" },
-      { q: "Gateway of India built to commemorate visit of?", o: ["Queen Victoria","King George V","Lord Mountbatten","King Edward VII"], a: 1, cat: "Mumbai" },
-      { q: "Minimum age to become President of India?", o: ["25","30","35","40"], a: 2, cat: "India" },
-      { q: "Constitution Day is on?", o: ["15 Aug","26 Jan","26 Nov","2 Oct"], a: 2, cat: "India" },
-      { q: "Smallest state of India by area?", o: ["Sikkim","Goa","Tripura","Mizoram"], a: 1, cat: "India" },
-      { q: "Right to Education is a?", o: ["Legal Right","Fundamental Right","Directive Principle","None"], a: 1, cat: "Constitution" },
-      { q: "The 3rd Battle of Panipat was fought in?", o: ["1757","1761","1764","1526"], a: 1, cat: "History" },
-      { q: "Founder of Maratha Empire?", o: ["Sambhaji Maharaj","Shivaji Maharaj","Shahu Maharaj","Rajaram Maharaj"], a: 1, cat: "Maharashtra" },
-      { q: "Largest district in Maharashtra by area?", o: ["Pune","Nashik","Ahmednagar","Aurangabad"], a: 2, cat: "Maharashtra" },
-      { q: "In which year was the Bombay High Court established?", o: ["1861","1862","1860","1864"], a: 1, cat: "Maharashtra" }
-    ]
-  }
-
-  /* ► ADD MORE TESTS HERE — just copy the format above */
-];
-
-
-/* ═══════════════════════════════════════════════════════════
-  THEME ENGINE
-  Two themes: edtech-blue (default) ↔ edtech-navy (alternate)
-═══════════════════════════════════════════════════════════ */
+// ══════════════════════════════════════════════════════
+// THEME
+// ══════════════════════════════════════════════════════
 let currentTheme = localStorage.getItem('sb_theme') || 'edtech-blue';
-
 function applyTheme(t) {
   currentTheme = t;
   document.documentElement.setAttribute('data-theme', t);
@@ -1527,140 +612,219 @@ function applyTheme(t) {
   const isBlue = t === 'edtech-blue';
   document.querySelectorAll('.theme-toggle').forEach(b => {
     b.textContent = isBlue ? '🌊' : '🔵';
-    b.title = isBlue ? 'Switch to Navy theme' : 'Switch to Blue theme';
   });
 }
-
-function toggleTheme() {
-  applyTheme(currentTheme === 'edtech-blue' ? 'edtech-navy' : 'edtech-blue');
-}
-
+function toggleTheme() { applyTheme(currentTheme === 'edtech-blue' ? 'edtech-navy' : 'edtech-blue'); }
 applyTheme(currentTheme);
 
-
-/* ═══════════════════════════════════════════════════════════
-  TEST SELECTION
-═══════════════════════════════════════════════════════════ */
+// ══════════════════════════════════════════════════════
+// TESTS DATA (loaded from DB, fallback to static)
+// ══════════════════════════════════════════════════════
+let TESTS_DB = [];
 let activeCategory = 'All';
 
+// Fallback demo tests when DB has no data yet
+const DEMO_TESTS = [
+  {
+    id: 'demo-1',
+    title: 'Demo: General Knowledge – 5Q',
+    description: 'Sample test to verify your setup. Add real tests via the admin API.',
+    duration_mins: 5,
+    total_marks: 5,
+    is_free: true,
+    attempt_count: 0,
+    exam: { name: 'Demo', icon: '🎯' },
+    questions: [
+      { id:'d1', q_number:1, question:'Capital of Maharashtra?', options:['Pune','Mumbai','Nagpur','Aurangabad'], correct_idx:1, category:'GK' },
+      { id:'d2', q_number:2, question:'First Chief Minister of Maharashtra?', options:['Y.B. Chavan','Sharad Pawar','Vasantrao Naik','A.R. Antulay'], correct_idx:0, category:'History' },
+      { id:'d3', q_number:3, question:'Largest district in Maharashtra by area?', options:['Pune','Nashik','Ahmednagar','Aurangabad'], correct_idx:2, category:'Geography' },
+      { id:'d4', q_number:4, question:'Who wrote the Indian National Anthem?', options:['Bankim Chandra','Rabindranath Tagore','Sarojini Naidu','Sushila Nayar'], correct_idx:1, category:'History' },
+      { id:'d5', q_number:5, question:'Brain of the computer?', options:['ALU','CPU','RAM','ROM'], correct_idx:1, category:'Computer' }
+    ]
+  }
+];
+
+async function loadTests() {
+  document.getElementById('loading-state').style.display = 'block';
+  document.getElementById('error-state').style.display   = 'none';
+  document.getElementById('tests-loaded').style.display  = 'none';
+
+  try {
+    const res  = await fetch(`${API}/api/tests?published=true`, {
+      headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {}
+    });
+    if (!res.ok) throw new Error('Server error');
+    const data = await res.json();
+
+    // For each test, load questions
+    const testsWithQ = await Promise.all((data.tests || []).map(async test => {
+      try {
+        const qRes  = await fetch(`${API}/api/tests/${test.id}`, {
+          headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {}
+        });
+        const qData = await qRes.json();
+        return { ...test, questions: qData.test?.questions || [] };
+      } catch(_) {
+        return { ...test, questions: [] };
+      }
+    }));
+
+    TESTS_DB = testsWithQ.filter(t => t.questions.length > 0);
+
+    if (TESTS_DB.length === 0) {
+      // No tests in DB yet — show demo
+      TESTS_DB = DEMO_TESTS;
+      document.getElementById('select-subtitle').textContent = 'Showing demo test — add real questions via the admin panel.';
+    } else {
+      document.getElementById('select-subtitle').textContent = `${TESTS_DB.length} test${TESTS_DB.length > 1 ? 's' : ''} available`;
+    }
+
+    document.getElementById('loading-state').style.display = 'none';
+    document.getElementById('tests-loaded').style.display  = 'block';
+    buildTestCards();
+
+  } catch (err) {
+    console.error(err);
+    // Fallback to demo tests
+    TESTS_DB = DEMO_TESTS;
+    document.getElementById('loading-state').style.display = 'none';
+    document.getElementById('error-state').style.display   = 'block';
+    document.getElementById('error-msg').textContent       = 'Could not reach server. Showing demo test.';
+    document.getElementById('tests-loaded').style.display  = 'block';
+    document.getElementById('select-subtitle').textContent = 'Demo mode — server unavailable';
+    buildTestCards();
+  }
+}
+
+loadTests();
+
+// ══════════════════════════════════════════════════════
+// BUILD TEST CARDS
+// ══════════════════════════════════════════════════════
 function buildTestCards() {
   const grid = document.getElementById('tests-grid');
   grid.innerHTML = '';
 
-  // Build category chips — all visible, wrapping layout
-  const cats = ['All', ...new Set(TESTS_DB.map(t => t.category))];
+  // Exam category chips
+  const cats = ['All', ...new Set(TESTS_DB.map(t => t.exam?.name || 'General'))];
   const chipsEl = document.getElementById('filter-chips');
   chipsEl.innerHTML = cats.map(c =>
-    `<button class="filter-chip ${c === activeCategory ? 'active' : ''}"
-      onclick="setCategory('${c}')">${c}</button>`
+    `<button class="filter-chip ${c === activeCategory ? 'active' : ''}" onclick="setCategory('${c}')">${c}</button>`
   ).join('');
 
-  const search = document.getElementById('search-input').value.toLowerCase();
-
+  const search = (document.getElementById('search-input')?.value || '').toLowerCase();
   let shown = 0;
+
   TESTS_DB.forEach((test, idx) => {
-    const matchCat = activeCategory === 'All' || test.category === activeCategory;
-    const matchQ   = test.name.toLowerCase().includes(search) ||
-                     test.desc.toLowerCase().includes(search) ||
-                     test.category.toLowerCase().includes(search);
+    const examName = test.exam?.name || 'General';
+    const matchCat = activeCategory === 'All' || examName === activeCategory;
+    const matchQ   = (test.title || '').toLowerCase().includes(search) ||
+                     (test.description || '').toLowerCase().includes(search);
     if (!matchCat || !matchQ) return;
     shown++;
 
-    const dur = formatDuration(test.duration);
-    const dots = buildDifficultyDots(test.difficulty);
-    const delay = (idx % 8) * 60;
+    const dur    = formatDuration((test.duration_mins || 60) * 60);
+    const badge  = test.is_free ? 'free' : 'premium';
+    const bText  = test.is_free ? 'FREE' : 'PREMIUM';
+    const icon   = test.exam?.icon || '📋';
+    const cats2  = [...new Set((test.questions || []).map(q => q.category).filter(Boolean))].slice(0,4);
+    const delay  = (idx % 8) * 60;
 
     const card = document.createElement('div');
     card.className = 'test-card';
     card.style.animationDelay = delay + 'ms';
     card.innerHTML = `
       <div class="test-card-top">
-        <div class="test-icon" style="background:var(--blue-light)">${test.icon}</div>
-        <span class="test-status-badge badge-${test.badge}">${test.badgeText}</span>
+        <div class="test-icon" style="background:var(--blue-light)">${icon}</div>
+        <span class="test-status-badge badge-${badge}">${bText}</span>
       </div>
-      <div class="test-name">${test.name}</div>
-      <div class="test-desc">${test.desc}</div>
+      <div class="test-name">${test.title}</div>
+      <div class="test-desc">${test.description || ''}</div>
       <div class="test-meta">
-        <div class="test-meta-item">📋 <strong>${test.questions.length}</strong> Questions</div>
+        <div class="test-meta-item">📋 <strong>${test.questions?.length || 0}</strong> Questions</div>
         <div class="test-meta-item">⏱ <strong>${dur}</strong></div>
-        <div class="test-meta-item">⭐ <strong>+${test.marks}</strong>/Q</div>
+        <div class="test-meta-item">⭐ <strong>+1</strong>/Q</div>
+        <div class="test-meta-item">👥 <strong>${test.attempt_count || 0}</strong> Attempts</div>
       </div>
-      <div class="test-tags">
-        ${[...new Set(test.questions.map(q => q.cat))].slice(0,4).map(c =>
-          `<span class="test-tag">${c}</span>`).join('')}
-      </div>
+      <div class="test-tags">${cats2.map(c => `<span class="test-tag">${c}</span>`).join('')}</div>
       <div class="test-card-footer">
-        <button class="start-btn" onclick="selectTest(${TESTS_DB.indexOf(test)})">
-          Start Test →
-        </button>
-        <div class="test-difficulty">
-          ${dots} <span style="margin-left:4px">Difficulty</span>
-        </div>
+        <button class="start-btn" onclick="selectTest(${idx})">Start Test →</button>
       </div>`;
     grid.appendChild(card);
   });
 
-  const noRes = document.getElementById('no-results');
-  noRes.style.display = shown === 0 ? 'block' : 'none';
+  document.getElementById('no-results').style.display = shown === 0 ? 'block' : 'none';
 }
 
-function setCategory(cat) {
-  activeCategory = cat;
-  buildTestCards();
-}
-
-function filterTests() {
-  buildTestCards();
-}
-
-function buildDifficultyDots(d) {
-  return [1,2,3,4,5].map(i =>
-    `<div class="diff-dot" style="background:${i <= d ? 'var(--amber)' : 'var(--surface3)'}"></div>`
-  ).join('');
-}
-
+function setCategory(cat) { activeCategory = cat; buildTestCards(); }
+function filterTests() { buildTestCards(); }
 function formatDuration(secs) {
   const m = Math.floor(secs / 60);
   return m >= 60 ? `${Math.floor(m/60)}h ${m%60}m` : `${m} min`;
 }
 
-buildTestCards();
-
-
-/* ═══════════════════════════════════════════════════════════
-  EXAM STATE
-═══════════════════════════════════════════════════════════ */
-let activeTest   = null;
-let current      = 0;
-let answers      = [];
-let status       = [];
-let timeLeft     = 0;
-let timerInterval= null;
+// ══════════════════════════════════════════════════════
+// EXAM STATE
+// ══════════════════════════════════════════════════════
+let activeTest    = null;
+let attemptId     = null;
+let current       = 0;
+let answers       = [];
+let status        = [];
+let timeLeft      = 0;
+let timerInterval = null;
+let startedAt     = null;
 
 function selectTest(idx) {
   activeTest = TESTS_DB[idx];
-  const t = activeTest;
-  const dur = formatDuration(t.duration);
+  const t    = activeTest;
+  const dur  = formatDuration((t.duration_mins || 60) * 60);
 
-  document.getElementById('login-icon').textContent    = t.icon;
-  document.getElementById('login-title').textContent   = t.name;
-  document.getElementById('login-subtitle').textContent= `SpardhaBox · ${t.category}`;
-  document.getElementById('li-name').textContent       = t.name;
-  document.getElementById('li-duration').textContent   = dur;
-  document.getElementById('li-questions').textContent  = t.questions.length;
-  document.getElementById('li-marks').textContent      = t.questions.length * t.marks;
+  document.getElementById('login-icon').textContent     = t.exam?.icon || '📋';
+  document.getElementById('login-title').textContent    = t.title;
+  document.getElementById('login-subtitle').textContent = `SpardhaBox · ${t.exam?.name || 'Mock Test'}`;
+  document.getElementById('li-name').textContent        = t.title;
+  document.getElementById('li-duration').textContent    = dur;
+  document.getElementById('li-questions').textContent   = t.questions?.length || 0;
+  document.getElementById('li-marks').textContent       = t.total_marks || t.questions?.length || 0;
+
+  // Show guest notice if not logged in
+  document.getElementById('guest-notice').style.display = currentUser ? 'none' : 'flex';
 
   switchScreen('select-screen', 'login-screen');
 }
 
-function startTest() {
-  const t = activeTest;
-  answers  = Array(t.questions.length).fill(null);
-  status   = Array(t.questions.length).fill(0);
-  timeLeft = t.duration;
+async function startTest() {
+  const t    = activeTest;
+  answers    = Array(t.questions.length).fill(null);
+  status     = Array(t.questions.length).fill(0);
+  timeLeft   = (t.duration_mins || 60) * 60;
+  startedAt  = new Date().toISOString();
+  attemptId  = null;
 
-  document.getElementById('exam-top-name').textContent = t.name;
-  document.getElementById('cand-test-name').textContent = t.name;
+  // Set candidate info in sidebar
+  const name = currentUser ? currentUser.name.split(' ')[0] : 'Guest';
+  document.getElementById('cand-name').textContent     = name;
+  document.getElementById('cand-test-name').textContent = t.title;
+  const initials = currentUser
+    ? currentUser.name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase()
+    : '👤';
+  document.getElementById('cand-avatar').textContent = currentUser ? initials : '👤';
+
+  document.getElementById('exam-top-name').textContent = t.title;
+
+  // Start attempt in backend (logged in users only)
+  if (currentUser && accessToken && t.id && !t.id.startsWith('demo')) {
+    try {
+      const res = await fetch(`${API}/api/attempts/start`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessToken}` },
+        body: JSON.stringify({ test_id: t.id })
+      });
+      const data = await res.json();
+      if (res.ok) attemptId = data.attempt?.id;
+    } catch(_) {}
+  }
 
   switchScreen('login-screen', 'exam-screen');
   loadQ(0);
@@ -1670,44 +834,42 @@ function startTest() {
   updateTimerDisplay();
 }
 
-
-/* ═══════════════════════════════════════════════════════════
-  TIMER
-═══════════════════════════════════════════════════════════ */
+// ══════════════════════════════════════════════════════
+// TIMER
+// ══════════════════════════════════════════════════════
 function tick() {
   timeLeft--;
   if (timeLeft <= 0) { clearInterval(timerInterval); submitTest(true); return; }
   updateTimerDisplay();
 }
-
 function updateTimerDisplay() {
   const m = Math.floor(timeLeft / 60), s = timeLeft % 60;
   const el = document.getElementById('timer');
-  el.textContent = `${m}:${s < 10 ? '0' + s : s}`;
+  el.textContent = `${m}:${s < 10 ? '0'+s : s}`;
   el.className = 'timer-value' + (timeLeft < 300 ? ' danger' : '');
 }
 
-
-/* ═══════════════════════════════════════════════════════════
-  QUESTION LOGIC
-═══════════════════════════════════════════════════════════ */
+// ══════════════════════════════════════════════════════
+// QUESTION LOGIC
+// ══════════════════════════════════════════════════════
 const OPTS = ['A','B','C','D','E','F'];
 
 function loadQ(i) {
   current = i;
   if (status[i] === 0) status[i] = 2;
-  const q = activeTest.questions[i];
+  const q     = activeTest.questions[i];
   const total = activeTest.questions.length;
+  const opts  = Array.isArray(q.options) ? q.options : (q.o || []);
 
-  document.getElementById('q-badge').textContent      = `Q ${i+1} / ${total}`;
-  document.getElementById('q-cat-badge').textContent  = q.cat;
-  document.getElementById('q-num-lbl').textContent    = `Question ${i + 1}`;
-  document.getElementById('q-text').textContent       = q.q;
-  document.getElementById('q-progress').style.width   = `${((i+1)/total)*100}%`;
+  document.getElementById('q-badge').textContent     = `Q ${i+1} / ${total}`;
+  document.getElementById('q-cat-badge').textContent = q.category || q.cat || '';
+  document.getElementById('q-num-lbl').textContent   = `Question ${i+1}`;
+  document.getElementById('q-text').textContent      = q.question || q.q || '';
+  document.getElementById('q-progress').style.width  = `${((i+1)/total)*100}%`;
 
   const area = document.getElementById('options-area');
   area.innerHTML = '';
-  q.o.forEach((opt, idx) => {
+  opts.forEach((opt, idx) => {
     const lbl = document.createElement('label');
     lbl.className = 'option-label' + (answers[i] === idx ? ' selected' : '');
     lbl.innerHTML = `
@@ -1719,15 +881,12 @@ function loadQ(i) {
       document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
       lbl.classList.add('selected');
       answers[current] = idx;
-      status[current] = 1;
-      updatePalette();
-      updateStats();
+      status[current]  = 1;
+      updatePalette(); updateStats();
     });
     area.appendChild(lbl);
   });
-
-  updatePalette();
-  updateStats();
+  updatePalette(); updateStats();
 }
 
 function saveNext() {
@@ -1736,104 +895,86 @@ function saveNext() {
   else status[current] = 2;
   navigate(1);
 }
-
 function navigate(dir) {
   const next = current + dir;
   if (next >= 0 && next < activeTest.questions.length) loadQ(next);
 }
-
 function markReview() {
   const sel = document.querySelector('input[name="opt"]:checked');
   if (sel) answers[current] = parseInt(sel.value);
   status[current] = 3;
   navigate(1);
 }
+function clearResp() { answers[current] = null; status[current] = 2; loadQ(current); }
 
-function clearResp() {
-  answers[current] = null;
-  status[current] = 2;
-  loadQ(current);
-}
-
-
-/* ═══════════════════════════════════════════════════════════
-  PALETTE
-═══════════════════════════════════════════════════════════ */
+// ══════════════════════════════════════════════════════
+// PALETTE
+// ══════════════════════════════════════════════════════
 function renderPalette() {
   const grid = document.getElementById('palette');
   grid.innerHTML = '';
   activeTest.questions.forEach((_, i) => {
     const btn = document.createElement('div');
-    btn.className = 'q-btn';
-    btn.id = `p${i}`;
-    btn.textContent = i + 1;
+    btn.className = 'q-btn'; btn.id = `p${i}`; btn.textContent = i+1;
     btn.onclick = () => loadQ(i);
     grid.appendChild(btn);
   });
   updatePalette();
 }
-
 function updatePalette() {
   activeTest.questions.forEach((_, i) => {
     const b = document.getElementById(`p${i}`);
     if (!b) return;
     b.className = 'q-btn' + (i === current ? ' current' : '') +
-      (status[i] === 1 ? ' st-1' : status[i] === 2 ? ' st-2' : status[i] === 3 ? ' st-3' : '');
+      (status[i]===1 ? ' st-1' : status[i]===2 ? ' st-2' : status[i]===3 ? ' st-3' : '');
   });
 }
-
 function updateStats() {
   let ans=0, notAns=0, nvis=0, rev=0;
-  status.forEach(s => {
-    if (s===1) ans++;
-    else if (s===2) notAns++;
-    else if (s===3) rev++;
-    else nvis++;
-  });
+  status.forEach(s => { if(s===1)ans++; else if(s===2)notAns++; else if(s===3)rev++; else nvis++; });
   document.getElementById('s-ans').textContent  = ans;
   document.getElementById('s-nans').textContent = notAns;
   document.getElementById('s-nvis').textContent = nvis;
   document.getElementById('s-rev').textContent  = rev;
 }
 
-
-/* ═══════════════════════════════════════════════════════════
-  SUBMIT MODAL
-═══════════════════════════════════════════════════════════ */
+// ══════════════════════════════════════════════════════
+// SUBMIT MODAL
+// ══════════════════════════════════════════════════════
 function openSubmitModal() {
   let ans=0, nan=0, rev=0;
-  status.forEach(s => { if(s===1) ans++; else if(s===3) rev++; else nan++; });
+  status.forEach(s => { if(s===1)ans++; else if(s===3)rev++; else nan++; });
   document.getElementById('m-ans').textContent = ans;
   document.getElementById('m-nan').textContent = nan;
   document.getElementById('m-rev').textContent = rev;
   document.getElementById('submit-modal').classList.add('open');
 }
-function closeModal() {
-  document.getElementById('submit-modal').classList.remove('open');
-}
+function closeModal() { document.getElementById('submit-modal').classList.remove('open'); }
 document.getElementById('submit-modal').addEventListener('click', e => {
   if (e.target === document.getElementById('submit-modal')) closeModal();
 });
 
-
-/* ═══════════════════════════════════════════════════════════
-  SUBMIT & RESULT
-═══════════════════════════════════════════════════════════ */
-function submitTest(auto = false) {
+// ══════════════════════════════════════════════════════
+// SUBMIT & SAVE SCORE
+// ══════════════════════════════════════════════════════
+async function submitTest(auto = false) {
   if (!auto) closeModal();
   clearInterval(timerInterval);
 
   const qs = activeTest.questions;
   let score=0, wrong=0, skipped=0, html='';
+  const answersPayload = [];
 
   qs.forEach((q, i) => {
-    const attempted = answers[i] !== null;
-    const correct   = attempted && answers[i] === q.a;
+    const correctIdx = q.correct_idx ?? q.a;
+    const attempted  = answers[i] !== null;
+    const correct    = attempted && answers[i] === correctIdx;
     if (correct) score++;
     else if (!attempted) skipped++;
     else wrong++;
 
-    const userAns = attempted ? q.o[answers[i]] : '—';
+    const opts   = Array.isArray(q.options) ? q.options : (q.o || []);
+    const userAns = attempted ? opts[answers[i]] : '—';
     const tag = !attempted
       ? '<span class="tag tag-s">⬤ Skipped</span>'
       : correct
@@ -1842,82 +983,94 @@ function submitTest(auto = false) {
 
     html += `<tr>
       <td class="q-no">${i+1}</td>
-      <td>${q.q}</td>
+      <td>${q.question || q.q}</td>
       <td class="ans-val">${userAns}</td>
-      <td class="ans-val">${q.o[q.a]}</td>
+      <td class="ans-val">${opts[correctIdx]}</td>
       <td>${tag}</td>
     </tr>`;
+
+    answersPayload.push({
+      question_id: q.id,
+      selected_idx: answers[i],
+      is_correct: correct,
+      time_taken: 0
+    });
   });
 
-  const attempted  = score + wrong;
-  const accuracy   = attempted > 0 ? Math.round((score / attempted) * 100) : 0;
-  const total      = qs.length;
+  const attempted = score + wrong;
+  const accuracy  = attempted > 0 ? Math.round((score / attempted) * 100) : 0;
+  const total     = qs.length;
+  const timeTaken = ((activeTest.duration_mins || 60) * 60) - timeLeft;
 
-  document.getElementById('res-score').textContent    = score;
-  document.getElementById('res-denom').textContent    = `out of ${total}`;
-  document.getElementById('res-test-name').textContent= activeTest.name;
-  document.getElementById('res-correct').textContent  = score;
-  document.getElementById('res-wrong').textContent    = wrong;
-  document.getElementById('res-skipped').textContent  = skipped;
-  document.getElementById('res-accuracy').textContent = accuracy + '%';
-  document.getElementById('result-body').innerHTML    = html;
+  document.getElementById('res-score').textContent     = score;
+  document.getElementById('res-denom').textContent     = `out of ${total}`;
+  document.getElementById('res-test-name').textContent = activeTest.title;
+  document.getElementById('res-correct').textContent   = score;
+  document.getElementById('res-wrong').textContent     = wrong;
+  document.getElementById('res-skipped').textContent   = skipped;
+  document.getElementById('res-accuracy').textContent  = accuracy + '%';
+  document.getElementById('result-body').innerHTML     = html;
+
+  // Save to backend if logged in
+  document.getElementById('score-saved-badge').style.display = 'none';
+  document.getElementById('score-guest-badge').style.display = 'none';
+
+  if (currentUser && accessToken && attemptId) {
+    try {
+      const res = await fetch(`${API}/api/attempts/${attemptId}/submit`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessToken}` },
+        body: JSON.stringify({ answers: answersPayload, time_taken_secs: timeTaken })
+      });
+      if (res.ok) {
+        document.getElementById('score-saved-badge').style.display = 'inline-flex';
+      }
+    } catch(_) {}
+  } else if (!currentUser) {
+    document.getElementById('score-guest-badge').style.display = 'inline-flex';
+  }
 
   switchScreen('exam-screen', 'result-screen');
 }
 
-function retakeTest() {
-  switchScreen('result-screen', 'login-screen');
-}
+function retakeTest() { switchScreen('result-screen', 'login-screen'); }
 
-
-/* ═══════════════════════════════════════════════════════════
-  NAVIGATION UTILS
-═══════════════════════════════════════════════════════════ */
+// ══════════════════════════════════════════════════════
+// NAVIGATION UTILS
+// ══════════════════════════════════════════════════════
 function switchScreen(from, to) {
   document.getElementById(from).classList.remove('active-screen');
   document.getElementById(to).classList.add('active-screen');
 }
-
 function goBack(screen) {
   ['select-screen','login-screen','exam-screen','result-screen'].forEach(s => {
     document.getElementById(s).classList.remove('active-screen');
   });
-  if (screen === 'select-screen') {
-    clearInterval(timerInterval);
-    buildTestCards();
-  }
+  if (screen === 'select-screen') { clearInterval(timerInterval); buildTestCards(); }
   document.getElementById(screen).classList.add('active-screen');
 }
 
-/* ═══════════════════════════════════════════════════════════
-  MOBILE PALETTE
-═══════════════════════════════════════════════════════════ */
-function openMobPalette() {
-  syncMobPalette();
-  document.getElementById('mob-palette-overlay').classList.add('open');
-}
-function closeMobPalette() {
-  document.getElementById('mob-palette-overlay').classList.remove('open');
-}
-function closeMobPaletteOutside(e) {
-  if (e.target === document.getElementById('mob-palette-overlay')) closeMobPalette();
-}
+// ══════════════════════════════════════════════════════
+// MOBILE PALETTE
+// ══════════════════════════════════════════════════════
+function openMobPalette() { syncMobPalette(); document.getElementById('mob-palette-overlay').classList.add('open'); }
+function closeMobPalette() { document.getElementById('mob-palette-overlay').classList.remove('open'); }
+function closeMobPaletteOutside(e) { if (e.target === document.getElementById('mob-palette-overlay')) closeMobPalette(); }
 function syncMobPalette() {
   const grid = document.getElementById('mob-palette');
   grid.innerHTML = '';
   activeTest.questions.forEach((_, i) => {
     const btn = document.createElement('div');
-    btn.className = 'q-btn' + (i === current ? ' current' : '') +
-      (status[i] === 1 ? ' st-1' : status[i] === 2 ? ' st-2' : status[i] === 3 ? ' st-3' : '');
-    btn.textContent = i + 1;
+    btn.className = 'q-btn' + (i===current?' current':'') +
+      (status[i]===1?' st-1':status[i]===2?' st-2':status[i]===3?' st-3':'');
+    btn.textContent = i+1;
     btn.onclick = () => { loadQ(i); closeMobPalette(); };
     grid.appendChild(btn);
   });
-  // sync stats
   let ans=0, notAns=0, nvis=0, rev=0;
-  status.forEach(s => { if(s===1) ans++; else if(s===2) notAns++; else if(s===3) rev++; else nvis++; });
-  const set = (id, v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
-  set('ms-ans', ans); set('ms-nans', notAns); set('ms-nvis', nvis); set('ms-rev', rev);
+  status.forEach(s => { if(s===1)ans++; else if(s===2)notAns++; else if(s===3)rev++; else nvis++; });
+  const set = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+  set('ms-ans',ans); set('ms-nans',notAns); set('ms-nvis',nvis); set('ms-rev',rev);
 }
 </script>
 </body>
