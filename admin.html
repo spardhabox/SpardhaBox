@@ -962,18 +962,21 @@ async function importBulk() {
   try { questions = JSON.parse(raw); } catch(e) { return toast('Invalid JSON: ' + e.message, 'error'); }
   if (!Array.isArray(questions) || questions.length === 0) return toast('Must be a non-empty array', 'error');
 
-  const payload = questions.map(q => ({
-    test_id:     testId,
-    question:    q.question,
-    options:     q.options,
-    correct_idx: q.correct_idx,
-    category:    q.category || 'General',
-    difficulty:  q.difficulty || 'medium',
-    explanation: q.explanation || ''
-  }));
+  // Backend expects: { test_id, questions: [...] } — test_id at top level
+  const payload = {
+    test_id: testId,
+    questions: questions.map(q => ({
+      question:    q.question,
+      options:     q.options,
+      correct_idx: q.correct_idx,
+      category:    q.category || "General",
+      difficulty:  q.difficulty || "medium",
+      explanation: q.explanation || ""
+    }))
+  };
 
   try {
-    const data = await api('POST', '/api/questions/bulk', { questions: payload });
+    const data = await api("POST", "/api/questions/bulk", payload);
     toast(`✅ Imported ${data.count || questions.length} questions!`, 'success');
     closeModal('bulk-modal');
     document.getElementById('bulk-json').value = '';
