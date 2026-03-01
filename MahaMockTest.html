@@ -116,25 +116,25 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
 .user-avatar-sm{width:24px;height:24px;border-radius:50%;background:#c9a84c;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;color:#111;}
 .user-name-sm{font-size:0.75rem;font-weight:600;color:#fff;}
 
-/* INSTRUCTIONS SCREEN */
+/* INSTRUCTIONS/LOGIN SCREEN */
 #login-screen{align-items:center;justify-content:center;background:var(--bg);position:relative;overflow:hidden;}
 .login-glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,var(--blue-glow),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
-.login-card{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:44px;width:460px;position:relative;box-shadow:var(--shadow-lg);animation:cardIn .5s cubic-bezier(.25,.8,.25,1) both;}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:40px;width:100%;max-width:480px;position:relative;box-shadow:var(--shadow-lg);animation:cardIn .5s cubic-bezier(.25,.8,.25,1) both;}
 .back-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:var(--text-mute);font-family:'Sora',sans-serif;font-size:0.8rem;font-weight:500;margin-bottom:20px;padding:0;transition:color .2s;}
 .back-btn:hover{color:var(--blue);}
 .login-icon{width:64px;height:64px;background:var(--blue);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:16px;box-shadow:0 8px 24px var(--blue-glow);}
-.login-card h2{font-size:1.4rem;font-weight:800;letter-spacing:-.3px;margin-bottom:4px;}
-.login-card .subtitle{color:var(--text-soft);font-size:0.85rem;margin-bottom:20px;}
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;}
-.info-cell{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:11px;}
-.info-cell .lbl{font-size:0.65rem;color:var(--text-mute);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
-.info-cell .val{font-size:0.9rem;font-weight:700;}
+.login-card h2{font-size:1.3rem;font-weight:800;letter-spacing:-.2px;margin-bottom:6px;line-height:1.4;word-wrap:break-word;}
+.login-card .subtitle{color:var(--text-soft);font-size:0.85rem;margin-bottom:24px;}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
+.info-cell{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;}
+.info-cell .lbl{font-size:0.65rem;color:var(--text-mute);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:600;}
+.info-cell .val{font-size:0.95rem;font-weight:700;line-height:1.4;word-wrap:break-word;}
 .info-cell .val.hi{color:var(--blue);}
-.divider{height:1px;background:var(--border);margin:0 0 16px;}
-.instructions{background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.2);border-radius:8px;padding:13px;font-size:0.78rem;color:var(--text-soft);line-height:1.7;margin-bottom:18px;}
+.divider{height:1px;background:var(--border);margin:0 0 18px;}
+.instructions{background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.2);border-radius:10px;padding:14px;font-size:0.78rem;color:var(--text-soft);line-height:1.7;margin-bottom:18px;}
 .instructions strong{color:var(--amber);}
-.guest-notice{background:var(--blue-light);border:1px solid rgba(26,86,219,.2);border-radius:8px;padding:10px 13px;font-size:0.76rem;color:var(--blue);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-.btn-full{width:100%;padding:14px;background:var(--blue);border:none;border-radius:10px;color:#fff;font-family:'Sora',sans-serif;font-size:0.95rem;font-weight:700;cursor:pointer;transition:all .3s;box-shadow:0 6px 20px var(--blue-glow);}
+.guest-notice{background:var(--blue-light);border:1px solid rgba(26,86,219,.2);border-radius:10px;padding:11px 13px;font-size:0.76rem;color:var(--blue);margin-bottom:14px;display:flex;align-items:center;gap:8px;line-height:1.5;}
+.btn-full{width:100%;padding:13px 20px;background:var(--blue);border:none;border-radius:10px;color:#fff;font-family:'Sora',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;transition:all .3s;box-shadow:0 6px 20px var(--blue-glow);}
 .btn-full:hover{background:var(--blue-dark);transform:translateY(-2px);}
 
 /* EXAM SCREEN */
@@ -260,7 +260,7 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
   .select-body{padding:20px 16px;}
   .tests-grid{grid-template-columns:1fr;gap:14px;}
   #login-screen{padding-top:70px;padding-bottom:24px;align-items:flex-start;overflow-y:auto;}
-  .login-card{width:100%;max-width:100%;margin:0 16px;padding:24px 20px;border-radius:18px;}
+  .login-card{width:calc(100% - 32px);margin:0 16px;padding:24px 20px;border-radius:18px;max-width:100%;}
   .sidebar{display:none;}
   .exam-body{flex-direction:column;overflow:visible;}
   .q-panel{padding:16px;gap:14px;overflow:visible;flex:none;}
@@ -274,6 +274,7 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
   .res-table-wrap{overflow-x:auto;}
   .res-table{min-width:560px;}
   .modal-box{width:calc(100% - 32px);padding:24px 20px;border-radius:18px;}
+  .info-grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
@@ -334,7 +335,7 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
     <button class="back-btn" onclick="showScreen('select-screen')">← Back to Tests</button>
     <div class="login-icon" id="login-icon">📋</div>
     <h2 id="login-title">Test Instructions</h2>
-    <div class="subtitle" id="login-subtitle">SpardhaBox · Maha Mock Test</div>
+    <div class="subtitle" id="login-subtitle">SpardhaBox · Mock Test</div>
     <div class="info-grid">
       <div class="info-cell"><div class="lbl">Test</div><div class="val hi" id="li-name">—</div></div>
       <div class="info-cell"><div class="lbl">Duration</div><div class="val" id="li-duration">—</div></div>
@@ -353,7 +354,7 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
     <div class="guest-notice" id="guest-notice" style="display:none">
       ℹ️ You are taking this as a <strong>guest</strong>. Your score won't be saved. <a href="/" style="color:var(--blue);font-weight:700;text-decoration:underline">Login</a> to save your progress.
     </div>
-    <button class="btn-full" onclick="beginExam()">🚀 &nbsp;Begin Exam</button>
+    <button class="btn-full" onclick="beginExam()">🚀 Begin Exam</button>
   </div>
 </div>
 
@@ -411,13 +412,13 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
   <div class="action-bar">
     <div class="action-left">
       <button class="btn btn-ghost btn-sm" onclick="navigate(-1)">← Prev</button>
-      <button class="btn btn-amber btn-sm" onclick="markReview()">🔖 Mark &amp; Next</button>
+      <button class="btn btn-amber btn-sm" onclick="markReview()">🔖 Mark & Next</button>
       <button class="btn btn-outline btn-sm" onclick="clearAnswer()">✕ Clear</button>
       <button class="btn btn-ghost btn-sm mob-palette-trigger" onclick="openMobPalette()">🗂 Palette</button>
     </div>
     <div class="action-right">
       <button class="btn btn-ghost btn-sm" onclick="navigate(1)">Next →</button>
-      <button class="btn btn-blue btn-sm" onclick="saveAndNext()">Save &amp; Next</button>
+      <button class="btn btn-blue btn-sm" onclick="saveAndNext()">Save & Next</button>
       <button class="btn btn-green btn-sm" onclick="confirmSubmit()">Submit Exam</button>
     </div>
   </div>
