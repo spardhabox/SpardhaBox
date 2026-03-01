@@ -117,25 +117,42 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
 .user-name-sm{font-size:0.75rem;font-weight:600;color:#fff;}
 
 /* INSTRUCTIONS/LOGIN SCREEN */
-#login-screen{align-items:center;justify-content:center;background:var(--bg);position:relative;overflow-y:auto;overflow-x:hidden;padding:80px 16px 24px;}
-.login-glow{position:fixed;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,var(--blue-glow),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
-.login-card{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:40px;width:100%;max-width:500px;position:relative;box-shadow:var(--shadow-lg);animation:cardIn .5s cubic-bezier(.25,.8,.25,1) both;overflow:visible;}
-.back-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;color:var(--text-mute);font-family:'Sora',sans-serif;font-size:0.8rem;font-weight:500;margin-bottom:20px;padding:0;transition:color .2s;}
-.back-btn:hover{color:var(--blue);}
-.login-icon{width:64px;height:64px;background:var(--blue);border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;margin-bottom:16px;box-shadow:0 8px 24px var(--blue-glow);}
-.login-card h2{font-size:1.3rem;font-weight:800;letter-spacing:-.2px;margin-bottom:6px;line-height:1.4;word-wrap:break-word;}
-.login-card .subtitle{color:var(--text-soft);font-size:0.85rem;margin-bottom:24px;}
-.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
-.info-cell{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;}
-.info-cell .lbl{font-size:0.65rem;color:var(--text-mute);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;font-weight:600;}
-.info-cell .val{font-size:0.95rem;font-weight:700;line-height:1.4;word-wrap:break-word;}
-.info-cell .val.hi{color:var(--blue);}
-.divider{height:1px;background:var(--border);margin:0 0 18px;}
-.instructions{background:rgba(245,166,35,.06);border:1px solid rgba(245,166,35,.2);border-radius:10px;padding:14px;font-size:0.78rem;color:var(--text-soft);line-height:1.7;margin-bottom:18px;}
-.instructions strong{color:var(--amber);}
-.guest-notice{background:var(--blue-light);border:1px solid rgba(26,86,219,.2);border-radius:10px;padding:12px 14px;font-size:0.75rem;color:var(--blue);margin-bottom:16px;display:flex;align-items:flex-start;gap:8px;line-height:1.6;flex-wrap:wrap;}
-.btn-full{width:100%;padding:14px 20px;background:var(--blue);border:none;border-radius:10px;color:#fff;font-family:'Sora',sans-serif;font-size:0.9rem;font-weight:600;cursor:pointer;transition:all .3s;box-shadow:0 6px 20px var(--blue-glow);min-height:44px;display:flex;align-items:center;justify-content:center;gap:6px;}
-.btn-full:hover{background:var(--blue-dark);transform:translateY(-2px);box-shadow:0 8px 24px var(--blue-glow);}
+#login-screen{align-items:center;justify-content:center;background:var(--bg);position:relative;overflow-y:auto;overflow-x:hidden;padding:80px 16px 32px;}
+.login-glow{position:fixed;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,var(--blue-glow),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+.login-card{background:var(--surface);border:1px solid var(--border);border-radius:24px;width:100%;max-width:520px;position:relative;box-shadow:0 20px 60px rgba(26,86,219,.14),0 4px 20px rgba(0,0,0,.06);animation:cardIn .5s cubic-bezier(.25,.8,.25,1) both;overflow:hidden;}
+
+/* Card header band */
+.login-card-header{background:linear-gradient(135deg,var(--blue) 0%,var(--blue-dark) 100%);border-radius:0;padding:28px 32px 24px;position:relative;overflow:hidden;}
+.login-card-header::before{content:'';position:absolute;top:-50px;right:-40px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.07);pointer-events:none;}
+.login-card-header::after{content:'';position:absolute;bottom:-40px;right:30px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none;}
+.back-btn{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:7px;cursor:pointer;color:rgba(255,255,255,.8);font-family:'Sora',sans-serif;font-size:0.72rem;font-weight:600;margin-bottom:18px;padding:5px 12px;transition:all .2s;letter-spacing:.3px;}
+.back-btn:hover{background:rgba(255,255,255,.25);color:#fff;}
+.login-card-header h2{font-size:1.22rem;font-weight:800;letter-spacing:-.3px;color:#fff;line-height:1.35;word-wrap:break-word;margin-bottom:5px;position:relative;}
+.login-card-header .subtitle{font-size:0.74rem;color:rgba(255,255,255,.6);font-weight:500;letter-spacing:.3px;position:relative;}
+
+/* Stats strip - 3 inline stats */
+.meta-strip{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--border);background:var(--surface2);}
+.meta-strip-item{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 8px 13px;gap:2px;position:relative;}
+.meta-strip-item:not(:last-child)::after{content:'';position:absolute;right:0;top:22%;height:56%;width:1px;background:var(--border);}
+.meta-strip-icon{font-size:1rem;line-height:1;margin-bottom:3px;}
+.meta-strip-val{font-family:'JetBrains Mono',monospace;font-size:1.1rem;font-weight:700;color:var(--text);line-height:1;}
+.meta-strip-lbl{font-size:0.58rem;text-transform:uppercase;letter-spacing:1.3px;color:var(--text-mute);font-weight:600;margin-top:2px;}
+
+/* Card body */
+.login-card-body{padding:22px 32px 28px;}
+.login-icon{display:none;}
+.info-grid{display:none;}
+.divider{display:none;}
+.instructions{background:rgba(245,166,35,.05);border:1px solid rgba(245,166,35,.18);border-radius:12px;padding:16px 18px;font-size:0.78rem;color:var(--text-soft);line-height:1.75;margin-bottom:16px;}
+.instructions-header{display:flex;align-items:center;gap:7px;font-size:0.7rem;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px;}
+.instr-list{display:flex;flex-direction:column;gap:6px;}
+.instr-row{display:flex;align-items:flex-start;gap:9px;font-size:0.78rem;color:var(--text-soft);}
+.instr-row::before{content:'';display:block;width:4px;height:4px;border-radius:50%;background:var(--amber);margin-top:7px;flex-shrink:0;opacity:.6;}
+.instr-row strong{color:var(--blue);font-weight:700;}
+.guest-notice{background:var(--blue-light);border:1px solid rgba(26,86,219,.18);border-radius:10px;padding:11px 14px;font-size:0.74rem;color:var(--blue);margin-bottom:16px;display:flex;align-items:center;gap:8px;line-height:1.55;}
+.btn-full{width:100%;padding:15px 20px;background:linear-gradient(135deg,var(--blue),var(--blue-dark));border:none;border-radius:12px;color:#fff;font-family:'Sora',sans-serif;font-size:0.92rem;font-weight:700;cursor:pointer;transition:all .3s;box-shadow:0 6px 20px var(--blue-glow);min-height:50px;display:flex;align-items:center;justify-content:center;gap:8px;letter-spacing:.2px;}
+.btn-full:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 10px 30px var(--blue-glow);}
+.btn-full:active{transform:translateY(0);}
 
 /* EXAM SCREEN */
 .exam-body{flex:1;display:flex;overflow:hidden;}
@@ -260,7 +277,9 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
   .select-body{padding:20px 16px;}
   .tests-grid{grid-template-columns:1fr;gap:14px;}
   #login-screen{padding-top:70px;padding-bottom:24px;align-items:flex-start;overflow-y:auto;}
-  .login-card{width:calc(100% - 32px);margin:0 16px;padding:24px 20px;border-radius:18px;max-width:100%;}
+  .login-card{width:calc(100% - 32px);margin:0 16px;border-radius:18px;max-width:100%;}
+  .login-card-header{padding:20px 20px 18px;}
+  .login-card-body{padding:18px 20px 22px;}
   .sidebar{display:none;}
   .exam-body{flex-direction:column;overflow:visible;}
   .q-panel{padding:16px;gap:14px;overflow:visible;flex:none;}
@@ -327,34 +346,55 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
 <!-- SCREEN 2: INSTRUCTIONS -->
 <div id="login-screen" class="screen">
   <div class="login-glow"></div>
-  <div class="top-bar" style="position:absolute;top:0;left:0;right:0;">
+  <div class="top-bar" style="position:fixed;top:0;left:0;right:0;z-index:100;">
     <a class="brand" href="/"><div class="brand-logo">📚</div><div class="brand-name">Spardha<em>Box</em></div></a>
     <div class="top-right"><button class="theme-toggle" onclick="toggleTheme()">🌊</button></div>
   </div>
   <div class="login-card">
-    <button class="back-btn" onclick="showScreen('select-screen')">← Back to Tests</button>
-    <div class="login-icon" id="login-icon">📋</div>
-    <h2 id="login-title">Test Instructions</h2>
-    <div class="subtitle" id="login-subtitle">SpardhaBox · Mock Test</div>
-    <div class="info-grid">
-      <div class="info-cell"><div class="lbl">Test</div><div class="val hi" id="li-name">—</div></div>
-      <div class="info-cell"><div class="lbl">Duration</div><div class="val" id="li-duration">—</div></div>
-      <div class="info-cell"><div class="lbl">Questions</div><div class="val" id="li-questions">—</div></div>
-      <div class="info-cell"><div class="lbl">Max Marks</div><div class="val" id="li-marks">—</div></div>
+    <!-- Blue header band with title -->
+    <div class="login-card-header">
+      <button class="back-btn" onclick="showScreen('select-screen')">← Back to Tests</button>
+      <h2 id="login-title">Test Instructions</h2>
+      <div class="subtitle" id="login-subtitle">SpardhaBox · Mock Test</div>
+      <!-- Hidden elements kept for JS compatibility -->
+      <div id="login-icon" style="display:none">📋</div>
+      <div id="li-name" style="display:none">—</div>
     </div>
-    <div class="divider"></div>
-    <div class="instructions">
-      <strong>⚠ Instructions:</strong><br>
-      • Each correct answer carries <strong>+1</strong> mark.<br>
-      • Wrong answers may have negative marking as per exam rules.<br>
-      • Mark questions for review and revisit anytime.<br>
-      • Timer auto-submits when time expires.<br>
-      • Do not refresh the page during the exam.
+    <!-- Compact 3-stat strip: Duration | Questions | Max Marks -->
+    <div class="meta-strip">
+      <div class="meta-strip-item">
+        <div class="meta-strip-icon">⏱</div>
+        <div class="meta-strip-val" id="li-duration">—</div>
+        <div class="meta-strip-lbl">Duration</div>
+      </div>
+      <div class="meta-strip-item">
+        <div class="meta-strip-icon">📝</div>
+        <div class="meta-strip-val" id="li-questions">—</div>
+        <div class="meta-strip-lbl">Questions</div>
+      </div>
+      <div class="meta-strip-item">
+        <div class="meta-strip-icon">🏆</div>
+        <div class="meta-strip-val" id="li-marks">—</div>
+        <div class="meta-strip-lbl">Max Marks</div>
+      </div>
     </div>
-    <div class="guest-notice" id="guest-notice" style="display:none">
-      ℹ️ You are taking this as a <strong>guest</strong>. Your score won't be saved. <a href="/" style="color:var(--blue);font-weight:700;text-decoration:underline">Login</a> to save your progress.
+    <!-- Body: instructions + action -->
+    <div class="login-card-body">
+      <div class="instructions">
+        <div class="instructions-header">⚠ Instructions</div>
+        <div class="instr-list">
+          <div class="instr-row">Each correct answer carries <strong>+1</strong> mark.</div>
+          <div class="instr-row">Wrong answers may have negative marking as per exam rules.</div>
+          <div class="instr-row">Mark questions for review and revisit anytime.</div>
+          <div class="instr-row">Timer auto-submits when time expires.</div>
+          <div class="instr-row">Do not refresh the page during the exam.</div>
+        </div>
+      </div>
+      <div class="guest-notice" id="guest-notice" style="display:none">
+        ℹ️ You are taking this as a <strong style="margin:0 3px">guest</strong>. Your score won't be saved. <a href="/" style="color:var(--blue);font-weight:700;text-decoration:underline;margin-left:3px">Login</a> to save progress.
+      </div>
+      <button class="btn-full" onclick="beginExam()">🚀 Begin Exam</button>
     </div>
-    <button class="btn-full" onclick="beginExam()">🚀 Begin Exam</button>
   </div>
 </div>
 
