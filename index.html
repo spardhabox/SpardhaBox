@@ -502,13 +502,39 @@ function applyTheme(t) {
   currentTheme = t;
   document.documentElement.setAttribute('data-theme', t);
   localStorage.setItem('sb_theme', t);
-  const isLight = t === 'edtech-blue';
   document.querySelectorAll('.theme-toggle').forEach(b => {
-    b.textContent = isLight ? '🌊' : '☀️';
+    b.textContent = t === 'edtech-blue' ? '🌊' : '☀️';
   });
 }
 function toggleTheme() { applyTheme(currentTheme === 'edtech-blue' ? 'edtech-navy' : 'edtech-blue'); }
 applyTheme(currentTheme);
+
+// ══════════════════════════════════════════════════════
+// TOKEN REFRESH HELPER
+// ══════════════════════════════════════════════════════
+async function refreshAccessToken() {
+  const refresh = localStorage.getItem('sb_refresh');
+  if (!refresh) return null;
+  try {
+    const res  = await fetch(`${API}/api/auth/refresh`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ refreshToken: refresh })
+    });
+    if (!res.ok) throw new Error('Refresh failed');
+    const data = await res.json();
+    localStorage.setItem('sb_token', data.accessToken);
+    if (data.refreshToken) localStorage.setItem('sb_refresh', data.refreshToken);
+    return data.accessToken;
+  } catch (_) {
+    // Refresh expired — force logout
+    localStorage.removeItem('sb_token');
+    localStorage.removeItem('sb_refresh');
+    localStorage.removeItem('sb_user');
+    updateNavForGuest();
+    return null;
+  }
+}
 
 // ══════════════════════════════════════════════════════
 // MOBILE NAV
@@ -568,29 +594,27 @@ async function handleLogin() {
   hideError('login-error');
   if (!email || !password) return showError('login-error', 'Please enter email and password.');
 
-  btn.classList.add('btn-loading');
-  btn.textContent = 'Logging in…';
+  btn.classList.add('btn-loading'); btn.textContent = 'Logging in…';
 
   try {
     const res  = await fetch(`${API}/api/auth/login`, {
-      method: 'POST',
+      method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
+      body:    JSON.stringify({ email, password })
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Login failed.');
+    if (!res.ok) throw new Error(data.error || data.message || 'Login failed.');
 
-    localStorage.setItem('sb_token', data.accessToken);
+    localStorage.setItem('sb_token',   data.accessToken);
     localStorage.setItem('sb_refresh', data.refreshToken);
-    localStorage.setItem('sb_user', JSON.stringify(data.user));
+    localStorage.setItem('sb_user',    JSON.stringify(data.user));
 
     closeAuth();
     updateNavForUser(data.user);
   } catch (err) {
     showError('login-error', err.message);
   } finally {
-    btn.classList.remove('btn-loading');
-    btn.textContent = 'Login to SpardhaBox';
+    btn.classList.remove('btn-loading'); btn.textContent = 'Login to SpardhaBox';
   }
 }
 
@@ -607,29 +631,27 @@ async function handleRegister() {
   if (!name || !email || !password) return showError('register-error', 'All fields are required.');
   if (password.length < 6) return showError('register-error', 'Password must be at least 6 characters.');
 
-  btn.classList.add('btn-loading');
-  btn.textContent = 'Creating account…';
+  btn.classList.add('btn-loading'); btn.textContent = 'Creating account…';
 
   try {
     const res  = await fetch(`${API}/api/auth/register`, {
-      method: 'POST',
+      method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, email, password })
+      body:    JSON.stringify({ name, email, password })
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Registration failed.');
+    if (!res.ok) throw new Error(data.error || data.message || 'Registration failed.');
 
-    localStorage.setItem('sb_token', data.accessToken);
+    localStorage.setItem('sb_token',   data.accessToken);
     localStorage.setItem('sb_refresh', data.refreshToken);
-    localStorage.setItem('sb_user', JSON.stringify(data.user));
+    localStorage.setItem('sb_user',    JSON.stringify(data.user));
 
     showSuccess('register-success', '🎉 Account created! Welcome to SpardhaBox!');
     setTimeout(() => { closeAuth(); updateNavForUser(data.user); }, 1200);
   } catch (err) {
     showError('register-error', err.message);
   } finally {
-    btn.classList.remove('btn-loading');
-    btn.textContent = 'Create Free Account';
+    btn.classList.remove('btn-loading'); btn.textContent = 'Create Free Account';
   }
 }
 
@@ -640,9 +662,9 @@ async function logout() {
   const refresh = localStorage.getItem('sb_refresh');
   try {
     await fetch(`${API}/api/auth/logout`, {
-      method: 'POST',
+      method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ refreshToken: refresh })
+      body:    JSON.stringify({ refreshToken: refresh })
     });
   } catch (_) {}
   localStorage.removeItem('sb_token');
@@ -653,11 +675,9 @@ async function logout() {
 }
 
 // ══════════════════════════════════════════════════════
-// USER MENU TOGGLE
+// USER MENU
 // ══════════════════════════════════════════════════════
-function toggleUserMenu() {
-  document.getElementById('user-menu').classList.toggle('open');
-}
+function toggleUserMenu() { document.getElementById('user-menu').classList.toggle('open'); }
 document.addEventListener('click', function(e) {
   const pill = document.getElementById('user-pill');
   const menu = document.getElementById('user-menu');
@@ -667,7 +687,7 @@ document.addEventListener('click', function(e) {
 });
 
 // ══════════════════════════════════════════════════════
-// UPDATE NAV
+// NAV STATE
 // ══════════════════════════════════════════════════════
 function updateNavForUser(user) {
   document.getElementById('login-btn').style.display    = 'none';
@@ -684,29 +704,71 @@ function updateNavForGuest() {
 }
 
 // ══════════════════════════════════════════════════════
-// INIT — check if already logged in
+// INIT — restore session, silently refresh token if needed
 // ══════════════════════════════════════════════════════
-(function init() {
-  const stored = localStorage.getItem('sb_user');
-  if (stored) {
-    try { updateNavForUser(JSON.parse(stored)); } catch (_) {}
+
+// ══════════════════════════════════════════════════════
+// TOKEN REFRESH HELPER
+// ══════════════════════════════════════════════════════
+async function tryRefreshToken() {
+  const refresh = localStorage.getItem('sb_refresh');
+  if (!refresh) return false;
+  try {
+    const res = await fetch(`${API}/api/auth/refresh`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refreshToken: refresh })
+    });
+    if (!res.ok) throw new Error('refresh failed');
+    const data = await res.json();
+    localStorage.setItem('sb_token', data.accessToken);
+    if (data.refreshToken) localStorage.setItem('sb_refresh', data.refreshToken);
+    return true;
+  } catch (_) {
+    localStorage.removeItem('sb_token');
+    localStorage.removeItem('sb_refresh');
+    localStorage.removeItem('sb_user');
+    updateNavForGuest();
+    return false;
   }
+}
+
+(async function init() {
+  const stored = localStorage.getItem('sb_user');
+  const token  = localStorage.getItem('sb_token');
+  if (!stored) return; // guest
+  try {
+    const user = JSON.parse(stored);
+    updateNavForUser(user);
+    // Silently validate / refresh token in background
+    if (token) {
+      const res = await fetch(`${API}/api/auth/me`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (res.status === 401) {
+        // Try refresh
+        await refreshAccessToken();
+      }
+    }
+  } catch (_) {}
 })();
 
-// Enter key support for forms
+// Enter key support
 document.getElementById('login-password').addEventListener('keydown', e => { if(e.key==='Enter') handleLogin(); });
 document.getElementById('register-password').addEventListener('keydown', e => { if(e.key==='Enter') handleRegister(); });
 
-// SCROLL REVEAL
+// Scroll reveal
 const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.08 });
 document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-// STAGGER CARDS
+// Stagger cards
 document.querySelectorAll('.exam-card').forEach((c, i) => c.style.animationDelay = i * 55 + 'ms');
 document.querySelectorAll('.exam-card[role="button"]').forEach(card => {
-  card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }});
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); card.click(); }
+  });
 });
 </script>
 </body>
