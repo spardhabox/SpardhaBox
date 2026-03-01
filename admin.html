@@ -555,6 +555,7 @@ tr:hover td{background:rgba(99,102,241,.04);}
 <div class="toast-container" id="toast-container"></div>
 
 <script>
+
 // ══════════════════════════════════════════════════════
 // CONFIG
 // ══════════════════════════════════════════════════════
@@ -572,7 +573,7 @@ let allTests   = [];
   const user  = localStorage.getItem('sb_admin_user');
   if (token && user) {
     adminToken = token;
-    adminUser  = JSON.parse(user);
+    try { adminUser = JSON.parse(user); } catch(_) { return; }
     showAdminApp();
   }
 })();
@@ -593,18 +594,19 @@ async function adminLogin() {
 
   try {
     const res  = await fetch(`${API}/api/auth/login`, {
-      method: 'POST',
+      method:  'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password })
+      body:    JSON.stringify({ email, password })
     });
     const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Login failed');
+    if (!res.ok) throw new Error(data.error || data.message || 'Login failed');
     if (data.user.role !== 'admin') throw new Error('Access denied. Admin accounts only.');
 
     adminToken = data.accessToken;
     adminUser  = data.user;
-    localStorage.setItem('sb_admin_token', adminToken);
-    localStorage.setItem('sb_admin_user', JSON.stringify(adminUser));
+    localStorage.setItem('sb_admin_token',   adminToken);
+    localStorage.setItem('sb_admin_refresh', data.refreshToken);
+    localStorage.setItem('sb_admin_user',    JSON.stringify(adminUser));
     showAdminApp();
   } catch(e) {
     err.textContent = e.message; err.classList.add('show');
@@ -626,39 +628,67 @@ function showAdminApp() {
 }
 
 function adminLogout() {
-  localStorage.removeItem('sb_admin_token');
-  localStorage.removeItem('sb_admin_user');
+  ['sb_admin_token','sb_admin_refresh','sb_admin_user'].forEach(k => localStorage.removeItem(k));
   location.reload();
 }
 
 // ══════════════════════════════════════════════════════
-// API HELPER
+// API HELPER — with auto token refresh on 401
 // ══════════════════════════════════════════════════════
-async function api(method, path, body) {
+async function api(method, path, body, _retry = false) {
   const res = await fetch(`${API}${path}`, {
     method,
     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${adminToken}` },
     body: body ? JSON.stringify(body) : undefined
   });
+
+  // Token expired — try refresh once
+  if (res.status === 401 && !_retry) {
+    const refreshed = await refreshAdminToken();
+    if (refreshed) return api(method, path, body, true);
+    // Refresh also failed — force logout
+    toast('Session expired. Please log in again.', 'error');
+    setTimeout(() => adminLogout(), 2000);
+    throw new Error('Session expired');
+  }
+
   const data = await res.json();
-  if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+  if (!res.ok) throw new Error(data.error || data.message || `Request failed (${res.status})`);
   return data;
 }
 
+async function refreshAdminToken() {
+  const refresh = localStorage.getItem('sb_admin_refresh');
+  if (!refresh) return false;
+  try {
+    const res  = await fetch(`${API}/api/auth/refresh`, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ refreshToken: refresh })
+    });
+    if (!res.ok) return false;
+    const data = await res.json();
+    adminToken = data.accessToken;
+    localStorage.setItem('sb_admin_token', adminToken);
+    if (data.refreshToken) localStorage.setItem('sb_admin_refresh', data.refreshToken);
+    return true;
+  } catch(_) { return false; }
+}
+
 // ══════════════════════════════════════════════════════
-// NAVIGATION
+// NAVIGATION — use passed element, not deprecated global event
 // ══════════════════════════════════════════════════════
-function showPage(page) {
+function showPage(page, navEl) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById(`page-${page}`).classList.add('active');
-  event.currentTarget.classList.add('active');
+  if (navEl) navEl.classList.add('active');
 
-  if (page === 'dashboard') loadDashboard();
-  else if (page === 'exams') loadExams();
-  else if (page === 'tests') loadTests();
+  if      (page === 'dashboard') loadDashboard();
+  else if (page === 'exams')     loadExams();
+  else if (page === 'tests')     loadTestsPage();
   else if (page === 'questions') loadTestsForSelect();
-  else if (page === 'users') loadUsers();
+  else if (page === 'users')     loadUsers();
 }
 
 // ══════════════════════════════════════════════════════
@@ -666,24 +696,25 @@ function showPage(page) {
 // ══════════════════════════════════════════════════════
 async function loadDashboard() {
   try {
-    const [testsData, usersData] = await Promise.all([
-      api('GET', '/api/tests?limit=100'),
-      api('GET', '/api/users?limit=5')
+    const [testsData, usersData, analytics] = await Promise.all([
+      api('GET', '/api/tests?limit=100&admin=true'),
+      api('GET', '/api/users?limit=5'),
+      api('GET', '/api/analytics/overview').catch(() => null)
     ]);
 
-    const tests = testsData.tests || [];
-    const users = usersData.users || [];
+    const tests  = testsData.tests || [];
+    const users  = usersData.users || [];
     const totalQ = tests.reduce((s, t) => s + (t.question_count || 0), 0);
 
-    document.getElementById('stat-tests').textContent     = tests.length;
-    document.getElementById('stat-questions').textContent = totalQ;
-    document.getElementById('stat-users').textContent     = usersData.pagination?.total || users.length;
-    document.getElementById('stat-attempts').textContent  = '—';
+    document.getElementById('stat-tests').textContent     = analytics?.stats?.total_tests     ?? tests.length;
+    document.getElementById('stat-questions').textContent = analytics?.stats?.total_questions ?? totalQ;
+    document.getElementById('stat-users').textContent     = analytics?.stats?.total_users     ?? (usersData.pagination?.total || users.length);
+    document.getElementById('stat-attempts').textContent  = analytics?.stats?.total_attempts  ?? '—';
 
     document.getElementById('recent-users-body').innerHTML = users.length
       ? users.map(u => `<tr>
-          <td class="td-main">${u.name}</td>
-          <td>${u.email}</td>
+          <td class="td-main">${escHtml(u.name)}</td>
+          <td>${escHtml(u.email)}</td>
           <td><span class="badge role-${u.role}">${u.role}</span></td>
           <td>${formatDate(u.created_at)}</td>
         </tr>`).join('')
@@ -697,34 +728,39 @@ async function loadDashboard() {
 async function loadExams() {
   try {
     const data = await api('GET', '/api/exams');
-    allExams = data.exams || [];
+    allExams = data.exams || data || [];
     renderExams();
     populateExamSelects();
   } catch(e) {
-    document.getElementById('exams-body').innerHTML = `<tr><td colspan="5" style="text-align:center;padding:30px;color:#f87171">${e.message}</td></tr>`;
+    document.getElementById('exams-body').innerHTML =
+      `<tr><td colspan="5" style="text-align:center;padding:30px;color:#f87171">${escHtml(e.message)}</td></tr>`;
   }
 }
 
 function renderExams() {
   document.getElementById('exams-body').innerHTML = allExams.length
-    ? allExams.map(e => `<tr>
-        <td style="font-size:1.3rem">${e.icon || '📋'}</td>
-        <td class="td-main">${e.name}</td>
-        <td style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:#475569">${e.slug}</td>
+    ? allExams.map((e, idx) => `<tr>
+        <td style="font-size:1.3rem">${escHtml(e.icon || '📋')}</td>
+        <td class="td-main">${escHtml(e.name)}</td>
+        <td style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:#475569">${escHtml(e.slug)}</td>
         <td><span class="badge ${e.status==='active'?'badge-green':'badge-gray'}">${e.status}</span></td>
         <td><div class="td-actions">
-          <button class="btn btn-ghost btn-sm" onclick="editExam(${JSON.stringify(e).replace(/"/g,'&quot;')})">✏️ Edit</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteExam('${e.id}','${e.name}')">🗑</button>
+          <button class="btn btn-ghost btn-sm" data-exam-idx="${idx}" onclick="editExamByIdx(this)">✏️ Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteExam('${e.id}','${escHtml(e.name).replace(/'/g,"\\'")}')">🗑</button>
         </div></td>
       </tr>`).join('')
     : `<tr><td colspan="5"><div class="empty-state"><div class="big">🎓</div><p>No exams yet. Create your first exam!</p></div></td></tr>`;
 }
 
-function editExam(exam) {
+// FIX: use data attribute index instead of inline JSON to avoid HTML injection
+function editExamByIdx(btn) {
+  const idx  = parseInt(btn.dataset.examIdx);
+  const exam = allExams[idx];
+  if (!exam) return;
   document.getElementById('exam-modal-title').textContent = 'Edit Exam';
   document.getElementById('exam-edit-id').value  = exam.id;
-  document.getElementById('exam-name').value     = exam.name;
-  document.getElementById('exam-slug').value     = exam.slug;
+  document.getElementById('exam-name').value     = exam.name || '';
+  document.getElementById('exam-slug').value     = exam.slug || '';
   document.getElementById('exam-icon').value     = exam.icon || '';
   document.getElementById('exam-desc').value     = exam.description || '';
   document.getElementById('exam-status').value   = exam.status || 'active';
@@ -742,12 +778,10 @@ async function saveExam() {
   };
   if (!body.name || !body.slug) return toast('Name and slug are required', 'error');
   try {
-    if (id) await api('PUT', `/api/exams/${id}`, body);
+    if (id) await api('PUT',  `/api/exams/${id}`, body);
     else    await api('POST', '/api/exams', body);
     toast(id ? 'Exam updated!' : 'Exam created!', 'success');
-    closeModal('exam-modal');
-    resetExamForm();
-    loadExams();
+    closeModal('exam-modal'); resetExamForm(); loadExams();
   } catch(e) { toast(e.message, 'error'); }
 }
 
@@ -755,8 +789,7 @@ async function deleteExam(id, name) {
   if (!confirm(`Delete exam "${name}"? This cannot be undone.`)) return;
   try {
     await api('DELETE', `/api/exams/${id}`);
-    toast('Exam deleted', 'success');
-    loadExams();
+    toast('Exam deleted', 'success'); loadExams();
   } catch(e) { toast(e.message, 'error'); }
 }
 
@@ -765,42 +798,48 @@ function resetExamForm() {
   document.getElementById('exam-edit-id').value = '';
   ['exam-name','exam-slug','exam-icon','exam-desc'].forEach(id => document.getElementById(id).value = '');
   document.getElementById('exam-status').value = 'active';
+  delete document.getElementById('exam-slug').dataset.edited;
 }
 
 // ══════════════════════════════════════════════════════
 // TESTS
 // ══════════════════════════════════════════════════════
-async function loadTests() {
+async function loadTestsPage() {
   try {
     const data = await api('GET', '/api/tests?limit=100&admin=true');
     allTests = data.tests || [];
     renderTests();
     populateTestSelects();
   } catch(e) {
-    document.getElementById('tests-body').innerHTML = `<tr><td colspan="6" style="text-align:center;padding:30px;color:#f87171">${e.message}</td></tr>`;
+    document.getElementById('tests-body').innerHTML =
+      `<tr><td colspan="6" style="text-align:center;padding:30px;color:#f87171">${escHtml(e.message)}</td></tr>`;
   }
 }
 
 function renderTests() {
   document.getElementById('tests-body').innerHTML = allTests.length
-    ? allTests.map(t => `<tr>
-        <td class="td-main">${t.title}</td>
-        <td><span class="badge badge-blue">${t.exam?.name || '—'}</span></td>
+    ? allTests.map((t, idx) => `<tr>
+        <td class="td-main">${escHtml(t.title)}</td>
+        <td><span class="badge badge-blue">${escHtml(t.exam?.name || '—')}</span></td>
         <td style="font-family:'JetBrains Mono',monospace">${t.question_count || 0}</td>
         <td>${t.duration_mins} min</td>
         <td><span class="badge ${t.is_published?'badge-green':'badge-amber'}">${t.is_published?'Published':'Draft'}</span></td>
         <td><div class="td-actions">
-          <button class="btn btn-ghost btn-sm" onclick="editTest(${JSON.stringify(t).replace(/"/g,'&quot;')})">✏️ Edit</button>
-          <button class="btn btn-danger btn-sm" onclick="deleteTest('${t.id}','${t.title}')">🗑</button>
+          <button class="btn btn-ghost btn-sm" data-test-idx="${idx}" onclick="editTestByIdx(this)">✏️ Edit</button>
+          <button class="btn btn-danger btn-sm" onclick="deleteTest('${t.id}','${escHtml(t.title).replace(/'/g,"\\'")}')">🗑</button>
         </div></td>
       </tr>`).join('')
     : `<tr><td colspan="6"><div class="empty-state"><div class="big">📋</div><p>No tests yet. Create your first test!</p></div></td></tr>`;
 }
 
-function editTest(test) {
+// FIX: use data attribute index instead of inline JSON
+function editTestByIdx(btn) {
+  const idx  = parseInt(btn.dataset.testIdx);
+  const test = allTests[idx];
+  if (!test) return;
   document.getElementById('test-modal-title').textContent = 'Edit Test';
   document.getElementById('test-edit-id').value    = test.id;
-  document.getElementById('test-title').value      = test.title;
+  document.getElementById('test-title').value      = test.title || '';
   document.getElementById('test-exam-id').value    = test.exam_id || '';
   document.getElementById('test-desc').value       = test.description || '';
   document.getElementById('test-duration').value   = test.duration_mins || 60;
@@ -823,15 +862,13 @@ async function saveTest() {
     is_free:        document.getElementById('test-free').value === 'true',
     is_published:   document.getElementById('test-published').value === 'true'
   };
-  if (!body.title) return toast('Test title is required', 'error');
+  if (!body.title)   return toast('Test title is required', 'error');
   if (!body.exam_id) return toast('Please select an exam category', 'error');
   try {
-    if (id) await api('PUT', `/api/tests/${id}`, body);
+    if (id) await api('PUT',  `/api/tests/${id}`, body);
     else    await api('POST', '/api/tests', body);
     toast(id ? 'Test updated!' : 'Test created!', 'success');
-    closeModal('test-modal');
-    resetTestForm();
-    loadTests();
+    closeModal('test-modal'); resetTestForm(); loadTestsPage();
   } catch(e) { toast(e.message, 'error'); }
 }
 
@@ -839,8 +876,7 @@ async function deleteTest(id, name) {
   if (!confirm(`Delete test "${name}"? All questions will also be deleted.`)) return;
   try {
     await api('DELETE', `/api/tests/${id}`);
-    toast('Test deleted', 'success');
-    loadTests();
+    toast('Test deleted', 'success'); loadTestsPage();
   } catch(e) { toast(e.message, 'error'); }
 }
 
@@ -857,7 +893,10 @@ function resetTestForm() {
 // ══════════════════════════════════════════════════════
 async function loadTestsForSelect() {
   if (allTests.length === 0) {
-    try { const d = await api('GET','/api/tests?limit=100&admin=true'); allTests = d.tests||[]; } catch(_) {}
+    try {
+      const d = await api('GET', '/api/tests?limit=100&admin=true');
+      allTests = d.tests || [];
+    } catch(_) {}
   }
   populateTestSelects();
 }
@@ -865,36 +904,36 @@ async function loadTestsForSelect() {
 async function loadQuestions() {
   const testId = document.getElementById('q-test-filter').value;
   if (!testId) return;
-  document.getElementById('questions-body').innerHTML = `<tr class="loading-row"><td colspan="5"><span class="spinner"></span>Loading…</td></tr>`;
+  document.getElementById('questions-body').innerHTML =
+    `<tr class="loading-row"><td colspan="5"><span class="spinner"></span>Loading…</td></tr>`;
   try {
-    const data = await api('GET', `/api/tests/${testId}`);
-    const questions = data.test?.questions || [];
+    const data      = await api('GET', `/api/tests/${testId}`);
+    const questions = data.test?.questions || data.questions || [];
     document.getElementById('q-count').textContent = `(${questions.length} questions)`;
     document.getElementById('questions-body').innerHTML = questions.length
       ? questions.map(q => `<tr>
-          <td class="q-no" style="font-family:'JetBrains Mono',monospace;color:#475569">${q.q_number}</td>
-          <td class="td-main" style="max-width:400px">${q.question.substring(0,100)}${q.question.length>100?'…':''}</td>
-          <td><span class="badge badge-gray">${q.category||'—'}</span></td>
+          <td style="font-family:'JetBrains Mono',monospace;color:#475569">${q.q_number || ''}</td>
+          <td class="td-main" style="max-width:400px">${escHtml(q.question.substring(0,100))}${q.question.length>100?'…':''}</td>
+          <td><span class="badge badge-gray">${escHtml(q.category||'—')}</span></td>
           <td><span class="badge ${q.difficulty==='easy'?'badge-green':q.difficulty==='hard'?'badge-red':'badge-amber'}">${q.difficulty||'medium'}</span></td>
           <td><div class="td-actions">
             <button class="btn btn-danger btn-sm" onclick="deleteQuestion('${q.id}')">🗑</button>
           </div></td>
         </tr>`).join('')
-      : `<tr><td colspan="5"><div class="empty-state"><div class="big">❓</div><p>No questions in this test yet.</p><button class="btn btn-primary btn-sm" onclick="openModal('question-modal')">+ Add Question</button></div></td></tr>`;
+      : `<tr><td colspan="5"><div class="empty-state"><div class="big">❓</div><p>No questions yet.</p><button class="btn btn-primary btn-sm" onclick="openModal('question-modal')">+ Add Question</button></div></td></tr>`;
   } catch(e) { toast(e.message, 'error'); }
 }
 
 async function saveQuestion() {
-  const id      = document.getElementById('question-edit-id').value;
   const testId  = document.getElementById('question-test-id').value;
   const text    = document.getElementById('question-text').value.trim();
   const opts    = [0,1,2,3].map(i => document.getElementById(`opt-${i}`).value.trim());
   const correct = document.querySelector('input[name="correct-opt"]:checked');
 
-  if (!testId) return toast('Please select a test', 'error');
-  if (!text)   return toast('Question text is required', 'error');
-  if (opts.some(o => !o)) return toast('All 4 options are required', 'error');
-  if (!correct) return toast('Please select the correct answer', 'error');
+  if (!testId)              return toast('Please select a test', 'error');
+  if (!text)                return toast('Question text is required', 'error');
+  if (opts.some(o => !o))   return toast('All 4 options are required', 'error');
+  if (!correct)             return toast('Please select the correct answer', 'error');
 
   const body = {
     test_id:     testId,
@@ -905,15 +944,11 @@ async function saveQuestion() {
     difficulty:  document.getElementById('question-difficulty').value,
     explanation: document.getElementById('question-explanation').value.trim()
   };
-
   try {
     await api('POST', '/api/questions', body);
     toast('Question added!', 'success');
-    closeModal('question-modal');
-    resetQuestionForm();
-    // refresh if same test is selected
-    const filter = document.getElementById('q-test-filter').value;
-    if (filter === testId) loadQuestions();
+    closeModal('question-modal'); resetQuestionForm();
+    if (document.getElementById('q-test-filter').value === testId) loadQuestions();
   } catch(e) { toast(e.message, 'error'); }
 }
 
@@ -921,16 +956,15 @@ async function deleteQuestion(id) {
   if (!confirm('Delete this question?')) return;
   try {
     await api('DELETE', `/api/questions/${id}`);
-    toast('Question deleted', 'success');
-    loadQuestions();
+    toast('Question deleted', 'success'); loadQuestions();
   } catch(e) { toast(e.message, 'error'); }
 }
 
 function resetQuestionForm() {
-  document.getElementById('question-edit-id').value = '';
-  document.getElementById('question-text').value    = '';
-  document.getElementById('question-category').value = '';
-  document.getElementById('question-explanation').value = '';
+  document.getElementById('question-edit-id').value       = '';
+  document.getElementById('question-text').value          = '';
+  document.getElementById('question-category').value      = '';
+  document.getElementById('question-explanation').value   = '';
   [0,1,2,3].forEach(i => document.getElementById(`opt-${i}`).value = '');
   document.querySelectorAll('input[name="correct-opt"]').forEach(r => r.checked = false);
 }
@@ -939,16 +973,16 @@ function resetQuestionForm() {
 // BULK IMPORT
 // ══════════════════════════════════════════════════════
 function previewBulk() {
-  const raw = document.getElementById('bulk-json').value.trim();
+  const raw     = document.getElementById('bulk-json').value.trim();
   const preview = document.getElementById('bulk-preview');
   try {
     const arr = JSON.parse(raw);
     if (!Array.isArray(arr)) throw new Error('Must be a JSON array');
     preview.style.display = 'block';
-    preview.innerHTML = `✅ Valid JSON — <strong>${arr.length} questions</strong> ready to import.<br>First question: "${arr[0]?.question?.substring(0,80)}…"`;
+    preview.innerHTML = `✅ Valid JSON — <strong>${arr.length} questions</strong> ready to import.<br>First: "${escHtml(arr[0]?.question?.substring(0,80))}…"`;
   } catch(e) {
     preview.style.display = 'block';
-    preview.innerHTML = `❌ Invalid JSON: ${e.message}`;
+    preview.innerHTML = `❌ Invalid JSON: ${escHtml(e.message)}`;
   }
 }
 
@@ -962,27 +996,25 @@ async function importBulk() {
   try { questions = JSON.parse(raw); } catch(e) { return toast('Invalid JSON: ' + e.message, 'error'); }
   if (!Array.isArray(questions) || questions.length === 0) return toast('Must be a non-empty array', 'error');
 
-  // Backend expects: { test_id, questions: [...] } — test_id at top level
   const payload = {
     test_id: testId,
     questions: questions.map(q => ({
       question:    q.question,
       options:     q.options,
       correct_idx: q.correct_idx,
-      category:    q.category || "General",
-      difficulty:  q.difficulty || "medium",
-      explanation: q.explanation || ""
+      category:    q.category    || 'General',
+      difficulty:  q.difficulty  || 'medium',
+      explanation: q.explanation || ''
     }))
   };
 
   try {
-    const data = await api("POST", "/api/questions/bulk", payload);
+    const data = await api('POST', '/api/questions/bulk', payload);
     toast(`✅ Imported ${data.count || questions.length} questions!`, 'success');
     closeModal('bulk-modal');
     document.getElementById('bulk-json').value = '';
     document.getElementById('bulk-preview').style.display = 'none';
-    const filter = document.getElementById('q-test-filter').value;
-    if (filter === testId) loadQuestions();
+    if (document.getElementById('q-test-filter').value === testId) loadQuestions();
   } catch(e) { toast(e.message, 'error'); }
 }
 
@@ -991,17 +1023,17 @@ async function importBulk() {
 // ══════════════════════════════════════════════════════
 async function loadUsers() {
   try {
-    const data = await api('GET', '/api/users?limit=100');
+    const data  = await api('GET', '/api/users?limit=100');
     const users = data.users || [];
     document.getElementById('users-body').innerHTML = users.length
       ? users.map(u => `<tr>
-          <td class="td-main">${u.name}</td>
-          <td style="color:#64748b">${u.email}</td>
+          <td class="td-main">${escHtml(u.name)}</td>
+          <td style="color:#64748b">${escHtml(u.email)}</td>
           <td><span class="badge role-${u.role}">${u.role}</span></td>
           <td><span class="badge ${u.is_active?'badge-green':'badge-red'}">${u.is_active?'Active':'Inactive'}</span></td>
           <td style="color:#475569">${formatDate(u.created_at)}</td>
           <td><div class="td-actions">
-            <button class="btn btn-ghost btn-sm" onclick="openRoleModal('${u.id}','${u.name}','${u.role}')">👑 Role</button>
+            <button class="btn btn-ghost btn-sm" onclick="openRoleModal('${u.id}','${escHtml(u.name).replace(/'/g,"\\'")}','${u.role}')">👑 Role</button>
             <button class="btn btn-danger btn-sm" onclick="toggleUser('${u.id}','${u.is_active}')">${u.is_active?'Deactivate':'Activate'}</button>
           </div></td>
         </tr>`).join('')
@@ -1010,9 +1042,9 @@ async function loadUsers() {
 }
 
 function openRoleModal(id, name, role) {
-  document.getElementById('role-user-id').value    = id;
+  document.getElementById('role-user-id').value         = id;
   document.getElementById('role-user-name').textContent = `Changing role for: ${name}`;
-  document.getElementById('role-select').value     = role;
+  document.getElementById('role-select').value          = role;
   openModal('role-modal');
 }
 
@@ -1021,61 +1053,65 @@ async function saveRole() {
   const role = document.getElementById('role-select').value;
   try {
     await api('PATCH', `/api/users/${id}/role`, { role });
-    toast('Role updated!', 'success');
-    closeModal('role-modal');
-    loadUsers();
+    toast('Role updated!', 'success'); closeModal('role-modal'); loadUsers();
   } catch(e) { toast(e.message, 'error'); }
 }
 
 async function toggleUser(id, isActive) {
-  const action = isActive === 'true' ? 'deactivate' : 'activate';
-  if (!confirm(`${action.charAt(0).toUpperCase()+action.slice(1)} this user?`)) return;
+  const action = isActive === 'true' ? 'Deactivate' : 'Activate';
+  if (!confirm(`${action} this user?`)) return;
   try {
     await api('PATCH', `/api/users/${id}/status`, { is_active: isActive !== 'true' });
-    toast(`User ${action}d`, 'success');
-    loadUsers();
+    toast(`User ${action.toLowerCase()}d`, 'success'); loadUsers();
   } catch(e) { toast(e.message, 'error'); }
 }
 
 // ══════════════════════════════════════════════════════
 // HELPERS
 // ══════════════════════════════════════════════════════
+function escHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+
 function populateExamSelects() {
-  const opts = allExams.map(e => `<option value="${e.id}">${e.icon||''} ${e.name}</option>`).join('');
+  const opts = allExams.map(e => `<option value="${e.id}">${escHtml(e.icon||'')} ${escHtml(e.name)}</option>`).join('');
   document.getElementById('test-exam-id').innerHTML = '<option value="">— Select Exam —</option>' + opts;
 }
 
 function populateTestSelects() {
-  const opts = allTests.map(t => `<option value="${t.id}">${t.title}</option>`).join('');
+  const opts = allTests.map(t => `<option value="${t.id}">${escHtml(t.title)}</option>`).join('');
   ['question-test-id','bulk-test-id','q-test-filter'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.innerHTML = '<option value="">— Select Test —</option>' + opts;
   });
 }
 
-function openModal(id) {
-  // Pre-populate test selects when opening question/bulk modals
+async function openModal(id) {
   if (id === 'question-modal' || id === 'bulk-modal') {
-    if (allTests.length === 0) loadTests().then(populateTestSelects);
-    else populateTestSelects();
-    // Pre-select current filter test
+    // FIX: properly await test loading before populating selects
+    if (allTests.length === 0) {
+      try {
+        const d  = await api('GET', '/api/tests?limit=100&admin=true');
+        allTests = d.tests || [];
+      } catch(_) {}
+    }
+    populateTestSelects();
     const filter = document.getElementById('q-test-filter')?.value;
     if (filter) {
       const sel = document.getElementById(id === 'question-modal' ? 'question-test-id' : 'bulk-test-id');
       if (sel) sel.value = filter;
     }
   }
-  if (id === 'test-modal') {
-    populateExamSelects();
-    resetTestForm();
-  }
-  if (id === 'exam-modal') resetExamForm();
+  if (id === 'test-modal')  { populateExamSelects(); resetTestForm(); }
+  if (id === 'exam-modal')  { resetExamForm(); }
   document.getElementById(id).classList.add('open');
 }
 
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 
-// Close modal on background click
 document.querySelectorAll('.modal-bg').forEach(bg => {
   bg.addEventListener('click', e => { if(e.target === bg) bg.classList.remove('open'); });
 });
@@ -1095,9 +1131,8 @@ function formatDate(iso) {
 function toast(msg, type='success') {
   const el = document.createElement('div');
   el.className = `toast ${type}`;
-  el.innerHTML = (type==='success'?'✅ ':'❌ ') + msg;
-  const container = document.getElementById('toast-container');
-  container.appendChild(el);
+  el.innerHTML = (type==='success'?'✅ ':'❌ ') + escHtml(msg);
+  document.getElementById('toast-container').appendChild(el);
   setTimeout(() => el.remove(), 4000);
 }
 
@@ -1105,12 +1140,13 @@ function toast(msg, type='success') {
 document.getElementById('exam-name').addEventListener('input', function() {
   const slug = document.getElementById('exam-slug');
   if (!slug.dataset.edited) {
-    slug.value = this.value.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    slug.value = this.value.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
   }
 });
 document.getElementById('exam-slug').addEventListener('input', function() {
   this.dataset.edited = 'true';
 });
+
 </script>
 </body>
 </html>
