@@ -332,7 +332,7 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
       <span class="exam-title-tag">Maha Mock Test Platform</span>
     </div>
     <div class="top-right">
-      <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">🌊</button>
+      <button class="theme-toggle" onclick="_0x7d8c()" title="Toggle theme">🌊</button>
       <div class="user-pill-topbar" id="topbar-user" style="display:none">
         <div class="user-avatar-sm" id="topbar-avatar">?</div>
         <span class="user-name-sm" id="topbar-name">User</span>
@@ -345,13 +345,13 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
     <div class="select-hero">
       <span class="eyebrow">Choose Your Test</span>
       <h1>Available Mock Tests</h1>
-      <p id="select-subtitle">Loading tests from database…</p>
+      <p id="select-subtitle">Loading available tests…</p>
     </div>
 
     <!-- Loading state -->
     <div id="loading-state" class="loading-state">
       <span class="loading-spinner">⏳</span>
-      Fetching tests from database…
+      Fetching available tests…
     </div>
 
     <!-- Error state -->
@@ -359,7 +359,7 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
       <div class="big">⚠️</div>
       <h3>Could not load tests</h3>
       <p id="error-msg">Unable to connect to the server. Showing demo tests instead.</p>
-      <button class="btn btn-blue" onclick="loadTests()">↺ Retry</button>
+      <button class="btn btn-blue" onclick="_0x9b0a()">↺ Retry</button>
     </div>
 
     <!-- Tests list (shown after load) -->
@@ -367,7 +367,7 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
       <div class="filter-bar">
         <div class="search-box">
           <span>🔍</span>
-          <input type="text" id="search-input" placeholder="Search tests…" oninput="filterTests()">
+          <input type="text" id="search-input" placeholder="Search tests…" oninput="_0x5b6a()">
         </div>
         <div id="filter-chips"></div>
       </div>
@@ -387,11 +387,11 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
   <div class="top-bar" style="position:absolute;top:0;left:0;right:0;">
     <a class="brand" href="/"><div class="brand-logo">📚</div><div class="brand-name">Spardha<em>Box</em></div></a>
     <div class="top-right">
-      <button class="theme-toggle" onclick="toggleTheme()">🌊</button>
+      <button class="theme-toggle" onclick="_0x7d8c()">🌊</button>
     </div>
   </div>
   <div class="login-card">
-    <button class="back-btn" onclick="goBack('select-screen')">← Back to Tests</button>
+    <button class="back-btn" onclick="_0x9b1a('select-screen')">← Back to Tests</button>
     <div class="login-icon" id="login-icon">📋</div>
     <h2 id="login-title">Loading…</h2>
     <div class="subtitle" id="login-subtitle">SpardhaBox · Maha Mock Test</div>
@@ -413,7 +413,7 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
     <div class="guest-notice" id="guest-notice" style="display:none">
       ℹ️ You are taking this test as a <strong>guest</strong>. Your score won't be saved. <a href="/" style="color:var(--blue);font-weight:700;text-decoration:underline">Login</a> to save progress.
     </div>
-    <button class="btn-full" onclick="startTest()">🚀 &nbsp;Begin Exam</button>
+    <button class="btn-full" onclick="_0x1d2c()">🚀 &nbsp;Begin Exam</button>
   </div>
 </div>
 
@@ -427,7 +427,7 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
       <span class="section-pill">Section A</span>
     </div>
     <div class="top-right">
-      <button class="theme-toggle" onclick="toggleTheme()">🌊</button>
+      <button class="theme-toggle" onclick="_0x7d8c()">🌊</button>
       <div class="timer-block">
         <span>⏱</span>
         <div>
@@ -482,15 +482,15 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
 
   <div class="action-bar">
     <div class="action-left">
-      <button class="btn btn-ghost btn-sm" onclick="navigate(-1)">← Prev</button>
-      <button class="btn btn-amber btn-sm" onclick="markReview()">🔖 Mark &amp; Next</button>
-      <button class="btn btn-outline btn-sm" onclick="clearResp()">✕ Clear</button>
-      <button class="btn btn-ghost btn-sm mob-palette-trigger" onclick="openMobPalette()">🗂 Palette</button>
+      <button class="btn btn-ghost btn-sm" onclick="_0x7f8e(-1)">← Prev</button>
+      <button class="btn btn-amber btn-sm" onclick="_0x9d0c()">🔖 Mark &amp; Next</button>
+      <button class="btn btn-outline btn-sm" onclick="_0x1b2a()">✕ Clear</button>
+      <button class="btn btn-ghost btn-sm mob-palette-trigger" onclick="_0x1d3c()">🗂 Palette</button>
     </div>
     <div class="action-right">
-      <button class="btn btn-ghost btn-sm" onclick="navigate(1)">Next →</button>
-      <button class="btn btn-blue btn-sm" onclick="saveNext()">Save &amp; Next</button>
-      <button class="btn btn-green btn-sm" onclick="openSubmitModal()">Submit Exam</button>
+      <button class="btn btn-ghost btn-sm" onclick="_0x7f8e(1)">Next →</button>
+      <button class="btn btn-blue btn-sm" onclick="_0x5988()">Save &amp; Next</button>
+      <button class="btn btn-green btn-sm" onclick="_0x9908()">Submit Exam</button>
     </div>
   </div>
 </div>
@@ -502,9 +502,9 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
     <a class="brand" href="/"><div class="brand-logo">📚</div><div class="brand-name">Spardha<em>Box</em></div></a>
     <div class="top-center"><span class="exam-title-tag">Performance Report</span></div>
     <div class="top-right">
-      <button class="theme-toggle" onclick="toggleTheme()">🌊</button>
-      <button class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,.4)" onclick="goBack('select-screen')">← All Tests</button>
-      <button class="btn btn-blue btn-sm" onclick="retakeTest()">↺ Retake</button>
+      <button class="theme-toggle" onclick="_0x7d8c()">🌊</button>
+      <button class="btn btn-outline btn-sm" style="color:#fff;border-color:rgba(255,255,255,.4)" onclick="_0x9b1a('select-screen')">← All Tests</button>
+      <button class="btn btn-blue btn-sm" onclick="_0x5d7e()">↺ Retake</button>
     </div>
   </div>
   <div class="result-body">
@@ -536,9 +536,9 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
 
 
 <!-- MOBILE PALETTE -->
-<div class="mob-palette-overlay" id="mob-palette-overlay" onclick="closeMobPaletteOutside(event)">
+<div class="mob-palette-overlay" id="mob-palette-overlay" onclick="_0x5b7a(event)">
   <div class="mob-palette-sheet">
-    <div class="mob-palette-header"><h3>📋 Question Palette</h3><button class="mob-palette-close" onclick="closeMobPalette()">✕</button></div>
+    <div class="mob-palette-header"><h3>📋 Question Palette</h3><button class="mob-palette-close" onclick="_0x3f5e()">✕</button></div>
     <div class="mob-palette-stats">
       <div class="stat-cell"><div class="stat-dot d-green" id="ms-ans">0</div><div><div class="stat-val" style="color:var(--green)">Answered</div><div class="stat-lbl">Attempted</div></div></div>
       <div class="stat-cell"><div class="stat-dot d-red" id="ms-nans">0</div><div><div class="stat-val" style="color:var(--red)">Not Ans.</div><div class="stat-lbl">Skipped</div></div></div>
@@ -567,511 +567,24 @@ body{font-family:'Sora',sans-serif;background:var(--bg);color:var(--text);font-s
       <div class="modal-stat"><div class="m-val c-amber" id="m-rev">0</div><div class="m-lbl">Review</div></div>
     </div>
     <div class="modal-actions">
-      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
-      <button class="btn btn-green" onclick="submitTest()">Submit Now</button>
+      <button class="btn btn-outline" onclick="_0x1f30()">Cancel</button>
+      <button class="btn btn-green" onclick="_0x3b5a()">Submit Now</button>
     </div>
   </div>
 </div>
 
 
-<script>
-// ══════════════════════════════════════════════════════
-// CONFIG
-// ══════════════════════════════════════════════════════
-const API = 'https://spardhabox-backend-production.up.railway.app';
-
-// ══════════════════════════════════════════════════════
-// AUTH STATE
-// ══════════════════════════════════════════════════════
-let currentUser  = null;
-let accessToken  = null;
-
-function initAuth() {
-  try {
-    const stored = localStorage.getItem('sb_user');
-    accessToken  = localStorage.getItem('sb_token');
-    if (stored && accessToken) {
-      currentUser = JSON.parse(stored);
-      const initials = currentUser.name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
-      document.getElementById('topbar-user').style.display = 'flex';
-      document.getElementById('topbar-avatar').textContent  = initials;
-      document.getElementById('topbar-name').textContent    = currentUser.name.split(' ')[0];
-    }
-  } catch(_) {}
-}
-initAuth();
-
-// ══════════════════════════════════════════════════════
-// THEME
-// ══════════════════════════════════════════════════════
-let currentTheme = localStorage.getItem('sb_theme') || 'edtech-blue';
-function applyTheme(t) {
-  currentTheme = t;
-  document.documentElement.setAttribute('data-theme', t);
-  localStorage.setItem('sb_theme', t);
-  const isBlue = t === 'edtech-blue';
-  document.querySelectorAll('.theme-toggle').forEach(b => {
-    b.textContent = isBlue ? '🌊' : '🔵';
-  });
-}
-function toggleTheme() { applyTheme(currentTheme === 'edtech-blue' ? 'edtech-navy' : 'edtech-blue'); }
-applyTheme(currentTheme);
-
-// ══════════════════════════════════════════════════════
-// TESTS DATA (loaded from DB, fallback to static)
-// ══════════════════════════════════════════════════════
-let TESTS_DB = [];
-let activeCategory = 'All';
-
-// Fallback demo tests when DB has no data yet
-const DEMO_TESTS = [
-  {
-    id: 'demo-1',
-    title: 'Demo: General Knowledge – 5Q',
-    description: 'Sample test to verify your setup. Add real tests via the admin API.',
-    duration_mins: 5,
-    total_marks: 5,
-    is_free: true,
-    attempt_count: 0,
-    exam: { name: 'Demo', icon: '🎯' },
-    questions: [
-      { id:'d1', q_number:1, question:'Capital of Maharashtra?', options:['Pune','Mumbai','Nagpur','Aurangabad'], correct_idx:1, category:'GK' },
-      { id:'d2', q_number:2, question:'First Chief Minister of Maharashtra?', options:['Y.B. Chavan','Sharad Pawar','Vasantrao Naik','A.R. Antulay'], correct_idx:0, category:'History' },
-      { id:'d3', q_number:3, question:'Largest district in Maharashtra by area?', options:['Pune','Nashik','Ahmednagar','Aurangabad'], correct_idx:2, category:'Geography' },
-      { id:'d4', q_number:4, question:'Who wrote the Indian National Anthem?', options:['Bankim Chandra','Rabindranath Tagore','Sarojini Naidu','Sushila Nayar'], correct_idx:1, category:'History' },
-      { id:'d5', q_number:5, question:'Brain of the computer?', options:['ALU','CPU','RAM','ROM'], correct_idx:1, category:'Computer' }
-    ]
-  }
-];
-
-async function loadTests() {
-  document.getElementById('loading-state').style.display = 'block';
-  document.getElementById('error-state').style.display   = 'none';
-  document.getElementById('tests-loaded').style.display  = 'none';
-
-  try {
-    const res  = await fetch(`${API}/api/tests?published=true`, {
-      headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {}
-    });
-    if (!res.ok) throw new Error('Server error');
-    const data = await res.json();
-
-    // For each test, load questions
-    const testsWithQ = await Promise.all((data.tests || []).map(async test => {
-      try {
-        const qRes  = await fetch(`${API}/api/tests/${test.id}`, {
-          headers: accessToken ? { Authorization: `Bearer ${accessToken}` } : {}
-        });
-        const qData = await qRes.json();
-        return { ...test, questions: qData.test?.questions || [] };
-      } catch(_) {
-        return { ...test, questions: [] };
-      }
-    }));
-
-    TESTS_DB = testsWithQ.filter(t => t.questions.length > 0);
-
-    if (TESTS_DB.length === 0) {
-      // No tests in DB yet — show demo
-      TESTS_DB = DEMO_TESTS;
-      document.getElementById('select-subtitle').textContent = 'Showing demo test — add real questions via the admin panel.';
-    } else {
-      document.getElementById('select-subtitle').textContent = `${TESTS_DB.length} test${TESTS_DB.length > 1 ? 's' : ''} available`;
-    }
-
-    document.getElementById('loading-state').style.display = 'none';
-    document.getElementById('tests-loaded').style.display  = 'block';
-    buildTestCards();
-
-  } catch (err) {
-    console.error(err);
-    // Fallback to demo tests
-    TESTS_DB = DEMO_TESTS;
-    document.getElementById('loading-state').style.display = 'none';
-    document.getElementById('error-state').style.display   = 'block';
-    document.getElementById('error-msg').textContent       = 'Could not reach server. Showing demo test.';
-    document.getElementById('tests-loaded').style.display  = 'block';
-    document.getElementById('select-subtitle').textContent = 'Demo mode — server unavailable';
-    buildTestCards();
-  }
-}
-
-loadTests();
-
-// ══════════════════════════════════════════════════════
-// BUILD TEST CARDS
-// ══════════════════════════════════════════════════════
-function buildTestCards() {
-  const grid = document.getElementById('tests-grid');
-  grid.innerHTML = '';
-
-  // Exam category chips
-  const cats = ['All', ...new Set(TESTS_DB.map(t => t.exam?.name || 'General'))];
-  const chipsEl = document.getElementById('filter-chips');
-  chipsEl.innerHTML = cats.map(c =>
-    `<button class="filter-chip ${c === activeCategory ? 'active' : ''}" onclick="setCategory('${c}')">${c}</button>`
-  ).join('');
-
-  const search = (document.getElementById('search-input')?.value || '').toLowerCase();
-  let shown = 0;
-
-  TESTS_DB.forEach((test, idx) => {
-    const examName = test.exam?.name || 'General';
-    const matchCat = activeCategory === 'All' || examName === activeCategory;
-    const matchQ   = (test.title || '').toLowerCase().includes(search) ||
-                     (test.description || '').toLowerCase().includes(search);
-    if (!matchCat || !matchQ) return;
-    shown++;
-
-    const dur    = formatDuration((test.duration_mins || 60) * 60);
-    const badge  = test.is_free ? 'free' : 'premium';
-    const bText  = test.is_free ? 'FREE' : 'PREMIUM';
-    const icon   = test.exam?.icon || '📋';
-    const cats2  = [...new Set((test.questions || []).map(q => q.category).filter(Boolean))].slice(0,4);
-    const delay  = (idx % 8) * 60;
-
-    const card = document.createElement('div');
-    card.className = 'test-card';
-    card.style.animationDelay = delay + 'ms';
-    card.innerHTML = `
-      <div class="test-card-top">
-        <div class="test-icon" style="background:var(--blue-light)">${icon}</div>
-        <span class="test-status-badge badge-${badge}">${bText}</span>
-      </div>
-      <div class="test-name">${test.title}</div>
-      <div class="test-desc">${test.description || ''}</div>
-      <div class="test-meta">
-        <div class="test-meta-item">📋 <strong>${test.questions?.length || 0}</strong> Questions</div>
-        <div class="test-meta-item">⏱ <strong>${dur}</strong></div>
-        <div class="test-meta-item">⭐ <strong>+1</strong>/Q</div>
-        <div class="test-meta-item">👥 <strong>${test.attempt_count || 0}</strong> Attempts</div>
-      </div>
-      <div class="test-tags">${cats2.map(c => `<span class="test-tag">${c}</span>`).join('')}</div>
-      <div class="test-card-footer">
-        <button class="start-btn" onclick="selectTest(${idx})">Start Test →</button>
-      </div>`;
-    grid.appendChild(card);
-  });
-
-  document.getElementById('no-results').style.display = shown === 0 ? 'block' : 'none';
-}
-
-function setCategory(cat) { activeCategory = cat; buildTestCards(); }
-function filterTests() { buildTestCards(); }
-function formatDuration(secs) {
-  const m = Math.floor(secs / 60);
-  return m >= 60 ? `${Math.floor(m/60)}h ${m%60}m` : `${m} min`;
-}
-
-// ══════════════════════════════════════════════════════
-// EXAM STATE
-// ══════════════════════════════════════════════════════
-let activeTest    = null;
-let attemptId     = null;
-let current       = 0;
-let answers       = [];
-let status        = [];
-let timeLeft      = 0;
-let timerInterval = null;
-let startedAt     = null;
-
-function selectTest(idx) {
-  activeTest = TESTS_DB[idx];
-  const t    = activeTest;
-  const dur  = formatDuration((t.duration_mins || 60) * 60);
-
-  document.getElementById('login-icon').textContent     = t.exam?.icon || '📋';
-  document.getElementById('login-title').textContent    = t.title;
-  document.getElementById('login-subtitle').textContent = `SpardhaBox · ${t.exam?.name || 'Mock Test'}`;
-  document.getElementById('li-name').textContent        = t.title;
-  document.getElementById('li-duration').textContent    = dur;
-  document.getElementById('li-questions').textContent   = t.questions?.length || 0;
-  document.getElementById('li-marks').textContent       = t.total_marks || t.questions?.length || 0;
-
-  // Show guest notice if not logged in
-  document.getElementById('guest-notice').style.display = currentUser ? 'none' : 'flex';
-
-  switchScreen('select-screen', 'login-screen');
-}
-
-async function startTest() {
-  const t    = activeTest;
-  answers    = Array(t.questions.length).fill(null);
-  status     = Array(t.questions.length).fill(0);
-  timeLeft   = (t.duration_mins || 60) * 60;
-  startedAt  = new Date().toISOString();
-  attemptId  = null;
-
-  // Set candidate info in sidebar
-  const name = currentUser ? currentUser.name.split(' ')[0] : 'Guest';
-  document.getElementById('cand-name').textContent     = name;
-  document.getElementById('cand-test-name').textContent = t.title;
-  const initials = currentUser
-    ? currentUser.name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase()
-    : '👤';
-  document.getElementById('cand-avatar').textContent = currentUser ? initials : '👤';
-
-  document.getElementById('exam-top-name').textContent = t.title;
-
-  // Start attempt in backend (logged in users only)
-  if (currentUser && accessToken && t.id && !t.id.startsWith('demo')) {
-    try {
-      const res = await fetch(`${API}/api/attempts/start`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessToken}` },
-        body: JSON.stringify({ test_id: t.id })
-      });
-      const data = await res.json();
-      if (res.ok) attemptId = data.attempt?.id;
-    } catch(_) {}
-  }
-
-  switchScreen('login-screen', 'exam-screen');
-  loadQ(0);
-  renderPalette();
-  if (timerInterval) clearInterval(timerInterval);
-  timerInterval = setInterval(tick, 1000);
-  updateTimerDisplay();
-}
-
-// ══════════════════════════════════════════════════════
-// TIMER
-// ══════════════════════════════════════════════════════
-function tick() {
-  timeLeft--;
-  if (timeLeft <= 0) { clearInterval(timerInterval); submitTest(true); return; }
-  updateTimerDisplay();
-}
-function updateTimerDisplay() {
-  const m = Math.floor(timeLeft / 60), s = timeLeft % 60;
-  const el = document.getElementById('timer');
-  el.textContent = `${m}:${s < 10 ? '0'+s : s}`;
-  el.className = 'timer-value' + (timeLeft < 300 ? ' danger' : '');
-}
-
-// ══════════════════════════════════════════════════════
-// QUESTION LOGIC
-// ══════════════════════════════════════════════════════
-const OPTS = ['A','B','C','D','E','F'];
-
-function loadQ(i) {
-  current = i;
-  if (status[i] === 0) status[i] = 2;
-  const q     = activeTest.questions[i];
-  const total = activeTest.questions.length;
-  const opts  = Array.isArray(q.options) ? q.options : (q.o || []);
-
-  document.getElementById('q-badge').textContent     = `Q ${i+1} / ${total}`;
-  document.getElementById('q-cat-badge').textContent = q.category || q.cat || '';
-  document.getElementById('q-num-lbl').textContent   = `Question ${i+1}`;
-  document.getElementById('q-text').textContent      = q.question || q.q || '';
-  document.getElementById('q-progress').style.width  = `${((i+1)/total)*100}%`;
-
-  const area = document.getElementById('options-area');
-  area.innerHTML = '';
-  opts.forEach((opt, idx) => {
-    const lbl = document.createElement('label');
-    lbl.className = 'option-label' + (answers[i] === idx ? ' selected' : '');
-    lbl.innerHTML = `
-      <input type="radio" name="opt" value="${idx}" ${answers[i] === idx ? 'checked' : ''}>
-      <span class="opt-letter">${OPTS[idx]}</span>
-      <span class="opt-text">${opt}</span>
-      <span class="opt-check">✓</span>`;
-    lbl.querySelector('input').addEventListener('change', () => {
-      document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected'));
-      lbl.classList.add('selected');
-      answers[current] = idx;
-      status[current]  = 1;
-      updatePalette(); updateStats();
-    });
-    area.appendChild(lbl);
-  });
-  updatePalette(); updateStats();
-}
-
-function saveNext() {
-  const sel = document.querySelector('input[name="opt"]:checked');
-  if (sel) { answers[current] = parseInt(sel.value); status[current] = 1; }
-  else status[current] = 2;
-  navigate(1);
-}
-function navigate(dir) {
-  const next = current + dir;
-  if (next >= 0 && next < activeTest.questions.length) loadQ(next);
-}
-function markReview() {
-  const sel = document.querySelector('input[name="opt"]:checked');
-  if (sel) answers[current] = parseInt(sel.value);
-  status[current] = 3;
-  navigate(1);
-}
-function clearResp() { answers[current] = null; status[current] = 2; loadQ(current); }
-
-// ══════════════════════════════════════════════════════
-// PALETTE
-// ══════════════════════════════════════════════════════
-function renderPalette() {
-  const grid = document.getElementById('palette');
-  grid.innerHTML = '';
-  activeTest.questions.forEach((_, i) => {
-    const btn = document.createElement('div');
-    btn.className = 'q-btn'; btn.id = `p${i}`; btn.textContent = i+1;
-    btn.onclick = () => loadQ(i);
-    grid.appendChild(btn);
-  });
-  updatePalette();
-}
-function updatePalette() {
-  activeTest.questions.forEach((_, i) => {
-    const b = document.getElementById(`p${i}`);
-    if (!b) return;
-    b.className = 'q-btn' + (i === current ? ' current' : '') +
-      (status[i]===1 ? ' st-1' : status[i]===2 ? ' st-2' : status[i]===3 ? ' st-3' : '');
-  });
-}
-function updateStats() {
-  let ans=0, notAns=0, nvis=0, rev=0;
-  status.forEach(s => { if(s===1)ans++; else if(s===2)notAns++; else if(s===3)rev++; else nvis++; });
-  document.getElementById('s-ans').textContent  = ans;
-  document.getElementById('s-nans').textContent = notAns;
-  document.getElementById('s-nvis').textContent = nvis;
-  document.getElementById('s-rev').textContent  = rev;
-}
-
-// ══════════════════════════════════════════════════════
-// SUBMIT MODAL
-// ══════════════════════════════════════════════════════
-function openSubmitModal() {
-  let ans=0, nan=0, rev=0;
-  status.forEach(s => { if(s===1)ans++; else if(s===3)rev++; else nan++; });
-  document.getElementById('m-ans').textContent = ans;
-  document.getElementById('m-nan').textContent = nan;
-  document.getElementById('m-rev').textContent = rev;
-  document.getElementById('submit-modal').classList.add('open');
-}
-function closeModal() { document.getElementById('submit-modal').classList.remove('open'); }
-document.getElementById('submit-modal').addEventListener('click', e => {
-  if (e.target === document.getElementById('submit-modal')) closeModal();
+<script>(function(){
+var _bm='\x3c\x64\x69\x76\x20\x73\x74\x79\x6c\x65\x3d\x22\x66\x6f\x6e\x74\x2d\x66\x61\x6d\x69\x6c\x79\x3a\x73\x61\x6e\x73\x2d\x73\x65\x72\x69\x66\x3b\x70\x61\x64\x64\x69\x6e\x67\x3a\x38\x30\x70\x78\x3b\x74\x65\x78\x74\x2d\x61\x6c\x69\x67\x6e\x3a\x63\x65\x6e\x74\x65\x72\x3b\x62\x61\x63\x6b\x67\x72\x6f\x75\x6e\x64\x3a\x23\x30\x66\x31\x62\x33\x35\x3b\x63\x6f\x6c\x6f\x72\x3a\x23\x66\x66\x66\x3b\x68\x65\x69\x67\x68\x74\x3a\x31\x30\x30\x76\x68\x3b\x64\x69\x73\x70\x6c\x61\x79\x3a\x66\x6c\x65\x78\x3b\x61\x6c\x69\x67\x6e\x2d\x69\x74\x65\x6d\x73\x3a\x63\x65\x6e\x74\x65\x72\x3b\x6a\x75\x73\x74\x69\x66\x79\x2d\x63\x6f\x6e\x74\x65\x6e\x74\x3a\x63\x65\x6e\x74\x65\x72\x3b\x66\x6c\x65\x78\x2d\x64\x69\x72\x65\x63\x74\x69\x6f\x6e\x3a\x63\x6f\x6c\x75\x6d\x6e\x22\x3e\x3c\x68\x32\x3e\x26\x23\x31\x32\x38\x36\x38\x33\x3b\x20\x41\x63\x63\x65\x73\x73\x20\x52\x65\x73\x74\x72\x69\x63\x74\x65\x64\x3c\x2f\x68\x32\x3e\x3c\x70\x20\x73\x74\x79\x6c\x65\x3d\x22\x63\x6f\x6c\x6f\x72\x3a\x23\x38\x38\x39\x39\x62\x62\x3b\x6d\x61\x72\x67\x69\x6e\x2d\x74\x6f\x70\x3a\x31\x32\x70\x78\x22\x3e\x44\x65\x76\x65\x6c\x6f\x70\x65\x72\x20\x74\x6f\x6f\x6c\x73\x20\x61\x72\x65\x20\x6e\x6f\x74\x20\x70\x65\x72\x6d\x69\x74\x74\x65\x64\x20\x6f\x6e\x20\x74\x68\x69\x73\x20\x70\x6c\x61\x74\x66\x6f\x72\x6d\x2e\x3c\x2f\x70\x3e\x3c\x2f\x64\x69\x76\x3e';
+var _bl=function(){document.body.innerHTML=_bm;};
+var _ck=function(){var _s=+new Date();(function(){}).constructor('\x64\x65\x62\x75\x67\x67\x65\x72')();if(+new Date()-_s>160){_bl();}};
+setInterval(_ck,800);
+window.addEventListener('\x64\x65\x76\x74\x6f\x6f\x6c\x73\x63\x68\x61\x6e\x67\x65',function(e){if(e['\x69\x73\x4f\x70\x65\x6e'])_bl();});
+document.addEventListener('\x63\x6f\x6e\x74\x65\x78\x74\x6d\x65\x6e\x75',function(e){e.preventDefault();});
+document.addEventListener('\x6b\x65\x79\x64\x6f\x77\x6e',function(e){
+if(e.keyCode===123||(e.ctrlKey&&e.shiftKey&&(e.keyCode===73||e.keyCode===74||e.keyCode===67))||(e.ctrlKey&&e.keyCode===85)){e.preventDefault();return false;}
 });
-
-// ══════════════════════════════════════════════════════
-// SUBMIT & SAVE SCORE
-// ══════════════════════════════════════════════════════
-async function submitTest(auto = false) {
-  if (!auto) closeModal();
-  clearInterval(timerInterval);
-
-  const qs = activeTest.questions;
-  let score=0, wrong=0, skipped=0, html='';
-  const answersPayload = [];
-
-  qs.forEach((q, i) => {
-    const correctIdx = q.correct_idx ?? q.a;
-    const attempted  = answers[i] !== null;
-    const correct    = attempted && answers[i] === correctIdx;
-    if (correct) score++;
-    else if (!attempted) skipped++;
-    else wrong++;
-
-    const opts   = Array.isArray(q.options) ? q.options : (q.o || []);
-    const userAns = attempted ? opts[answers[i]] : '—';
-    const tag = !attempted
-      ? '<span class="tag tag-s">⬤ Skipped</span>'
-      : correct
-        ? '<span class="tag tag-c">✓ Correct</span>'
-        : '<span class="tag tag-w">✗ Wrong</span>';
-
-    html += `<tr>
-      <td class="q-no">${i+1}</td>
-      <td>${q.question || q.q}</td>
-      <td class="ans-val">${userAns}</td>
-      <td class="ans-val">${opts[correctIdx]}</td>
-      <td>${tag}</td>
-    </tr>`;
-
-    answersPayload.push({
-      question_id: q.id,
-      selected_idx: answers[i],
-      is_correct: correct,
-      time_taken: 0
-    });
-  });
-
-  const attempted = score + wrong;
-  const accuracy  = attempted > 0 ? Math.round((score / attempted) * 100) : 0;
-  const total     = qs.length;
-  const timeTaken = ((activeTest.duration_mins || 60) * 60) - timeLeft;
-
-  document.getElementById('res-score').textContent     = score;
-  document.getElementById('res-denom').textContent     = `out of ${total}`;
-  document.getElementById('res-test-name').textContent = activeTest.title;
-  document.getElementById('res-correct').textContent   = score;
-  document.getElementById('res-wrong').textContent     = wrong;
-  document.getElementById('res-skipped').textContent   = skipped;
-  document.getElementById('res-accuracy').textContent  = accuracy + '%';
-  document.getElementById('result-body').innerHTML     = html;
-
-  // Save to backend if logged in
-  document.getElementById('score-saved-badge').style.display = 'none';
-  document.getElementById('score-guest-badge').style.display = 'none';
-
-  if (currentUser && accessToken && attemptId) {
-    try {
-      const res = await fetch(`${API}/api/attempts/${attemptId}/submit`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${accessToken}` },
-        body: JSON.stringify({ answers: answersPayload, time_taken_secs: timeTaken })
-      });
-      if (res.ok) {
-        document.getElementById('score-saved-badge').style.display = 'inline-flex';
-      }
-    } catch(_) {}
-  } else if (!currentUser) {
-    document.getElementById('score-guest-badge').style.display = 'inline-flex';
-  }
-
-  switchScreen('exam-screen', 'result-screen');
-}
-
-function retakeTest() { switchScreen('result-screen', 'login-screen'); }
-
-// ══════════════════════════════════════════════════════
-// NAVIGATION UTILS
-// ══════════════════════════════════════════════════════
-function switchScreen(from, to) {
-  document.getElementById(from).classList.remove('active-screen');
-  document.getElementById(to).classList.add('active-screen');
-}
-function goBack(screen) {
-  ['select-screen','login-screen','exam-screen','result-screen'].forEach(s => {
-    document.getElementById(s).classList.remove('active-screen');
-  });
-  if (screen === 'select-screen') { clearInterval(timerInterval); buildTestCards(); }
-  document.getElementById(screen).classList.add('active-screen');
-}
-
-// ══════════════════════════════════════════════════════
-// MOBILE PALETTE
-// ══════════════════════════════════════════════════════
-function openMobPalette() { syncMobPalette(); document.getElementById('mob-palette-overlay').classList.add('open'); }
-function closeMobPalette() { document.getElementById('mob-palette-overlay').classList.remove('open'); }
-function closeMobPaletteOutside(e) { if (e.target === document.getElementById('mob-palette-overlay')) closeMobPalette(); }
-function syncMobPalette() {
-  const grid = document.getElementById('mob-palette');
-  grid.innerHTML = '';
-  activeTest.questions.forEach((_, i) => {
-    const btn = document.createElement('div');
-    btn.className = 'q-btn' + (i===current?' current':'') +
-      (status[i]===1?' st-1':status[i]===2?' st-2':status[i]===3?' st-3':'');
-    btn.textContent = i+1;
-    btn.onclick = () => { loadQ(i); closeMobPalette(); };
-    grid.appendChild(btn);
-  });
-  let ans=0, notAns=0, nvis=0, rev=0;
-  status.forEach(s => { if(s===1)ans++; else if(s===2)notAns++; else if(s===3)rev++; else nvis++; });
-  const set = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
-  set('ms-ans',ans); set('ms-nans',notAns); set('ms-nvis',nvis); set('ms-rev',rev);
-}
-</script>
+})();
+(function(){const _0x1a2b = 'https: let _0x3c4d = null; let _0x5e6f = null; function _0x2b4d() { try { const stored = localStorage.getItem('sb_user'); _0x5e6f = localStorage.getItem('sb_token'); if (stored && _0x5e6f) { _0x3c4d = JSON.parse(stored); const initials = _0x3c4d.name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase(); document.getElementById('topbar-user').style.display = 'flex'; document.getElementById('topbar-avatar').textContent = initials; document.getElementById('topbar-name').textContent = _0x3c4d.name.split(' ')[0]; } } catch(_) {} } _0x2b4d(); let _0x7a8b = localStorage.getItem('sb_theme') || 'edtech-blue'; function _0x5f6e(t) { _0x7a8b = t; document.documentElement.setAttribute('data-theme', t); localStorage.setItem('sb_theme', t); const isBlue = t === 'edtech-blue'; document.querySelectorAll('.theme-toggle').forEach(b => { b.textContent = isBlue ? '\u1f30a' : '\u1f535'; }); } function _0x7d8c() { _0x5f6e(_0x7a8b === 'edtech-blue' ? 'edtech-navy' : 'edtech-blue'); } _0x5f6e(_0x7a8b); let _0x9c0d = []; let _0x1e2f = 'All'; const _0x3a4b = [ { id: 'demo-1', title: 'Demo: General Knowledge \u2013 5Q', description: 'Sample test \u2014 more tests coming soon.', duration_mins: 5, total_marks: 5, is_free: true, attempt_count: 0, exam: { name: 'Demo', icon: '\u1f3af' }, questions: [ { id:'d1', q_number:1, question:'Capital of Maharashtra?', options:['Pune','Mumbai','Nagpur','Aurangabad'], correct_idx:1, category:'GK' }, { id:'d2', q_number:2, question:'First Chief Minister of Maharashtra?', options:['Y.B. Chavan','Sharad Pawar','Vasantrao Naik','A.R. Antulay'], correct_idx:0, category:'History' }, { id:'d3', q_number:3, question:'Largest district in Maharashtra by area?', options:['Pune','Nashik','Ahmednagar','Aurangabad'], correct_idx:2, category:'Geography' }, { id:'d4', q_number:4, question:'Who wrote the Indian National Anthem?', options:['Bankim Chandra','Rabindranath Tagore','Sarojini Naidu','Sushila Nayar'], correct_idx:1, category:'History' }, { id:'d5', q_number:5, question:'Brain of the computer?', options:['ALU','CPU','RAM','ROM'], correct_idx:1, category:'Computer' } ] } ]; async function _0x9b0a() { document.getElementById('loading-state').style.display = 'block'; document.getElementById('error-state').style.display = 'none'; document.getElementById('tests-loaded').style.display = 'none'; try { const res = await fetch(`${_0x1a2b}/api/tests?published=true`, { headers: _0x5e6f ? { Authorization: `Bearer ${_0x5e6f}` } : {} }); if (!res.ok) throw new Error('Server error'); const data = await res.json(); const testsWithQ = await Promise.all((data.tests || []).map(async test => { try { const qRes = await fetch(`${_0x1a2b}/api/tests/${test.id}`, { headers: _0x5e6f ? { Authorization: `Bearer ${_0x5e6f}` } : {} }); const qData = await qRes.json(); return { ...test, questions: qData.test?.questions || [] }; } catch(_) { return { ...test, questions: [] }; } })); _0x9c0d = testsWithQ.filter(t => t.questions.length > 0); if (_0x9c0d.length === 0) { _0x9c0d = _0x3a4b; document.getElementById('select-subtitle').textContent = 'Showing demo test \u2014 more tests will be available soon.'; } else { document.getElementById('select-subtitle').textContent = `${_0x9c0d.length} test${_0x9c0d.length > 1 ? 's' : ''} available`; } document.getElementById('loading-state').style.display = 'none'; document.getElementById('tests-loaded').style.display = 'block'; _0x1f2e(); } catch (err) { console.error(err); _0x9c0d = _0x3a4b; document.getElementById('loading-state').style.display = 'none'; document.getElementById('error-state').style.display = 'block'; document.getElementById('error-msg').textContent = 'Could not reach server. Showing demo test.'; document.getElementById('tests-loaded').style.display = 'block'; document.getElementById('select-subtitle').textContent = 'Demo mode \u2014 server unavailable'; _0x1f2e(); } } _0x9b0a(); function _0x1f2e() { const grid = document.getElementById('tests-grid'); grid.innerHTML = ''; const cats = ['All', ...new Set(_0x9c0d.map(t => t.exam?.name || 'General'))]; const chipsEl = document.getElementById('filter-chips'); chipsEl.innerHTML = cats.map(c => `<button class="filter-chip ${c === _0x1e2f ? 'active' : ''}" onclick="_0x3d4c('${c}')">${c}</button>` ).join(''); const search = (document.getElementById('search-input')?.value || '').toLowerCase(); let shown = 0; _0x9c0d.forEach((test, idx) => { const examName = test.exam?.name || 'General'; const matchCat = _0x1e2f === 'All' || examName === _0x1e2f; const matchQ = (test.title || '').toLowerCase().includes(search) || (test.description || '').toLowerCase().includes(search); if (!matchCat || !matchQ) return; shown++; const dur = _0x7988((test.duration_mins || 60) * 60); const badge = test.is_free ? 'free' : 'premium'; const bText = test.is_free ? 'FREE' : 'PREMIUM'; const icon = test.exam?.icon || '\u1f4cb'; const cats2 = [...new Set((test.questions || []).map(q => q.category).filter(Boolean))].slice(0,4); const delay = (idx % 8) * 60; const card = document.createElement('div'); card.className = 'test-card'; card.style.animationDelay = delay + 'ms'; card.innerHTML = ` <div class="test-card-top"> <div class="test-icon" style="background:var(--blue-light)">${icon}</div> <span class="test-_0x3e4f-badge badge-${badge}">${bText}</span> </div> <div class="test-name">${test.title}</div> <div class="test-desc">${test.description || ''}</div> <div class="test-meta"> <div class="test-meta-item">📋 <strong>${test.questions?.length || 0}</strong> Questions</div> <div class="test-meta-item">⏱ <strong>${dur}</strong></div> <div class="test-meta-item">⭐ <strong>+1</strong>/Q</div> <div class="test-meta-item">👥 <strong>${test.attempt_count || 0}</strong> Attempts</div> </div> <div class="test-tags">${cats2.map(c => `<span class="test-tag">${c}</span>`).join('')}</div> <div class="test-card-footer"> <button class="start-btn" onclick="_0x9f0e(${idx})">Start Test →</button> </div>`; grid.appendChild(card); }); document.getElementById('no-results').style.display = shown === 0 ? 'block' : 'none'; } function _0x3d4c(cat) { _0x1e2f = cat; _0x1f2e(); } function _0x5b6a() { _0x1f2e(); } function _0x7988(secs) { const m = Math.floor(secs / 60); return m >= 60 ? `${Math.floor(m/60)}h ${m%60}m` : `${m} min`; } let _0x5c6d = null; let _0x7e8f = null; let _0x9a0b = 0; let _0x1c2d = []; let _0x3e4f = []; let _0x5a6b = 0; let _0x7c8d = null; let _0x9e0f = null; function _0x9f0e(idx) { _0x5c6d = _0x9c0d[idx]; const t = _0x5c6d; const dur = _0x7988((t.duration_mins || 60) * 60); document.getElementById('login-icon').textContent = t.exam?.icon || '\u1f4cb'; document.getElementById('login-title').textContent = t.title; document.getElementById('login-subtitle').textContent = `SpardhaBox · ${t.exam?.name || 'Mock Test'}`; document.getElementById('li-name').textContent = t.title; document.getElementById('li-duration').textContent = dur; document.getElementById('li-questions').textContent = t.questions?.length || 0; document.getElementById('li-marks').textContent = t.total_marks || t.questions?.length || 0; document.getElementById('guest-notice').style.display = _0x3c4d ? 'none' : 'flex'; _0x7f90('select-screen', 'login-screen'); } async function _0x1d2c() { const t = _0x5c6d; _0x1c2d = Array(t.questions.length).fill(null); _0x3e4f = Array(t.questions.length).fill(0); _0x5a6b = (t.duration_mins || 60) * 60; _0x9e0f = new Date().toISOString(); _0x7e8f = null; const name = _0x3c4d ? _0x3c4d.name.split(' ')[0] : 'Guest'; document.getElementById('cand-name').textContent = name; document.getElementById('cand-test-name').textContent = t.title; const initials = _0x3c4d ? _0x3c4d.name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase() : '\u1f464'; document.getElementById('cand-avatar').textContent = _0x3c4d ? initials : '\u1f464'; document.getElementById('exam-top-name').textContent = t.title; if (_0x3c4d && _0x5e6f && t.id && !t.id.startsWith('demo')) { try { const res = await fetch(`${_0x1a2b}/api/attempts/start`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${_0x5e6f}` }, body: JSON.stringify({ test_id: t.id }) }); const data = await res.json(); if (res.ok) _0x7e8f = data.attempt?.id; } catch(_) {} } _0x7f90('login-screen', 'exam-screen'); _0x3b4a(0); _0x3988(); if (_0x7c8d) clearInterval(_0x7c8d); _0x7c8d = setInterval(_0x9f1e, 1000); _0x1b3a(); } function _0x9f1e() { _0x5a6b--; if (_0x5a6b <= 0) { clearInterval(_0x7c8d); _0x3b5a(true); return; } _0x1b3a(); } function _0x1b3a() { const m = Math.floor(_0x5a6b / 60), s = _0x5a6b % 60; const el = document.getElementById('timer'); el.textContent = `${m}:${s < 10 ? '0'+s : s}`; el.className = 'timer-value' + (_0x5a6b < 300 ? ' danger' : ''); } const _0x1a3c = ['A','B','C','D','E','F']; function _0x3b4a(i) { _0x9a0b = i; if (_0x3e4f[i] === 0) _0x3e4f[i] = 2; const q = _0x5c6d.questions[i]; const total = _0x5c6d.questions.length; const opts = Array.isArray(q.options) ? q.options : (q.o || []); document.getElementById('q-badge').textContent = `Q ${i+1} / ${total}`; document.getElementById('q-cat-badge').textContent = q.category || q.cat || ''; document.getElementById('q-num-lbl').textContent = `Question ${i+1}`; document.getElementById('q-text').textContent = q.question || q.q || ''; document.getElementById('q-progress').style.width = `${((i+1)/total)*100}%`; const area = document.getElementById('options-area'); area.innerHTML = ''; opts.forEach((opt, idx) => { const lbl = document.createElement('label'); lbl.className = 'option-label' + (_0x1c2d[i] === idx ? ' selected' : ''); lbl.innerHTML = ` <input type="radio" name="opt" value="${idx}" ${_0x1c2d[i] === idx ? 'checked' : ''}> <span class="opt-letter">${_0x1a3c[idx]}</span> <span class="opt-text">${opt}</span> <span class="opt-check">✓</span>`; lbl.querySelector('input').addEventListener('change', () => { document.querySelectorAll('.option-label').forEach(l => l.classList.remove('selected')); lbl.classList.add('selected'); _0x1c2d[_0x9a0b] = idx; _0x3e4f[_0x9a0b] = 1; _0x5f60(); _0x7b8a(); }); area.appendChild(lbl); }); _0x5f60(); _0x7b8a(); } function _0x5988() { const sel = document.querySelector('input[name=\x22opt\x22]:checked'); if (sel) { _0x1c2d[_0x9a0b] = parseInt(sel.value); _0x3e4f[_0x9a0b] = 1; } else _0x3e4f[_0x9a0b] = 2; _0x7f8e(1); } function _0x7f8e(dir) { const next = _0x9a0b + dir; if (next >= 0 && next < _0x5c6d.questions.length) _0x3b4a(next); } function _0x9d0c() { const sel = document.querySelector('input[name=\x22opt\x22]:checked'); if (sel) _0x1c2d[_0x9a0b] = parseInt(sel.value); _0x3e4f[_0x9a0b] = 3; _0x7f8e(1); } function _0x1b2a() { _0x1c2d[_0x9a0b] = null; _0x3e4f[_0x9a0b] = 2; _0x3b4a(_0x9a0b); } function _0x3988() { const grid = document.getElementById('palette'); grid.innerHTML = ''; _0x5c6d.questions.forEach((_, i) => { const btn = document.createElement('div'); btn.className = 'q-btn'; btn.id = `p${i}`; btn.textContent = i+1; btn.onclick = () => _0x3b4a(i); grid.appendChild(btn); }); _0x5f60(); } function _0x5f60() { _0x5c6d.questions.forEach((_, i) => { const b = document.getElementById(`p${i}`); if (!b) return; b.className = 'q-btn' + (i === _0x9a0b ? ' _0x9a0b' : '') + (_0x3e4f[i]===1 ? ' st-1' : _0x3e4f[i]===2 ? ' st-2' : _0x3e4f[i]===3 ? ' st-3' : ''); }); } function _0x7b8a() { let ans=0, notAns=0, nvis=0, rev=0; _0x3e4f.forEach(s => { if(s===1)ans++; else if(s===2)notAns++; else if(s===3)rev++; else nvis++; }); document.getElementById('s-ans').textContent = ans; document.getElementById('s-nans').textContent = notAns; document.getElementById('s-nvis').textContent = nvis; document.getElementById('s-rev').textContent = rev; } function _0x9908() { let ans=0, nan=0, rev=0; _0x3e4f.forEach(s => { if(s===1)ans++; else if(s===3)rev++; else nan++; }); document.getElementById('m-ans').textContent = ans; document.getElementById('m-nan').textContent = nan; document.getElementById('m-rev').textContent = rev; document.getElementById('submit-modal').classList.add('open'); } function _0x1f30() { document.getElementById('submit-modal').classList.remove('open'); } document.getElementById('submit-modal').addEventListener('click', e => { if (e.target === document.getElementById('submit-modal')) _0x1f30(); }); async function _0x3b5a(auto = false) { if (!auto) _0x1f30(); clearInterval(_0x7c8d); const qs = _0x5c6d.questions; let score=0, wrong=0, skipped=0, html=''; const answersPayload = []; qs.forEach((q, i) => { const correctIdx = q.correct_idx ?? q.a; const attempted = _0x1c2d[i] !== null; const correct = attempted && _0x1c2d[i] === correctIdx; if (correct) score++; else if (!attempted) skipped++; else wrong++; const opts = Array.isArray(q.options) ? q.options : (q.o || []); const userAns = attempted ? opts[_0x1c2d[i]] : '\u2014'; const tag = !attempted ? '<span class=\x22tag tag-s\x22>\u2b24 Skipped</span>' : correct ? '<span class=\x22tag tag-c\x22>\u2713 Correct</span>' : '<span class=\x22tag tag-w\x22>\u2717 Wrong</span>'; html += `<tr> <td class="q-no">${i+1}</td> <td>${q.question || q.q}</td> <td class="ans-val">${userAns}</td> <td class="ans-val">${opts[correctIdx]}</td> <td>${tag}</td> </tr>`; answersPayload.push({ question_id: q.id, selected_idx: _0x1c2d[i], is_correct: correct, time_taken: 0 }); }); const attempted = score + wrong; const accuracy = attempted > 0 ? Math.round((score / attempted) * 100) : 0; const total = qs.length; const timeTaken = ((_0x5c6d.duration_mins || 60) * 60) - _0x5a6b; document.getElementById('res-score').textContent = score; document.getElementById('res-denom').textContent = `out of ${total}`; document.getElementById('res-test-name').textContent = _0x5c6d.title; document.getElementById('res-correct').textContent = score; document.getElementById('res-wrong').textContent = wrong; document.getElementById('res-skipped').textContent = skipped; document.getElementById('res-accuracy').textContent = accuracy + '%'; document.getElementById('result-body').innerHTML = html; document.getElementById('score-saved-badge').style.display = 'none'; document.getElementById('score-guest-badge').style.display = 'none'; if (_0x3c4d && _0x5e6f && _0x7e8f) { try { const res = await fetch(`${_0x1a2b}/api/attempts/${_0x7e8f}/submit`, { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${_0x5e6f}` }, body: JSON.stringify({ _0x1c2d: answersPayload, time_taken_secs: timeTaken }) }); if (res.ok) { document.getElementById('score-saved-badge').style.display = 'inline-flex'; } } catch(_) {} } else if (!_0x3c4d) { document.getElementById('score-guest-badge').style.display = 'inline-flex'; } _0x7f90('exam-screen', 'result-screen'); } function _0x5d7e() { _0x7f90('result-screen', 'login-screen'); } function _0x7f90(from, to) { document.getElementById(from).classList.remove('active-screen'); document.getElementById(to).classList.add('active-screen'); } function _0x9b1a(screen) { ['select-screen','login-screen','exam-screen','result-screen'].forEach(s => { document.getElementById(s).classList.remove('active-screen'); }); if (screen === 'select-screen') { clearInterval(_0x7c8d); _0x1f2e(); } document.getElementById(screen).classList.add('active-screen'); } function _0x1d3c() { _0x7d9c(); document.getElementById('mob-palette-overlay').classList.add('open'); } function _0x3f5e() { document.getElementById('mob-palette-overlay').classList.remove('open'); } function _0x5b7a(e) { if (e.target === document.getElementById('mob-palette-overlay')) _0x3f5e(); } function _0x7d9c() { const grid = document.getElementById('mob-palette'); grid.innerHTML = ''; _0x5c6d.questions.forEach((_, i) => { const btn = document.createElement('div'); btn.className = 'q-btn' + (i===_0x9a0b?' _0x9a0b':'') + (_0x3e4f[i]===1?' st-1':_0x3e4f[i]===2?' st-2':_0x3e4f[i]===3?' st-3':''); btn.textContent = i+1; btn.onclick = () => { _0x3b4a(i); _0x3f5e(); }; grid.appendChild(btn); }); let ans=0, notAns=0, nvis=0, rev=0; _0x3e4f.forEach(s => { if(s===1)ans++; else if(s===2)notAns++; else if(s===3)rev++; else nvis++; }); const set = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; }; set('ms-ans',ans); set('ms-nans',notAns); set('ms-nvis',nvis); set('ms-rev',rev); }})();</script>
 </body>
 </html>
